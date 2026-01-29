@@ -1,0 +1,34 @@
+{
+  "name": "harvey",
+  "version": "1.0.0",
+  "description": "An AI Agent that helps you research about financial topics using principles from Paper : \"Grounding Agent Memory in Contextual Intent (STITCH)\"",
+  "main": "ui.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/main.js",
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/regional-specter/Harvey.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/regional-specter/Harvey/issues"
+  },
+  "homepage": "https://github.com/regional-specter/Harvey#readme",
+  "dependencies": {
+    "ink": "^6.6.0",
+    "ink-gradient": "^3.0.0",
+    "react": "^19.2.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.8",
+    "esbuild": "^0.27.2",
+    "esbuild-register": "^3.6.0",
+    "typescript": "^5.9.3"
+  }
+}
