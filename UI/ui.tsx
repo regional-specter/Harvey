@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from 'react';
+// UI/ui.tsx
+import React, { useState, useEffect, useRef } from 'react';
 import { render, Box, Text, useInput, useApp } from 'ink';
 import Gradient from 'ink-gradient';
-import fs from 'fs';
+import fs from 'fs'; // For file system operations (suggestions)
 
+// Import agent core logic. Assumes agent/ directory is a sibling to UI/
+import { initializeAgent, handleUserInput } from '../agent/index.js'; 
+
+// --- ASCII Art Header ---
 const HEADER_ASCII = `
 ██╗  ██╗ █████╗ ██████╗ ██╗   ██╗███████╗██╗   ██╗
 ██║  ██║██╔══██╗██╔══██╗██║   ██║██╔════╝╚██╗ ██╔╝
@@ -14,7 +19,6 @@ const HEADER_ASCII = `
 
 const Header = () => (
     <Box flexDirection="column" alignItems="center" paddingBottom={1}>
-        {/* Use the Gradient component here */}
         <Gradient name="passion">
             <Text bold>
                 {HEADER_ASCII}
@@ -23,130 +27,204 @@ const Header = () => (
         
         <Box marginTop={1} width={80}>
             <Text color="gray" dimColor italic wrap="wrap" textAlign="center">
-		  	An intelligent research agent that tracks your goals, recalls contextually relevant information, and reasons across long, interleaved tasks to provide precise insights
+                An intelligent research agent that tracks your goals, recalls contextually relevant 
+                information, and reasons across long, interleaved tasks to provide precise insights.
             </Text>
         </Box>
     </Box>
 );
 
-const ChatHistory = ({ history }) => (
-	<Box flexDirection="column" paddingBottom={1}>
-		{history.map((message, index) => (
-			<Text key={index}>{message}</Text>
-		))}
-	</Box>
+// Modified ChatHistory to display messages, distinguishing user/agent output.
+const ChatHistory = ({ messages }) => (
+    <Box flexDirection="column" paddingBottom={1}>
+        {messages.map((message, index) => (
+            <React.Fragment key={index}>
+                {message}
+            </React.Fragment>
+        ))}
+    </Box>
 );
 
+// InputBox displays the current input value and a cursor.
 const InputBox = ({ value }) => {
-	const parts = value.split(/(@\S+)/);
-	return (
-		<Box borderStyle="single" paddingX={1}>
-			<Text>
-				{parts.map((part, i) => {
-					if (part.startsWith('@')) {
-						return (
-							<Text key={i} color="red">
-								{part}
-							</Text>
-						);
-					}
-					return part;
-				})}
-				█
-			</Text>
-		</Box>
-	);
+    // Basic logic for showing '@' prefix for file suggestions.
+    const parts = value.split(/(@\S*)/); 
+    return (
+        <Box borderStyle="single" paddingX={1} marginBottom={1}>
+            <Text>
+                {parts.map((part, i) => {
+                    if (part.startsWith('@')) {
+                        return (
+                            <Text key={i} color="red">
+                                {part}
+                            </Text>
+                        );
+                    }
+                    return part;
+                })}
+                █
+            </Text>
+        </Box>
+    );
 };
 
-const FileSuggestions = ({ suggestions, activeIndex }) => {
-	if (suggestions.length === 0) {
-		return null;
-	}
+// Component to display file suggestions.
+const FileSuggestions = ({ suggestions, activeIndex, filterText }) => {
+    if (suggestions.length === 0) return null;
 
-	return (
-		<Box flexDirection="column" borderStyle="single" width={80}>
-			{suggestions.map((suggestion, index) => {
-				const color = index === activeIndex ? 'red' : 'white';
-				return (
-					<Text key={suggestion} color={color}>
-						{suggestion}
-					</Text>
-				);
-			})}
-		</Box>
-	);
+    const filteredSuggestions = suggestions
+        .filter(s => s.toLowerCase().includes(filterText.toLowerCase()))
+        .slice(0, 5);
+
+    if (filteredSuggestions.length === 0) return null;
+
+    return (
+        <Box flexDirection="column" borderStyle="single" width="100%" paddingX={1}>
+            {filteredSuggestions.map((suggestion, index) => {
+                const color = index === activeIndex ? 'red' : 'white';
+                return (
+                    <Text key={suggestion} color={color}>
+                        {suggestion}
+                    </Text>
+                );
+            })}
+        </Box>
+    );
 };
 
 const App = () => {
-	const { exit } = useApp();
-	const [history, setHistory] = useState([]);
-	const [inputValue, setInputValue] = useState('');
-	const [suggestions, setSuggestions] = useState<string[]>([]);
-	const [suggestionBoxVisible, setSuggestionBoxVisible] = useState(false);
-	const [activeIndex, setActiveIndex] = useState(0);
+    const { exit } = useApp();
+    const [messages, setMessages] = useState<React.ReactNode[]>([]); 
+    const [inputValue, setInputValue] = useState(''); 
+    const [suggestions, setSuggestions] = useState<string[]>([]); 
+    const [suggestionBoxVisible, setSuggestionBoxVisible] = useState(false); 
+    const [activeIndex, setActiveIndex] = useState(0); 
+    const [isAgentReady, setIsAgentReady] = useState(false); 
 
-	useEffect(() => {
-		if (suggestionBoxVisible) {
-			fs.readdir(process.cwd(), (err, files) => {
-				if (err) {
-					// handle error
-				} else {
-					setSuggestions(files);
-				}
-			});
-		}
-	}, [suggestionBoxVisible]);
+    const inputValueRef = useRef(inputValue);
+    inputValueRef.current = inputValue;
 
-	useInput((input, key) => {
-		if (key.ctrl && key.name === 'c') {
-			exit();
-		}
+    // --- Agent Initialization Effect ---
+    useEffect(() => {
+        const init = async () => {
+            const success = await initializeAgent();
+            if (success) {
+                setMessages((prev) => [
+                    ...prev,
+                    <Text key="init-success" color="green">Agent initialized successfully.</Text>
+                ]);
+                setIsAgentReady(true);
+            } else {
+                setMessages((prev) => [
+                    ...prev,
+                    <Text key="init-fail" color="red">Agent failed to initialize. Please check logs.</Text>
+                ]);
+            }
+        };
+        init();
+    }, []);
 
-		if (suggestionBoxVisible) {
-			if (key.upArrow) {
-				setActiveIndex((prev) => (prev > 0 ? prev - 1 : suggestions.length - 1));
-			} else if (key.downArrow) {
-				setActiveIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : 0));
-			} else if (key.return) {
-				setInputValue(inputValue.slice(0, -1) + suggestions[activeIndex] + ' ');
-				setSuggestionBoxVisible(false);
-			} else if (key.backspace || key.delete) {
-				setInputValue(inputValue.slice(0, -1));
-				if(inputValue.slice(0, -1).endsWith('@') === false) {
-					setSuggestionBoxVisible(false);
-				}
+    // --- File Suggestion Logic ---
+    useEffect(() => {
+        if (suggestionBoxVisible) {
+            fs.readdir(process.cwd(), (err, files) => {
+                if (err) {
+                    setSuggestions([]);
+                } else {
+                    setSuggestions(files.filter(f => !f.startsWith('.') && f !== 'node_modules'));
+                }
+            });
+        } else {
+            setSuggestions([]);
+            setActiveIndex(0);
+        }
+    }, [suggestionBoxVisible]);
 
-			} else {
-				setInputValue(inputValue + input);
-			}
-		} else {
-			if (key.return) {
-				setHistory([...history, `> ${inputValue}`, `Harvey: ${inputValue}`]);
-				setInputValue('');
-			} else if (key.backspace || key.delete) {
-				setInputValue(inputValue.slice(0, -1));
-			} else {
-				if ((inputValue + input).endsWith('@')) {
-					setSuggestionBoxVisible(true);
-				}
-				setInputValue(inputValue + input);
-			}
-		}
-	});
+    // --- Input Handling Logic ---
+    useInput((input, key) => {
+        if (key.ctrl && key.name === 'c') {
+            exit();
+            return;
+        }
 
-	return (
-		<Box flexDirection="column" width="100%" height="100%">
-			<Header />
-			<ChatHistory history={history} />
-			<Box flexGrow={1} />
-			<InputBox
-				value={inputValue}
-			/>
-			{suggestionBoxVisible && (
-				<FileSuggestions suggestions={suggestions} activeIndex={activeIndex} />
-			)}
-		</Box>
-	);
+        if (!isAgentReady && !(key.ctrl && key.name === 'c')) return;
+
+        if (suggestionBoxVisible) {
+            if (key.upArrow) {
+                setActiveIndex((prev) => (prev > 0 ? prev - 1 : suggestions.length - 1));
+            } else if (key.downArrow) {
+                setActiveIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : 0));
+            } else if (key.return) {
+                const currentInputValue = inputValueRef.current;
+                const mentionParts = currentInputValue.split('@');
+                let newInputValue = currentInputValue;
+
+                if (mentionParts.length > 0 && currentInputValue.endsWith('@')) {
+                    const textAfterAt = mentionParts[mentionParts.length - 1];
+                    const beforeMention = currentInputValue.slice(0, -textAfterAt.length);
+                    newInputValue = beforeMention + '@' + suggestions[activeIndex] + ' ';
+                } else {
+                    newInputValue = currentInputValue + suggestions[activeIndex] + ' ';
+                }
+                setInputValue(newInputValue);
+                setSuggestionBoxVisible(false);
+                setActiveIndex(0);
+            } else if (key.backspace || key.delete) {
+                const newValue = inputValueRef.current.slice(0, -1);
+                setInputValue(newValue);
+                if (!newValue.endsWith('@')) setSuggestionBoxVisible(false);
+            } else {
+                setInputValue(inputValueRef.current + input);
+            }
+        } else {
+            if (key.return) {
+                const submittedInput = inputValueRef.current.trim();
+                setInputValue('');
+
+                if (submittedInput === '') return;
+
+                setMessages((prev) => [
+                    ...prev,
+                    <Text key={`user-${prev.length}`} color="cyan">{`> ${submittedInput}`}</Text>
+                ]);
+
+                (async () => {
+                    let agentResponse = '';
+                    try {
+                        agentResponse = await handleUserInput(submittedInput);
+                    } catch (e: any) {
+                        agentResponse = `An unexpected error occurred: ${e.message}`;
+                    }
+                    setMessages((prev) => [
+                        ...prev,
+                        <Text key={`agent-${prev.length}`} color="green">{`Agent: ${agentResponse}`}</Text>
+                    ]);
+                })();
+            } else if (key.backspace || key.delete) {
+                setInputValue(inputValueRef.current.slice(0, -1));
+            } else {
+                const newValue = inputValueRef.current + input;
+                setInputValue(newValue);
+                if (newValue.endsWith('@')) setSuggestionBoxVisible(true);
+            }
+        }
+    });
+
+    return (
+        <Box flexDirection="column" width="100%" height="100%">
+            <Header />
+            <ChatHistory messages={messages} />
+            <Box flexGrow={1} />
+            <InputBox value={inputValue} />
+            {suggestionBoxVisible && (
+                <FileSuggestions 
+                    suggestions={suggestions} 
+                    activeIndex={activeIndex} 
+                    filterText={inputValue.split('@').pop() || ''}
+                />
+            )}
+        </Box>
+    );
 };
 
 render(<App />);

@@ -1,28 +1,80 @@
-const { GoogleGenAI } = require("@google/genai");
-require("dotenv").config(); // Shortened way to load
+const { runAgentCycle } = require('./core/agent-loop');
+const { loadMemory, saveMemory, getMemoryEntries } = require('./memory/memory-store');
 
-async function getPorscheFacts() {
-  // 1. Ensure this exact name is in your .env file (e.g., GEMINI_API_KEY=AIza...)
-  const apiKey = process.env.GEMINI_API_KEY;
-
-  if (!apiKey) {
-    console.error("❌ ERROR: API Key is missing. Check your .env file for GEMINI_API_KEY.");
-    return;
-  }
-
-  try {
-    const genAI = new GoogleGenAI({ apiKey });
-    
-    const prompt = "What's the research work done on STITCH (Grounding Agentic Memory)";
-    
-    const result = await genAI.models.generateContent({ model: "models/gemini-flash-latest", contents: [{ text: prompt }] });
-    const text = result.candidates[0].content.parts[0].text;
-    
-    console.log(text);
-    
-  } catch (error) {
-    console.error("❌ Error during execution:", error.message);
-  }
+// --- Initialization ---
+// This function is intended to be called once when the agent application starts.
+// It loads existing memory from storage and prepares the agent.
+async function initializeAgent() {
+    try {
+        await loadMemory(); // Load existing memory from file (e.g., memory.json)
+        console.log("Agent core initialized. Memory loaded.");
+        return true; // Indicate successful initialization
+    } catch (error) {
+        console.error("❌ Agent core initialization failed:", error.message);
+        // In a real application, you might want more robust error handling here.
+        // For now, we'll log the error and return false, indicating initialization failure.
+        return false; 
+    }
 }
 
-getPorscheFacts();
+/**
+ * Handles user input. It determines if the input is a command (like '/summary')
+ * or a regular chat message, then invokes the appropriate agent logic.
+ * * @param {string} userInput - The raw input string provided by the user from the UI.
+ * @returns {Promise<string>} A promise that resolves to the string output to be displayed to the user.
+ * This could be an LLM response, command output, or an error message.
+ */
+async function handleUserInput(userInput) {
+    // Trim leading/trailing whitespace from the input for cleaner processing.
+    const trimmedInput = userInput.trim();
+
+    // --- Command Handling ---
+    // Check if the input starts with a '/' which indicates a command.
+    if (trimmedInput.startsWith('/')) {
+        // Extract the command name by removing the leading '/'.
+        const command = trimmedInput.substring(1); 
+
+        switch (command) {
+            case 'summary':
+                console.log("Agent core: Command received - /summary");
+                // Retrieve all current memory entries.
+                const memories = getMemoryEntries();
+                // Format the memory entries as a JSON string for display.
+                // The null, 2 arguments prettify the JSON output.
+                return `--- Memory Summary ---\n${JSON.stringify(memories, null, 2)}\n----------------------`;
+            
+            // Future commands can be added here, e.g.:
+            // case 'help':
+            //     return "Available commands: /summary, /help";
+            // case 'clear_memory':
+            //     // logic to clear memory, then save
+            //     return "Memory cleared.";
+
+            default:
+                // If the command is not recognized, inform the user.
+                return `Unknown command: /${command}. Type '/help' (not yet implemented) for available commands.`;
+        }
+    } else {
+        // --- Chat Input Handling ---
+        // If the input is not a command, treat it as a regular chat message.
+        try {
+            console.log(`Agent core: Processing chat input: "${userInput}"`);
+            // Call the agent's core cycle to generate an LLM response.
+            const llmResponse = await runAgentCycle(userInput);
+            return llmResponse;
+        } catch (error) {
+            // If any part of the agent cycle fails, catch the error.
+            console.error(`Agent core error during chat processing for input "${userInput}":`, error.message);
+            // Return a user-friendly error message.
+            return `An error occurred while processing your request: ${error.message}`;
+        }
+    }
+}
+
+// Export the functions that the UI will need to interact with the agent.
+module.exports = {
+    initializeAgent,
+    handleUserInput,
+    // getMemoryEntries could also be exported if the UI needs to display memories in a structured way,
+    // but handleUserInput with '/summary' covers the current requirement.
+};
