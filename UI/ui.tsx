@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { render, Box, Text, useInput, useApp } from 'ink';
 import Gradient from 'ink-gradient';
+
 import fs from 'fs'; // For file system operations (suggestions)
 
 // Import agent core logic. Assumes agent/ directory is a sibling to UI/
