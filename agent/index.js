@@ -1,16 +1,27 @@
 const { runAgentCycle } = require('./core/agent-loop');
 const { loadMemory, saveMemory, getMemoryEntries } = require('./memory/memory-store');
+const { setLogger, log, error } = require('./core/logger');
 
 // --- Initialization ---
+
+/**
+ * Sets the logger for the entire agent.
+ * This is the entry point for the UI to inject its logging mechanism.
+ * @param {function(string): void} loggerFunc - The callback function for logging.
+ */
+function setAgentLogger(loggerFunc) {
+    setLogger(loggerFunc);
+}
+
 // This function is intended to be called once when the agent application starts.
 // It loads existing memory from storage and prepares the agent.
 async function initializeAgent() {
     try {
         await loadMemory(); // Load existing memory from file (e.g., memory.json)
-        console.log("Agent core initialized. Memory loaded.");
+        log("Agent core initialized. Memory loaded.");
         return true; // Indicate successful initialization
-    } catch (error) {
-        console.error("❌ Agent core initialization failed:", error.message);
+    } catch (e) {
+        error("Agent core initialization failed:", e.message);
         // In a real application, you might want more robust error handling here.
         // For now, we'll log the error and return false, indicating initialization failure.
         return false; 
@@ -36,7 +47,7 @@ async function handleUserInput(userInput) {
 
         switch (command) {
             case 'summary':
-                console.log("Agent core: Command received - /summary");
+                log("Agent core: Command received - /summary");
                 // Retrieve all current memory entries.
                 const memories = getMemoryEntries();
                 // Format the memory entries as a JSON string for display.
@@ -58,15 +69,15 @@ async function handleUserInput(userInput) {
         // --- Chat Input Handling ---
         // If the input is not a command, treat it as a regular chat message.
         try {
-            console.log(`Agent core: Processing chat input: "${userInput}"`);
+            log(`Agent core: Processing chat input: "${userInput}"`);
             // Call the agent's core cycle to generate an LLM response.
             const llmResponse = await runAgentCycle(userInput);
             return llmResponse;
-        } catch (error) {
+        } catch (e) {
             // If any part of the agent cycle fails, catch the error.
-            console.error(`Agent core error during chat processing for input "${userInput}":`, error.message);
+            error(`Agent core error during chat processing for input "${userInput}":`, e.message);
             // Return a user-friendly error message.
-            return `An error occurred while processing your request: ${error.message}`;
+            return `An error occurred while processing your request: ${e.message}`;
         }
     }
 }
@@ -75,6 +86,7 @@ async function handleUserInput(userInput) {
 module.exports = {
     initializeAgent,
     handleUserInput,
+    setAgentLogger,
     // getMemoryEntries could also be exported if the UI needs to display memories in a structured way,
     // but handleUserInput with '/summary' covers the current requirement.
 };

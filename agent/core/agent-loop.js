@@ -1,6 +1,7 @@
 const { generateResponse } = require('./llm-client');
 // '../memory/memory-store' is one directory up, then into the memory directory.
 const { appendMemory, saveMemory, getMemoryEntries } = require('../memory/memory-store'); 
+const { log, error } = require('./logger');
 
 // Note: We are not calling loadMemory() here. It's assumed that the entry point (index.js)
 // will call loadMemory() once at startup to populate the in-memory store.
@@ -23,9 +24,9 @@ async function runAgentCycle(userInput) {
   try {
     // 1. Generate a response from the LLM using the user's input.
     // We pass the user's input directly as the prompt for this basic chat.
-    console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
+    log(`Agent loop: Requesting LLM response for: "${userInput}"`);
     const llmResponse = await generateResponse(userInput);
-    console.log(`Agent loop: Received response from LLM.`);
+    log(`Agent loop: Received response from LLM.`);
 
     // 2. Prepare the data for a new memory entry.
     // For this v0.1, we're using default values for scope, type, and empty entities.
@@ -55,11 +56,11 @@ async function runAgentCycle(userInput) {
     // 5. Return the LLM's response. This will be displayed to the user.
     return llmResponse;
 
-  } catch (error) {
-    console.error(`Agent Cycle Error: ${error.message}`);
+  } catch (e) {
+    error(`Agent Cycle Error: ${e.message}`);
     // Re-throw the error to be caught and handled by the entry point (e.g., index.js).
     // This allows the entry point to inform the user about the failure.
-    throw error;
+    throw e;
   }
 }
 

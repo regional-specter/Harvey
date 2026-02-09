@@ -39620,12 +39620,44 @@ var init_schemas = __esm({
   }
 });
 
+// ../agent/core/logger.js
+var require_logger = __commonJS({
+  "../agent/core/logger.js"(exports, module) {
+    var loggerCallback = null;
+    function setLogger(callback) {
+      loggerCallback = callback;
+    }
+    function log(...args) {
+      const message = args.map((arg) => typeof arg === "object" ? JSON.stringify(arg) : arg).join(" ");
+      if (loggerCallback) {
+        loggerCallback(message);
+      } else {
+        console.log(...args);
+      }
+    }
+    function error(...args) {
+      const message = `\u274C ${args.map((arg) => typeof arg === "object" ? JSON.stringify(arg, null, 2) : arg).join(" ")}`;
+      if (loggerCallback) {
+        loggerCallback(message);
+      } else {
+        console.error(...args);
+      }
+    }
+    module.exports = {
+      setLogger,
+      log,
+      error
+    };
+  }
+});
+
 // ../agent/memory/memory-store.js
 var require_memory_store = __commonJS({
   "../agent/memory/memory-store.js"(exports, module) {
     var fs3 = __require("fs");
     var path = __require("path");
     var { ChatMemorySchemaV1: ChatMemorySchemaV12, isValidMemoryEntry: isValidMemoryEntry2 } = (init_schemas(), __toCommonJS(schemas_exports));
+    var { log, error } = require_logger();
     var MEMORY_FILE_PATH = path.join(__dirname, "memory.json");
     var memoryEntries = [];
     var nextId = 1;
@@ -39644,18 +39676,18 @@ var require_memory_store = __commonJS({
           } else {
             nextId = 1;
           }
-          console.log(`Successfully loaded ${memoryEntries.length} memory entries from ${MEMORY_FILE_PATH}. Next ID will be: ${nextId}`);
+          log(`Successfully loaded ${memoryEntries.length} memory entries from ${MEMORY_FILE_PATH}. Next ID will be: ${nextId}`);
         } else {
           memoryEntries = [];
           nextId = 1;
-          console.log(`Memory file not found at ${MEMORY_FILE_PATH}. Initializing with an empty memory. Next ID will be: ${nextId}`);
+          log(`Memory file not found at ${MEMORY_FILE_PATH}. Initializing with an empty memory. Next ID will be: ${nextId}`);
         }
         return memoryEntries;
-      } catch (error) {
-        console.error(`\u274C Error loading or parsing memory from ${MEMORY_FILE_PATH}:`, error.message);
+      } catch (e2) {
+        error(`Error loading or parsing memory from ${MEMORY_FILE_PATH}:`, e2.message);
         memoryEntries = [];
         nextId = 1;
-        console.log(`Resetting memory due to error. Starting with an empty memory. Next ID will be: ${nextId}`);
+        log(`Resetting memory due to error. Starting with an empty memory. Next ID will be: ${nextId}`);
         return [];
       }
     }
@@ -39678,21 +39710,21 @@ var require_memory_store = __commonJS({
         // Any other fields from ChatMemorySchemaV1 can be added here if entryData provides them
       };
       if (!isValidMemoryEntry2(entry)) {
-        console.error("\u274C Invalid memory entry data provided. Entry not appended:", entryData);
+        error("Invalid memory entry data provided. Entry not appended:", entryData);
         nextId--;
         return null;
       }
       memoryEntries.push(entry);
-      console.log(`Appended memory entry ID: ${entry.id} with timestamp: ${entry.timestamp}`);
+      log(`Appended memory entry ID: ${entry.id} with timestamp: ${entry.timestamp}`);
       return entry;
     }
     async function saveMemory() {
       try {
         const dataToSave = JSON.stringify(memoryEntries, null, 2);
         fs3.writeFileSync(MEMORY_FILE_PATH, dataToSave, "utf-8");
-        console.log(`Successfully saved ${memoryEntries.length} memory entries to ${MEMORY_FILE_PATH}`);
-      } catch (error) {
-        console.error(`\u274C Error saving memory to ${MEMORY_FILE_PATH}:`, error.message);
+        log(`Successfully saved ${memoryEntries.length} memory entries to ${MEMORY_FILE_PATH}`);
+      } catch (e2) {
+        error(`Error saving memory to ${MEMORY_FILE_PATH}:`, e2.message);
       }
     }
     function getMemoryEntries() {
@@ -39713,14 +39745,15 @@ var require_agent_loop = __commonJS({
   "../agent/core/agent-loop.js"(exports, module) {
     var { generateResponse } = require_llm_client();
     var { appendMemory, saveMemory, getMemoryEntries } = require_memory_store();
+    var { log, error } = require_logger();
     async function runAgentCycle(userInput) {
       if (!userInput || typeof userInput !== "string" || userInput.trim() === "") {
         throw new Error("Invalid user input provided for agent cycle. Input cannot be empty.");
       }
       try {
-        console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
+        log(`Agent loop: Requesting LLM response for: "${userInput}"`);
         const llmResponse = await generateResponse(userInput);
-        console.log(`Agent loop: Received response from LLM.`);
+        log(`Agent loop: Received response from LLM.`);
         const memoryEntryData = {
           user_input: userInput,
           llm_response: llmResponse,
@@ -39737,9 +39770,9 @@ var require_agent_loop = __commonJS({
         }
         await saveMemory();
         return llmResponse;
-      } catch (error) {
-        console.error(`Agent Cycle Error: ${error.message}`);
-        throw error;
+      } catch (e2) {
+        error(`Agent Cycle Error: ${e2.message}`);
+        throw e2;
       }
     }
     module.exports = {
@@ -39755,13 +39788,17 @@ var require_agent = __commonJS({
   "../agent/index.js"(exports, module) {
     var { runAgentCycle } = require_agent_loop();
     var { loadMemory, saveMemory, getMemoryEntries } = require_memory_store();
+    var { setLogger, log, error } = require_logger();
+    function setAgentLogger2(loggerFunc) {
+      setLogger(loggerFunc);
+    }
     async function initializeAgent2() {
       try {
         await loadMemory();
-        console.log("Agent core initialized. Memory loaded.");
+        log("Agent core initialized. Memory loaded.");
         return true;
-      } catch (error) {
-        console.error("\u274C Agent core initialization failed:", error.message);
+      } catch (e2) {
+        error("Agent core initialization failed:", e2.message);
         return false;
       }
     }
@@ -39771,7 +39808,7 @@ var require_agent = __commonJS({
         const command = trimmedInput.substring(1);
         switch (command) {
           case "summary":
-            console.log("Agent core: Command received - /summary");
+            log("Agent core: Command received - /summary");
             const memories = getMemoryEntries();
             return `--- Memory Summary ---
 ${JSON.stringify(memories, null, 2)}
@@ -39787,18 +39824,19 @@ ${JSON.stringify(memories, null, 2)}
         }
       } else {
         try {
-          console.log(`Agent core: Processing chat input: "${userInput}"`);
+          log(`Agent core: Processing chat input: "${userInput}"`);
           const llmResponse = await runAgentCycle(userInput);
           return llmResponse;
-        } catch (error) {
-          console.error(`Agent core error during chat processing for input "${userInput}":`, error.message);
-          return `An error occurred while processing your request: ${error.message}`;
+        } catch (e2) {
+          error(`Agent core error during chat processing for input "${userInput}":`, e2.message);
+          return `An error occurred while processing your request: ${e2.message}`;
         }
       }
     }
     module.exports = {
       initializeAgent: initializeAgent2,
-      handleUserInput: handleUserInput2
+      handleUserInput: handleUserInput2,
+      setAgentLogger: setAgentLogger2
       // getMemoryEntries could also be exported if the UI needs to display memories in a structured way,
       // but handleUserInput with '/summary' covers the current requirement.
     };
@@ -39821,6 +39859,12 @@ var HEADER_ASCII = `
 `.trim();
 var Header = () => /* @__PURE__ */ React.createElement(Box, { flexDirection: "column", alignItems: "center", paddingBottom: 1 }, /* @__PURE__ */ React.createElement(Gradient, { name: "passion" }, /* @__PURE__ */ React.createElement(Text, { bold: true }, HEADER_ASCII)), /* @__PURE__ */ React.createElement(Box, { marginTop: 1, width: 80 }, /* @__PURE__ */ React.createElement(Text, { color: "gray", dimColor: true, italic: true, wrap: "wrap", textAlign: "center" }, "An intelligent research agent that tracks your goals, recalls contextually relevant information, and reasons across long, interleaved tasks to provide precise insights.")));
 var ChatHistory = ({ messages }) => /* @__PURE__ */ React.createElement(Box, { flexDirection: "column", paddingBottom: 1 }, messages.map((message, index) => /* @__PURE__ */ React.createElement(React.Fragment, { key: index }, message)));
+var LogBox = ({ logMessages }) => {
+  if (logMessages.length === 0) {
+    return null;
+  }
+  return /* @__PURE__ */ React.createElement(Box, { flexDirection: "column", paddingY: 1, width: "100%" }, /* @__PURE__ */ React.createElement(Text, { dimColor: true }, "--- Agent Logs ---"), logMessages.map((msg, index) => /* @__PURE__ */ React.createElement(Text, { key: index, color: "gray", dimColor: true, wrap: "truncate" }, msg)));
+};
 var InputBox = ({ value }) => {
   const parts = value.split(/(@\S*)/);
   return /* @__PURE__ */ React.createElement(Box, { borderStyle: "single", paddingX: 1, marginBottom: 1 }, /* @__PURE__ */ React.createElement(Text, null, parts.map((part, i2) => {
@@ -39842,6 +39886,7 @@ var FileSuggestions = ({ suggestions, activeIndex, filterText }) => {
 var App = () => {
   const { exit } = useApp();
   const [messages, setMessages] = useState([]);
+  const [logMessages, setLogMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionBoxVisible, setSuggestionBoxVisible] = useState(false);
@@ -39850,6 +39895,9 @@ var App = () => {
   const inputValueRef = useRef(inputValue);
   inputValueRef.current = inputValue;
   useEffect(() => {
+    (0, import_agent.setAgentLogger)((logMessage) => {
+      setLogMessages((prevLogs) => [...prevLogs, logMessage].slice(-5));
+    });
     const init = async () => {
       const success = await (0, import_agent.initializeAgent)();
       if (success) {
@@ -39943,7 +39991,7 @@ var App = () => {
       }
     }
   });
-  return /* @__PURE__ */ React.createElement(Box, { flexDirection: "column", width: "100%", height: "100%" }, /* @__PURE__ */ React.createElement(Header, null), /* @__PURE__ */ React.createElement(ChatHistory, { messages }), /* @__PURE__ */ React.createElement(Box, { flexGrow: 1 }), /* @__PURE__ */ React.createElement(InputBox, { value: inputValue }), suggestionBoxVisible && /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(Box, { flexDirection: "column", width: "100%", height: "100%" }, /* @__PURE__ */ React.createElement(Header, null), /* @__PURE__ */ React.createElement(ChatHistory, { messages }), /* @__PURE__ */ React.createElement(Box, { flexGrow: 1 }), /* @__PURE__ */ React.createElement(LogBox, { logMessages }), /* @__PURE__ */ React.createElement(InputBox, { value: inputValue }), suggestionBoxVisible && /* @__PURE__ */ React.createElement(
     FileSuggestions,
     {
       suggestions,

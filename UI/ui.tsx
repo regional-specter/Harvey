@@ -5,7 +5,7 @@ import Gradient from 'ink-gradient';
 import fs from 'fs'; // For file system operations (suggestions)
 
 // Import agent core logic. Assumes agent/ directory is a sibling to UI/
-import { initializeAgent, handleUserInput } from '../agent/index.js'; 
+import { initializeAgent, handleUserInput, setAgentLogger } from '../agent/index.js'; 
 
 // --- ASCII Art Header ---
 const HEADER_ASCII = `
@@ -44,6 +44,23 @@ const ChatHistory = ({ messages }) => (
         ))}
     </Box>
 );
+
+// Displays the latest log messages from the agent core.
+const LogBox = ({ logMessages }) => {
+    if (logMessages.length === 0) {
+        return null;
+    }
+    return (
+        <Box flexDirection="column" paddingY={1} width="100%">
+            <Text dimColor>--- Agent Logs ---</Text>
+            {logMessages.map((msg, index) => (
+                <Text key={index} color="gray" dimColor wrap="truncate">
+                    {msg}
+                </Text>
+            ))}
+        </Box>
+    );
+};
 
 // InputBox displays the current input value and a cursor.
 const InputBox = ({ value }) => {
@@ -95,6 +112,7 @@ const FileSuggestions = ({ suggestions, activeIndex, filterText }) => {
 const App = () => {
     const { exit } = useApp();
     const [messages, setMessages] = useState<React.ReactNode[]>([]); 
+    const [logMessages, setLogMessages] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState(''); 
     const [suggestions, setSuggestions] = useState<string[]>([]); 
     const [suggestionBoxVisible, setSuggestionBoxVisible] = useState(false); 
@@ -106,9 +124,17 @@ const App = () => {
 
     // --- Agent Initialization Effect ---
     useEffect(() => {
+        // Set up the logger to capture agent output in the UI state
+        setAgentLogger((logMessage) => {
+            setLogMessages(prevLogs => [...prevLogs, logMessage].slice(-5)); // Keep last 5 logs
+        });
+
         const init = async () => {
             const success = await initializeAgent();
             if (success) {
+                // The "Agent initialized successfully" message is now logged via the agent itself.
+                // We can remove the direct state update from here if we want to rely solely on the logger.
+                // For now, we'll keep it for explicit UI feedback.
                 setMessages((prev) => [
                     ...prev,
                     <Text key="init-success" color="green">Agent initialized successfully.</Text>
@@ -215,6 +241,7 @@ const App = () => {
             <Header />
             <ChatHistory messages={messages} />
             <Box flexGrow={1} />
+            <LogBox logMessages={logMessages} />
             <InputBox value={inputValue} />
             {suggestionBoxVisible && (
                 <FileSuggestions 

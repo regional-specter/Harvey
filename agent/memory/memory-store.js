@@ -3,6 +3,7 @@ const path = require('path');
 // Import the schema and validator defined previously.
 // Assuming schemas.js is in the same directory, hence './schemas'.
 const { ChatMemorySchemaV1, isValidMemoryEntry } = require('./schemas');
+const { log, error } = require('../core/logger');
 
 // Define the path to the memory file, relative to this file's location.
 const MEMORY_FILE_PATH = path.join(__dirname, 'memory.json');
@@ -34,19 +35,19 @@ async function loadMemory() {
       } else {
         nextId = 1; // Start from 1 if the file was empty or contained no entries
       }
-      console.log(`Successfully loaded ${memoryEntries.length} memory entries from ${MEMORY_FILE_PATH}. Next ID will be: ${nextId}`);
+      log(`Successfully loaded ${memoryEntries.length} memory entries from ${MEMORY_FILE_PATH}. Next ID will be: ${nextId}`);
     } else {
       memoryEntries = [];
       nextId = 1;
-      console.log(`Memory file not found at ${MEMORY_FILE_PATH}. Initializing with an empty memory. Next ID will be: ${nextId}`);
+      log(`Memory file not found at ${MEMORY_FILE_PATH}. Initializing with an empty memory. Next ID will be: ${nextId}`);
     }
     return memoryEntries;
-  } catch (error) {
-    console.error(`❌ Error loading or parsing memory from ${MEMORY_FILE_PATH}:`, error.message);
+  } catch (e) {
+    error(`Error loading or parsing memory from ${MEMORY_FILE_PATH}:`, e.message);
     // If there's an error (e.g., corrupted file), reset to an empty state to prevent further issues.
     memoryEntries = [];
     nextId = 1;
-    console.log(`Resetting memory due to error. Starting with an empty memory. Next ID will be: ${nextId}`);
+    log(`Resetting memory due to error. Starting with an empty memory. Next ID will be: ${nextId}`);
     return [];
   }
 }
@@ -75,14 +76,14 @@ function appendMemory(entryData) {
   // Validate the entry before adding it to memoryEntries.
   // The isValidMemoryEntry function (imported from schemas.js) handles type and presence checks.
   if (!isValidMemoryEntry(entry)) {
-    console.error("❌ Invalid memory entry data provided. Entry not appended:", entryData);
+    error("Invalid memory entry data provided. Entry not appended:", entryData);
     // Decrement nextId as this ID was not successfully used for a valid entry.
     nextId--;
     return null; // Indicate that the entry was not added.
   }
 
   memoryEntries.push(entry);
-  console.log(`Appended memory entry ID: ${entry.id} with timestamp: ${entry.timestamp}`);
+  log(`Appended memory entry ID: ${entry.id} with timestamp: ${entry.timestamp}`);
   return entry; // Return the successfully added entry
 }
 
@@ -96,9 +97,9 @@ async function saveMemory() {
     // Stringify the array to JSON format with indentation for readability.
     const dataToSave = JSON.stringify(memoryEntries, null, 2);
     fs.writeFileSync(MEMORY_FILE_PATH, dataToSave, 'utf-8');
-    console.log(`Successfully saved ${memoryEntries.length} memory entries to ${MEMORY_FILE_PATH}`);
-  } catch (error) {
-    console.error(`❌ Error saving memory to ${MEMORY_FILE_PATH}:`, error.message);
+    log(`Successfully saved ${memoryEntries.length} memory entries to ${MEMORY_FILE_PATH}`);
+  } catch (e) {
+    error(`Error saving memory to ${MEMORY_FILE_PATH}:`, e.message);
     // Depending on the application's needs, you might want to throw this error
     // or implement retry mechanisms. For now, logging is sufficient.
   }
