@@ -39865,9 +39865,22 @@ var require_agent = __commonJS({
         switch (command) {
           case "summary":
             log("Agent core: Command received - /summary");
-            const memories = getMemoryEntries();
+            const allMemories = getMemoryEntries();
+            const truncatedMemories = allMemories.map((entry) => {
+              const MAX_SUMMARY_LENGTH = 150;
+              let displayResponse = entry.llm_response;
+              if (displayResponse.length > MAX_SUMMARY_LENGTH) {
+                displayResponse = displayResponse.substring(0, MAX_SUMMARY_LENGTH).trim() + "... (truncated)";
+              }
+              return {
+                ...entry,
+                // Copy all other properties of the memory entry
+                llm_response: displayResponse
+                // Override with the truncated response
+              };
+            });
             return `--- Memory Summary ---
-${JSON.stringify(memories, null, 2)}
+${JSON.stringify(truncatedMemories, null, 2)}
 ----------------------`;
           // Future commands can be added here, e.g.:
           // case 'help':

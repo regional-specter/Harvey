@@ -48,11 +48,23 @@ async function handleUserInput(userInput) {
         switch (command) {
             case 'summary':
                 log("Agent core: Command received - /summary");
-                // Retrieve all current memory entries.
-                const memories = getMemoryEntries();
-                // Format the memory entries as a JSON string for display.
-                // The null, 2 arguments prettify the JSON output.
-                return `--- Memory Summary ---\n${JSON.stringify(memories, null, 2)}\n----------------------`;
+                const allMemories = getMemoryEntries(); // Get all memories
+
+                // Map over memories to truncate llm_response for cleaner display
+                const truncatedMemories = allMemories.map(entry => {
+                    const MAX_SUMMARY_LENGTH = 150; // Define maximum length for llm_response in summary
+                    let displayResponse = entry.llm_response;
+                    if (displayResponse.length > MAX_SUMMARY_LENGTH) {
+                        displayResponse = displayResponse.substring(0, MAX_SUMMARY_LENGTH).trim() + "... (truncated)";
+                    }
+                    return {
+                        ...entry, // Copy all other properties of the memory entry
+                        llm_response: displayResponse // Override with the truncated response
+                    };
+                });
+
+                // Stringify the truncated memories for display
+                return `--- Memory Summary ---\n${JSON.stringify(truncatedMemories, null, 2)}\n----------------------`;
             
             // Future commands can be added here, e.g.:
             // case 'help':
