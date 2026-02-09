@@ -39740,29 +39740,87 @@ var require_memory_store = __commonJS({
   }
 });
 
+// ../agent/core/intent-extractor.js
+var require_intent_extractor = __commonJS({
+  "../agent/core/intent-extractor.js"(exports, module) {
+    var { generateResponse } = require_llm_client();
+    async function extractIntentAndEntities(userInput, llmResponse) {
+      const extractionPrompt = `
+        Analyze the following user query and assistant response to determine the thematic scope and key financial entities.
+
+        User Query: "${userInput}"
+        Assistant Response: "${llmResponse}"
+
+        **Instructions:**
+        1.  **Thematic Scope:** Summarize the user's core goal in a few words. Use a consistent, descriptive label.
+            Examples: "company overview", "stock price analysis", "understanding financial metric", "long-term investment thesis", "general chat".
+        2.  **Entities:** Identify key financial entities mentioned. For each entity, specify its type and value.
+            *   Valid entity types are: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR'.
+            *   If no financial entities are present, return an empty array for the "entities" key.
+
+        Return your answer ONLY as a valid JSON object with the keys "thematic_scope" and "entities". Do not include any other text or formatting.
+        
+        Example for a financial query:
+        {
+          "thematic_scope": "understanding P/E ratio",
+          "entities": [
+            { "type": "FINANCIAL_METRIC", "value": "P/E ratio" }
+          ]
+        }
+        
+        Example for a general query:
+        {
+          "thematic_scope": "general chat",
+          "entities": []
+        }
+    `;
+      try {
+        console.log("Intent Extractor: Requesting analysis from LLM...");
+        const jsonResponseString = await generateResponse(extractionPrompt);
+        const cleanedJsonString = jsonResponseString.replace(/```json/g, "").replace(/```/g, "").trim();
+        const extractedData = JSON.parse(cleanedJsonString);
+        if (extractedData && typeof extractedData.thematic_scope === "string" && Array.isArray(extractedData.entities)) {
+          console.log(`Intent Extractor: Successfully extracted scope - "${extractedData.thematic_scope}"`);
+          return extractedData;
+        } else {
+          console.error("Intent Extractor: LLM returned malformed JSON.", extractedData);
+          return { thematic_scope: "general_chat", entities: [] };
+        }
+      } catch (error) {
+        console.error("Error during intent extraction:", error);
+        return { thematic_scope: "general_chat", entities: [] };
+      }
+    }
+    module.exports = {
+      extractIntentAndEntities
+    };
+  }
+});
+
 // ../agent/core/agent-loop.js
 var require_agent_loop = __commonJS({
   "../agent/core/agent-loop.js"(exports, module) {
     var { generateResponse } = require_llm_client();
-    var { appendMemory, saveMemory, getMemoryEntries } = require_memory_store();
-    var { log, error } = require_logger();
+    var { appendMemory, saveMemory } = require_memory_store();
+    var { extractIntentAndEntities } = require_intent_extractor();
     async function runAgentCycle(userInput) {
-      if (!userInput || typeof userInput !== "string" || userInput.trim() === "") {
+      if (!userInput || typeof userInput.trim() !== "string" || userInput.trim() === "") {
         throw new Error("Invalid user input provided for agent cycle. Input cannot be empty.");
       }
       try {
-        log(`Agent loop: Requesting LLM response for: "${userInput}"`);
+        console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
         const llmResponse = await generateResponse(userInput);
-        log(`Agent loop: Received response from LLM.`);
+        console.log(`Agent loop: Received response from LLM.`);
+        const { thematic_scope, entities } = await extractIntentAndEntities(userInput, llmResponse);
         const memoryEntryData = {
           user_input: userInput,
           llm_response: llmResponse,
-          thematic_scope: "general_chat",
-          // Default scope for simple chat interactions
+          thematic_scope,
+          // Use the dynamically extracted scope
           event_type: "chat_turn",
-          // Indicates this interaction was a turn in a chat
-          entities: []
-          // No specific entities extracted in this basic chat turn
+          // This remains 'chat_turn' for now
+          entities
+          // Use the dynamically extracted entities
         };
         const addedEntry = appendMemory(memoryEntryData);
         if (!addedEntry) {
@@ -39770,15 +39828,13 @@ var require_agent_loop = __commonJS({
         }
         await saveMemory();
         return llmResponse;
-      } catch (e2) {
-        error(`Agent Cycle Error: ${e2.message}`);
-        throw e2;
+      } catch (error) {
+        console.error(`Agent Cycle Error: ${error.message}`);
+        throw error;
       }
     }
     module.exports = {
       runAgentCycle
-      // Future enhancements might include functions to retrieve memories here,
-      // but for v0.1, memory retrieval is handled by memory-store.js and accessed by index.js
     };
   }
 });
