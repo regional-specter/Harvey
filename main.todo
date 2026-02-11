@@ -1,8 +1,8 @@
-Phase 1 — Core Foundations :
+Phase 1 (Beta Version) — Core Foundations :
      ☐ Define the CLI entry point and command structure (init research, set goal, fetch data, review memory)
      ☐ Force explicit research intent selection before any data is fetched (long-term, short-term, risk, macro)
-     ☐ Implement a minimal goal parser that normalizes user intent into a fixed schema
-     ☐ Create a lightweight memory store that saves facts with intent tags instead of embeddings
+     ✔ Implement a minimal goal parser that normalizes user intent into a fixed schema @done(26-02-11 17:04)
+     ✔ Create a lightweight memory store that saves facts with intent tags instead of embeddings @done(26-02-11 17:05)
      ☐ Enforce source attribution for every stored item with a direct URL reference
 
 Phase 2 — Data Ingestion Layer :
@@ -13,8 +13,8 @@ Phase 2 — Data Ingestion Layer :
      ☐ Normalize all incoming data into a shared internal format with timestamps and entity labels
 
 Phase 3 — Intent-Based Memory System :
-     ☐ Define intent schemas (goal context, entity scope, event type, data category)
-     ☐ Store research notes strictly under their originating intent bucket
+     ✔ Define intent schemas (goal context, entity scope, event type, data category) @done(26-02-11 17:05)
+     ✔ Store research notes strictly under their originating intent bucket @done(26-02-11 17:05)
      ☐ Block similarity-based retrieval across incompatible intents by default
      ☐ Implement memory stitching so new facts update existing intent threads
      ☐ Add explicit cross-intent access only when the user requests it
