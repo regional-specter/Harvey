@@ -454,5 +454,14 @@
     "thematic_scope": "general chat",
     "event_type": "greeting",
     "entities": []
+  },
+  {
+    "id": 26,
+    "timestamp": "2026-02-11T13:28:54.928Z",
+    "user_input": "Hi again",
+    "llm_response": "Hi again! It's good to see you back. How can I help you today?",
+    "thematic_scope": "general chat",
+    "event_type": "greeting",
+    "entities": []
   }
 ]

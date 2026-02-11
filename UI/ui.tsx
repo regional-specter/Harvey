@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { render, Box, Text, useInput, useApp } from 'ink';
 import Gradient from 'ink-gradient';
+import Spinner from 'ink-spinner';
 import { Marked } from 'marked';
 import { markedTerminal } from 'marked-terminal';
 
@@ -68,6 +69,15 @@ const LogBox = ({ logMessages }) => {
     );
 };
 
+const LoadingSpinner = () => (
+    <Box>
+        <Text color="green">
+            <Spinner type="dots" />
+            {' Processing...'}
+        </Text>
+    </Box>
+);
+
 // InputBox displays the current input value and a cursor.
 const InputBox = ({ value }) => {
     // Basic logic for showing '@' prefix for file suggestions.
@@ -124,6 +134,7 @@ const App = () => {
     const [suggestionBoxVisible, setSuggestionBoxVisible] = useState(false); 
     const [activeIndex, setActiveIndex] = useState(0); 
     const [isAgentReady, setIsAgentReady] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
 
     const inputValueRef = useRef(inputValue);
     inputValueRef.current = inputValue;
@@ -220,6 +231,7 @@ const App = () => {
                     <Text key={`user-${prev.length}`} color="cyan">{`> ${submittedInput}`}</Text>
                 ]);
 
+                setIsLoading(true);
                 (async () => {
                     let agentResponse = '';
                     try {
@@ -227,6 +239,7 @@ const App = () => {
                     } catch (e: any) {
                         agentResponse = `An unexpected error occurred: ${e.message}`;
                     }
+                    setIsLoading(false);
                     const formattedResponse = marked.parse(agentResponse).trim();
                     setMessages((prev) => [
                         ...prev,
@@ -251,7 +264,7 @@ const App = () => {
             <Header />
             <ChatHistory messages={messages} />
             <Box flexGrow={1} />
-            <LogBox logMessages={logMessages} />
+            {isLoading ? <LoadingSpinner /> : <LogBox logMessages={logMessages} />}
             <InputBox value={inputValue} />
             {suggestionBoxVisible && (
                 <FileSuggestions 
