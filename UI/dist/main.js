@@ -97087,7 +97087,7 @@ var require_intent_extractor = __commonJS({
     var { generateResponse } = require_llm_client();
     async function extractIntentAndEntities(userInput, llmResponse) {
       const extractionPrompt = `
-        Analyze the following user query and assistant response to determine the thematic scope and key financial entities.
+        Analyze the following user query and assistant response to determine the thematic scope, key financial entities, and the event type.
 
         User Query: "${userInput}"
         Assistant Response: "${llmResponse}"
@@ -97098,38 +97098,41 @@ var require_intent_extractor = __commonJS({
         2.  **Entities:** Identify key financial entities mentioned. For each entity, specify its type and value.
             *   Valid entity types are: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR'.
             *   If no financial entities are present, return an empty array for the "entities" key.
+        3.  **Event Type:** Classify the user's query into ONE of the following types: 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation'.
 
-        Return your answer ONLY as a valid JSON object with the keys "thematic_scope" and "entities". Do not include any other text or formatting.
+        Return your answer ONLY as a valid JSON object with the keys "thematic_scope", "entities", and "event_type". Do not include any other text or formatting.
         
         Example for a financial query:
         {
           "thematic_scope": "understanding P/E ratio",
           "entities": [
             { "type": "FINANCIAL_METRIC", "value": "P/E ratio" }
-          ]
+          ],
+          "event_type": "financial_query"
         }
         
-        Example for a general query:
+        Example for a greeting:
         {
           "thematic_scope": "general chat",
-          "entities": []
+          "entities": [],
+          "event_type": "greeting"
         }
     `;
       try {
-        console.log("Intent Extractor: Requesting analysis from LLM...");
+        console.log("Intent Extractor: Requesting analysis from LLM for scope, entities, and event type...");
         const jsonResponseString = await generateResponse(extractionPrompt);
         const cleanedJsonString = jsonResponseString.replace(/```json/g, "").replace(/```/g, "").trim();
         const extractedData = JSON.parse(cleanedJsonString);
-        if (extractedData && typeof extractedData.thematic_scope === "string" && Array.isArray(extractedData.entities)) {
-          console.log(`Intent Extractor: Successfully extracted scope - "${extractedData.thematic_scope}"`);
+        if (extractedData && typeof extractedData.thematic_scope === "string" && Array.isArray(extractedData.entities) && typeof extractedData.event_type === "string") {
+          console.log(`Intent Extractor: Successfully extracted scope ("${extractedData.thematic_scope}") and event type ("${extractedData.event_type}").`);
           return extractedData;
         } else {
           console.error("Intent Extractor: LLM returned malformed JSON.", extractedData);
-          return { thematic_scope: "general_chat", entities: [] };
+          return { thematic_scope: "general_chat", entities: [], event_type: "general_conversation" };
         }
       } catch (error) {
         console.error("Error during intent extraction:", error);
-        return { thematic_scope: "general_chat", entities: [] };
+        return { thematic_scope: "general_chat", entities: [], event_type: "general_conversation" };
       }
     }
     module.exports = {
@@ -97152,14 +97155,14 @@ var require_agent_loop = __commonJS({
         console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
         const llmResponse = await generateResponse(userInput);
         console.log(`Agent loop: Received response from LLM.`);
-        const { thematic_scope, entities } = await extractIntentAndEntities(userInput, llmResponse);
+        const { thematic_scope, entities, event_type } = await extractIntentAndEntities(userInput, llmResponse);
         const memoryEntryData = {
           user_input: userInput,
           llm_response: llmResponse,
           thematic_scope,
           // Use the dynamically extracted scope
-          event_type: "chat_turn",
-          // This remains 'chat_turn' for now
+          event_type,
+          // Use the dynamically extracted event type
           entities
           // Use the dynamically extracted entities
         };

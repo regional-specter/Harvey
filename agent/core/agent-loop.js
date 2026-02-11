@@ -25,16 +25,16 @@ async function runAgentCycle(userInput) {
     const llmResponse = await generateResponse(userInput);
     console.log(`Agent loop: Received response from LLM.`);
 
-    // 2. NEW STEP: Extract intent and entities from the conversation.
-    // This adds the "intelligence" to our memory.
-    const { thematic_scope, entities } = await extractIntentAndEntities(userInput, llmResponse);
+    // 2. NEW STEP: Extract intent, entities, and event type from the conversation.
+    // This adds more "intelligence" to our memory.
+    const { thematic_scope, entities, event_type } = await extractIntentAndEntities(userInput, llmResponse);
 
     // 3. Prepare the data for the new memory entry, now with dynamic scope and entities.
     const memoryEntryData = {
       user_input: userInput,
       llm_response: llmResponse,
       thematic_scope: thematic_scope, // Use the dynamically extracted scope
-      event_type: 'chat_turn',         // This remains 'chat_turn' for now
+      event_type: event_type,          // Use the dynamically extracted event type
       entities: entities               // Use the dynamically extracted entities
     };
 
