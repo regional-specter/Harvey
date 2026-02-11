@@ -96965,24 +96965,43 @@ var init_schemas = __esm({
 var require_logger = __commonJS({
   "../agent/core/logger.js"(exports, module) {
     var loggerCallback = null;
+    var originalConsole = {
+      log: console.log,
+      error: console.error,
+      warn: console.warn,
+      info: console.info
+    };
     function setLogger(callback) {
       loggerCallback = callback;
+      if (callback) {
+        console.log = (...args) => {
+          const message = args.map((arg) => typeof arg === "object" ? JSON.stringify(arg) : arg).join(" ");
+          callback(message);
+        };
+        console.error = (...args) => {
+          const message = `\u274C ${args.map((arg) => typeof arg === "object" ? JSON.stringify(arg, null, 2) : arg).join(" ")}`;
+          callback(message);
+        };
+        console.warn = (...args) => {
+          const message = `\u26A0\uFE0F ${args.map((arg) => typeof arg === "object" ? JSON.stringify(arg) : arg).join(" ")}`;
+          callback(message);
+        };
+        console.info = (...args) => {
+          const message = `\u2139\uFE0F ${args.map((arg) => typeof arg === "object" ? JSON.stringify(arg) : arg).join(" ")}`;
+          callback(message);
+        };
+      } else {
+        console.log = originalConsole.log;
+        console.error = originalConsole.error;
+        console.warn = originalConsole.warn;
+        console.info = originalConsole.info;
+      }
     }
     function log(...args) {
-      const message = args.map((arg) => typeof arg === "object" ? JSON.stringify(arg) : arg).join(" ");
-      if (loggerCallback) {
-        loggerCallback(message);
-      } else {
-        console.log(...args);
-      }
+      console.log(...args);
     }
     function error(...args) {
-      const message = `\u274C ${args.map((arg) => typeof arg === "object" ? JSON.stringify(arg, null, 2) : arg).join(" ")}`;
-      if (loggerCallback) {
-        loggerCallback(message);
-      } else {
-        console.error(...args);
-      }
+      console.error(...args);
     }
     module.exports = {
       setLogger,
@@ -97203,6 +97222,7 @@ var require_agent = __commonJS({
       }
     }
     async function handleUserInput2(userInput) {
+      console.log("A raw console.log message from the agent to test the new logger.");
       const trimmedInput = userInput.trim();
       if (trimmedInput.startsWith("/")) {
         const command = trimmedInput.substring(1);

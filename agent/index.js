@@ -36,6 +36,7 @@ async function initializeAgent() {
  * This could be an LLM response, command output, or an error message.
  */
 async function handleUserInput(userInput) {
+    console.log("A raw console.log message from the agent to test the new logger.");
     // Trim leading/trailing whitespace from the input for cleaner processing.
     const trimmedInput = userInput.trim();
 
