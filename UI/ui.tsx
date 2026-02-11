@@ -2,11 +2,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { render, Box, Text, useInput, useApp } from 'ink';
 import Gradient from 'ink-gradient';
+import { Marked } from 'marked';
+import { markedTerminal } from 'marked-terminal';
 
 import fs from 'fs'; // For file system operations (suggestions)
 
 // Import agent core logic. Assumes agent/ directory is a sibling to UI/
 import { initializeAgent, handleUserInput, setAgentLogger } from '../agent/index.js'; 
+
+const marked = new Marked(new markedTerminal());
 
 // --- ASCII Art Header ---
 const HEADER_ASCII = `
@@ -222,9 +226,13 @@ const App = () => {
                     } catch (e: any) {
                         agentResponse = `An unexpected error occurred: ${e.message}`;
                     }
+                    const formattedResponse = marked.parse(agentResponse).trim();
                     setMessages((prev) => [
                         ...prev,
-                        <Text key={`agent-${prev.length}`} color="green">{`Agent: ${agentResponse}`}</Text>
+                        <Box key={`agent-${prev.length}`} flexDirection="column">
+                            <Text color="green">Agent:</Text>
+                            <Text>{formattedResponse}</Text>
+                        </Box>
                     ]);
                 })();
             } else if (key.backspace || key.delete) {
