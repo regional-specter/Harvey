@@ -26,7 +26,7 @@ const HEADER_ASCII = `
 
 const Header = () => (
     <Box flexDirection="column" alignItems="center" paddingBottom={1}>
-        <Gradient name="passion">
+        <Gradient colors={['#1A1A1B', '#A39382']} multiline>
             <Text bold>
                 {HEADER_ASCII}
             </Text>
