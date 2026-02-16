@@ -98579,7 +98579,7 @@ __export(schemas_exports, {
 });
 function isValidMemoryEntry(entry) {
   if (!entry) return false;
-  if (typeof entry.id !== "number" || typeof entry.timestamp !== "string" || typeof entry.user_input !== "string" || typeof entry.llm_response !== "string" || typeof entry.thematic_scope !== "string" || typeof entry.event_type !== "string" || !Array.isArray(entry.entities)) {
+  if (typeof entry.id !== "number" || typeof entry.timestamp !== "string" || typeof entry.user_input !== "string" || typeof entry.llm_response !== "string" || typeof entry.thematic_scope !== "string" || typeof entry.event_type !== "string" || !Array.isArray(entry.entities) || entry.context !== void 0 && typeof entry.context !== "object") {
     console.error("Invalid memory entry structure:", entry);
     return false;
   }
@@ -98710,8 +98710,10 @@ var require_memory_store = __commonJS({
         // Default thematic scope
         event_type: entryData.event_type || "chat_turn",
         // Default event type for chat turns
-        entities: entryData.entities || []
+        entities: entryData.entities || [],
         // Default to an empty array for entities
+        context: entryData.context || {}
+        // Add context, defaulting to an empty object
         // Any other fields from ChatMemorySchemaV1 can be added here if entryData provides them
       };
       if (!isValidMemoryEntry2(entry)) {
@@ -98762,7 +98764,7 @@ var require_intent_extractor = __commonJS({
         2.  **Entities:** Identify key financial entities mentioned. For each entity, specify its type and value.
             *   Valid entity types are: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR'.
             *   If no financial entities are present, return an empty array for the "entities" key.
-        3.  **Event Type:** Classify the user's query into ONE of the following types: 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation'.
+        3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation'.
 
         Return your answer ONLY as a valid JSON object with the keys "thematic_scope", "entities", and "event_type". Do not include any other text or formatting.
         
@@ -98805,21 +98807,68 @@ var require_intent_extractor = __commonJS({
   }
 });
 
+// ../agent/data_sources/finance_api.js
+var require_finance_api = __commonJS({
+  "../agent/data_sources/finance_api.js"(exports, module) {
+    async function fetchStockPrice(ticker) {
+      console.log(`[finance_api] Fetching stock price for ${ticker}... (using placeholder data)`);
+      const dummyPrices = {
+        "AAPL": 195.34,
+        "MSFT": 410.5,
+        "GOOGL": 175.8,
+        "TSLA": 180.01,
+        "F": 12.5,
+        "NVDA": 950
+      };
+      const upperCaseTicker = ticker.toUpperCase();
+      if (dummyPrices[upperCaseTicker]) {
+        return dummyPrices[upperCaseTicker];
+      } else {
+        const randomPrice = (Math.random() * 500 + 50).toFixed(2);
+        return parseFloat(randomPrice);
+      }
+    }
+    module.exports = {
+      fetchStockPrice
+    };
+  }
+});
+
 // ../agent/core/agent-loop.js
 var require_agent_loop = __commonJS({
   "../agent/core/agent-loop.js"(exports, module) {
     var { generateResponse } = require_llm_client();
     var { appendMemory, saveMemory } = require_memory_store();
     var { extractIntentAndEntities } = require_intent_extractor();
+    var { fetchStockPrice } = require_finance_api();
     async function runAgentCycle(userInput) {
       if (!userInput || typeof userInput.trim() !== "string" || userInput.trim() === "") {
         throw new Error("Invalid user input provided for agent cycle. Input cannot be empty.");
       }
       try {
-        console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
-        const llmResponse = await generateResponse(userInput);
+        const { thematic_scope, entities, event_type } = await extractIntentAndEntities(userInput, "");
+        let llmResponse;
+        let context = {};
+        if (event_type === "data_request" && entities.some((e2) => e2.type === "STOCK_TICKER")) {
+          console.log("Agent loop: Detected a data request. Attempting to use tools...");
+          const tickerEntity = entities.find((e2) => e2.type === "STOCK_TICKER");
+          if (tickerEntity) {
+            const price = await fetchStockPrice(tickerEntity.value);
+            if (price !== null) {
+              context.price = price;
+              const enhancedPrompt = `The user asked: "${userInput}". Using the following data that I found: The price of ${tickerEntity.value} is $${price}. Please formulate a natural language response.`;
+              llmResponse = await generateResponse(enhancedPrompt);
+            } else {
+              llmResponse = await generateResponse(userInput);
+            }
+          } else {
+            llmResponse = await generateResponse(userInput);
+          }
+        } else {
+          console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
+          llmResponse = await generateResponse(userInput);
+        }
         console.log(`Agent loop: Received response from LLM.`);
-        const { thematic_scope, entities, event_type } = await extractIntentAndEntities(userInput, llmResponse);
         const memoryEntryData = {
           user_input: userInput,
           llm_response: llmResponse,
@@ -98827,8 +98876,10 @@ var require_agent_loop = __commonJS({
           // Use the dynamically extracted scope
           event_type,
           // Use the dynamically extracted event type
-          entities
+          entities,
           // Use the dynamically extracted entities
+          context
+          // Store the fetched data in memory
         };
         const addedEntry = appendMemory(memoryEntryData);
         if (!addedEntry) {

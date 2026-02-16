@@ -70,6 +70,7 @@ function appendMemory(entryData) {
     thematic_scope: entryData.thematic_scope || 'general_chat', // Default thematic scope
     event_type: entryData.event_type || 'chat_turn', // Default event type for chat turns
     entities: entryData.entities || [], // Default to an empty array for entities
+    context: entryData.context || {},    // Add context, defaulting to an empty object
     // Any other fields from ChatMemorySchemaV1 can be added here if entryData provides them
   };
 

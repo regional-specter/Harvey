@@ -38,7 +38,8 @@ export function isValidMemoryEntry(entry) {
       typeof entry.llm_response !== 'string' ||
       typeof entry.thematic_scope !== 'string' ||
       typeof entry.event_type !== 'string' ||
-      !Array.isArray(entry.entities)) {
+      !Array.isArray(entry.entities) ||
+      (entry.context !== undefined && typeof entry.context !== 'object')) {
     console.error('Invalid memory entry structure:', entry);
     return false;
   }

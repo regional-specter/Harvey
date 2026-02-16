@@ -25,7 +25,7 @@ async function extractIntentAndEntities(userInput, llmResponse) {
         2.  **Entities:** Identify key financial entities mentioned. For each entity, specify its type and value.
             *   Valid entity types are: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR'.
             *   If no financial entities are present, return an empty array for the "entities" key.
-        3.  **Event Type:** Classify the user's query into ONE of the following types: 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation'.
+        3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation'.
 
         Return your answer ONLY as a valid JSON object with the keys "thematic_scope", "entities", and "event_type". Do not include any other text or formatting.
         

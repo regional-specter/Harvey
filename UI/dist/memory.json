@@ -463,5 +463,85 @@
     "thematic_scope": "general chat",
     "event_type": "greeting",
     "entities": []
+  },
+  {
+    "id": 27,
+    "timestamp": "2026-02-14T11:18:55.568Z",
+    "user_input": "whats the price of AAPL ?",
+    "llm_response": "As of **July 16, 2024**, Apple Inc. (**AAPL**) is trading at approximately **$234.82**.\n\nThe stock has been trending upward today, currently up about **1.8%**.\n\n**Please Note:** Stock prices change every few seconds during market hours (9:30 AM – 4:00 PM ET). For the most accurate, real-time price, you can check these live sources:\n\n*   [Google Finance - AAPL](https://www.google.com/finance/quote/AAPL:NASDAQ)\n*   [Yahoo Finance - AAPL](https://finance.yahoo.com/quote/AAPL)\n*   [CNBC - Apple Quote](https://www.cnbc.com/quotes/AAPL)",
+    "thematic_scope": "stock price analysis",
+    "event_type": "financial_query",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "AAPL"
+      },
+      {
+        "type": "COMPANY_NAME",
+        "value": "Apple Inc."
+      },
+      {
+        "type": "FINANCIAL_METRIC",
+        "value": "price"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "timestamp": "2026-02-14T11:21:07.758Z",
+    "user_input": "What is the price of AAPL ?",
+    "llm_response": "As of the market close on **Friday, June 14, 2024**, the price of Apple Inc. (AAPL) was:\n\n**$212.49 USD**\n\n### Summary:\n*   **Change:** -$1.77 (-0.82%)\n*   **Day's Range:** $211.30 – $215.17\n*   **Market Status:** Closed (The stock market is closed on weekends. Prices will update when the market reopens on Monday morning).\n\nApple’s stock recently hit all-time highs this week following its \"Apple Intelligence\" announcements at WWDC. \n\n*Note: Stock prices change constantly during trading hours. For a real-time quote, you can check financial sites like Google Finance, Yahoo Finance, or Bloomberg.*",
+    "thematic_scope": "stock price analysis",
+    "event_type": "financial_query",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "AAPL"
+      },
+      {
+        "type": "COMPANY_NAME",
+        "value": "Apple Inc."
+      },
+      {
+        "type": "FINANCIAL_METRIC",
+        "value": "stock price"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "timestamp": "2026-02-16T09:58:09.889Z",
+    "user_input": "Whats the price of AAPL?",
+    "llm_response": "As of **May 22, 2024, at 11:45 AM EDT**, Apple Inc. (AAPL) is trading at approximately **$191.04**, down about 0.68% for the day.\n\nPlease note that stock prices change every few seconds during market hours. You can find the most up-to-the-minute price by checking [Google Finance](https://www.google.com/finance/quote/AAPL:NASDAQ), [Yahoo Finance](https://finance.yahoo.com/quote/AAPL), or your preferred brokerage app.",
+    "thematic_scope": "current stock price",
+    "event_type": "financial_query",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "AAPL"
+      }
+    ],
+    "context": {}
+  },
+  {
+    "id": 30,
+    "timestamp": "2026-02-16T10:00:43.508Z",
+    "user_input": "What is the price of AAPL?",
+    "llm_response": "The current price of Apple (AAPL) is $195.34.",
+    "thematic_scope": "stock price analysis",
+    "event_type": "data_request",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "AAPL"
+      },
+      {
+        "type": "FINANCIAL_METRIC",
+        "value": "price"
+      }
+    ],
+    "context": {
+      "price": 195.34
+    }
   }
 ]

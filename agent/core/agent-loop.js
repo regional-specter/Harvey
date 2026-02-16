@@ -5,6 +5,7 @@ const { generateResponse } = require('./llm-client');
 const { appendMemory, saveMemory } = require('../memory/memory-store'); 
 // Import our new intent extractor function.
 const { extractIntentAndEntities } = require('./intent-extractor');
+const { fetchStockPrice } = require('../data_sources/finance_api');
 
 /**
  * Executes a single cycle of the agent's operation. This now includes intent extraction.
@@ -20,14 +21,38 @@ async function runAgentCycle(userInput) {
   }
 
   try {
-    // 1. Generate the main response from the LLM to show to the user.
-    console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
-    const llmResponse = await generateResponse(userInput);
-    console.log(`Agent loop: Received response from LLM.`);
+    // First, extract intent from the user's initial query to see if it's a data request
+    const { thematic_scope, entities, event_type } = await extractIntentAndEntities(userInput, ""); // Pass empty response for initial check
 
-    // 2. NEW STEP: Extract intent, entities, and event type from the conversation.
-    // This adds more "intelligence" to our memory.
-    const { thematic_scope, entities, event_type } = await extractIntentAndEntities(userInput, llmResponse);
+    let llmResponse;
+    let context = {}; // To hold any fetched data
+
+    // 2. NEW STEP: Check if the request is for data that we can fetch with a tool.
+    if (event_type === 'data_request' && entities.some(e => e.type === 'STOCK_TICKER')) {
+      console.log('Agent loop: Detected a data request. Attempting to use tools...');
+      const tickerEntity = entities.find(e => e.type === 'STOCK_TICKER');
+      if (tickerEntity) {
+        // Use the new finance_api tool
+        const price = await fetchStockPrice(tickerEntity.value);
+        if (price !== null) {
+          context.price = price;
+          // Create an enhanced prompt for the LLM that includes the fetched data
+          const enhancedPrompt = `The user asked: "${userInput}". Using the following data that I found: The price of ${tickerEntity.value} is $${price}. Please formulate a natural language response.`;
+          llmResponse = await generateResponse(enhancedPrompt);
+        } else {
+          // If fetching fails, fall back to the normal response generation
+          llmResponse = await generateResponse(userInput);
+        }
+      } else {
+        llmResponse = await generateResponse(userInput);
+      }
+    } else {
+      // 1. If not a data request, generate the main response from the LLM directly.
+      console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
+      llmResponse = await generateResponse(userInput);
+    }
+    
+    console.log(`Agent loop: Received response from LLM.`);
 
     // 3. Prepare the data for the new memory entry, now with dynamic scope and entities.
     const memoryEntryData = {
@@ -35,7 +60,8 @@ async function runAgentCycle(userInput) {
       llm_response: llmResponse,
       thematic_scope: thematic_scope, // Use the dynamically extracted scope
       event_type: event_type,          // Use the dynamically extracted event type
-      entities: entities               // Use the dynamically extracted entities
+      entities: entities,              // Use the dynamically extracted entities
+      context: context                 // Store the fetched data in memory
     };
 
     // 4. Append the new, richer memory entry to the in-memory store.
