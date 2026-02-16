@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": 1,
+    "timestamp": "2026-02-16T10:14:57.084Z",
+    "user_input": "What is the current price of NVDA ?",
+    "llm_response": "The current price of NVIDIA (NVDA) is $182.81.",
+    "thematic_scope": "stock price analysis",
+    "event_type": "data_request",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "NVDA"
+      },
+      {
+        "type": "FINANCIAL_METRIC",
+        "value": "current price"
+      }
+    ],
+    "context": {
+      "price": 182.81
+    }
+  }
+]

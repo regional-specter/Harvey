@@ -98823,22 +98823,34 @@ var require_intent_extractor = __commonJS({
 // ../agent/data_sources/finance_api.js
 var require_finance_api = __commonJS({
   "../agent/data_sources/finance_api.js"(exports, module) {
+    var API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
     async function fetchStockPrice(ticker) {
-      console.log(`[finance_api] Fetching stock price for ${ticker}... (using placeholder data)`);
-      const dummyPrices = {
-        "AAPL": 195.34,
-        "MSFT": 410.5,
-        "GOOGL": 175.8,
-        "TSLA": 180.01,
-        "F": 12.5,
-        "NVDA": 950
-      };
-      const upperCaseTicker = ticker.toUpperCase();
-      if (dummyPrices[upperCaseTicker]) {
-        return dummyPrices[upperCaseTicker];
-      } else {
-        const randomPrice = (Math.random() * 500 + 50).toFixed(2);
-        return parseFloat(randomPrice);
+      if (!API_KEY) {
+        console.error("[finance_api] ERROR: ALPHA_VANTAGE_API_KEY is not set in the .env file.");
+        return null;
+      }
+      console.log(`[finance_api] Fetching LIVE stock price for ${ticker} from Alpha Vantage...`);
+      const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${API_KEY}`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data["Global Quote"] && data["Global Quote"]["05. price"]) {
+          const price = parseFloat(data["Global Quote"]["05. price"]);
+          console.log(`[finance_api] Successfully fetched price for ${ticker}: ${price}`);
+          return price;
+        } else if (data["Note"]) {
+          console.warn(`[finance_api] Alpha Vantage API Note: ${data["Note"]}`);
+          return null;
+        } else {
+          console.warn(`[finance_api] Could not find price for ${ticker} in API response.`, data);
+          return null;
+        }
+      } catch (error) {
+        console.error(`[finance_api] Error fetching stock price for ${ticker}:`, error.message);
+        return null;
       }
     }
     module.exports = {
