@@ -115,10 +115,31 @@ function getMemoryEntries() {
   return [...memoryEntries]; // Return a shallow copy to prevent external modification
 }
 
+/**
+ * Clears all memory entries from the in-memory store and the JSON file.
+ * @returns {Promise<void>}
+ */
+async function clearMemory() {
+  try {
+    // Reset the in-memory state
+    memoryEntries = [];
+    nextId = 1;
+    
+    // Overwrite the persistent file with an empty array
+    fs.writeFileSync(MEMORY_FILE_PATH, JSON.stringify([], null, 2), 'utf-8');
+    console.log(`Memory file has been cleared: ${MEMORY_FILE_PATH}`);
+  } catch (error) {
+    console.error(`❌ Error clearing memory file ${MEMORY_FILE_PATH}:`, error.message);
+    // Re-throw the error to be handled by the caller
+    throw error;
+  }
+}
+
 // Export the public functions for use by other modules.
 module.exports = {
   loadMemory,
   appendMemory,
   saveMemory,
   getMemoryEntries, // Expose getter for accessing memory data
+  clearMemory,      // Expose the new clear memory function
 };

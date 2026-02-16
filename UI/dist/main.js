@@ -98737,12 +98737,25 @@ var require_memory_store = __commonJS({
     function getMemoryEntries() {
       return [...memoryEntries];
     }
+    async function clearMemory() {
+      try {
+        memoryEntries = [];
+        nextId = 1;
+        fs3.writeFileSync(MEMORY_FILE_PATH, JSON.stringify([], null, 2), "utf-8");
+        console.log(`Memory file has been cleared: ${MEMORY_FILE_PATH}`);
+      } catch (error2) {
+        console.error(`\u274C Error clearing memory file ${MEMORY_FILE_PATH}:`, error2.message);
+        throw error2;
+      }
+    }
     module.exports = {
       loadMemory,
       appendMemory,
       saveMemory,
-      getMemoryEntries
+      getMemoryEntries,
       // Expose getter for accessing memory data
+      clearMemory
+      // Expose the new clear memory function
     };
   }
 });
@@ -98902,7 +98915,7 @@ var require_agent_loop = __commonJS({
 var require_agent = __commonJS({
   "../agent/index.js"(exports, module) {
     var { runAgentCycle } = require_agent_loop();
-    var { loadMemory, saveMemory, getMemoryEntries } = require_memory_store();
+    var { loadMemory, saveMemory, getMemoryEntries, clearMemory } = require_memory_store();
     var { setLogger, log, error } = require_logger();
     function setAgentLogger2(loggerFunc) {
       setLogger(loggerFunc);
@@ -98941,6 +98954,10 @@ var require_agent = __commonJS({
             return `--- Memory Summary ---
 ${JSON.stringify(truncatedMemories, null, 2)}
 ----------------------`;
+          case "clear-mem":
+            log("Agent core: Command received - /clear-mem");
+            await clearMemory();
+            return "Memory has been cleared.";
           // Future commands can be added here, e.g.:
           // case 'help':
           //     return "Available commands: /summary, /help";

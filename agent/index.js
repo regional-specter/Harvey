@@ -1,5 +1,5 @@
 const { runAgentCycle } = require('./core/agent-loop');
-const { loadMemory, saveMemory, getMemoryEntries } = require('./memory/memory-store');
+const { loadMemory, saveMemory, getMemoryEntries, clearMemory } = require('./memory/memory-store');
 const { setLogger, log, error } = require('./core/logger');
 
 // --- Initialization ---
@@ -66,6 +66,11 @@ async function handleUserInput(userInput) {
                 // Stringify the truncated memories for display
                 return `--- Memory Summary ---\n${JSON.stringify(truncatedMemories, null, 2)}\n----------------------`;
             
+            case 'clear-mem':
+                log("Agent core: Command received - /clear-mem");
+                await clearMemory();
+                return "Memory has been cleared.";
+
             // Future commands can be added here, e.g.:
             // case 'help':
             //     return "Available commands: /summary, /help";
