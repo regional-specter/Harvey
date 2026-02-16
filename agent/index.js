@@ -2,8 +2,6 @@ const { runAgentCycle } = require('./core/agent-loop');
 const { loadMemory, saveMemory, getMemoryEntries, clearMemory } = require('./memory/memory-store');
 const { setLogger, log, error } = require('./core/logger');
 
-// --- Initialization ---
-
 /**
  * Sets the logger for the entire agent.
  * This is the entry point for the UI to inject its logging mechanism.

@@ -6,7 +6,7 @@ Phase 1 (Beta Version) — Core Foundations :
      ☐ Enforce source attribution for every stored item with a direct URL reference
 
 Phase 2 — Data Ingestion Layer :
-     ☐ Integrate stock price and fundamentals ingestion from Yahoo Finance
+     ✔ Integrate stock price and fundamentals ingestion from Alpha Vantage @done(26-02-16 14:39)
      ☐ Add macroeconomic time-series data ingestion using FRED
      ☐ Pull structured market indicators and historical data from Alpha Vantage
      ☐ Fetch and parse SEC filings (10-K, 10-Q, 8-K) via EDGAR

@@ -19,5 +19,22 @@
     "context": {
       "price": 182.81
     }
+  },
+  {
+    "id": 2,
+    "timestamp": "2026-02-16T10:35:52.953Z",
+    "user_input": "get me the current price of TSLA",
+    "llm_response": "The current price of Tesla (TSLA) is **$417.44**.",
+    "thematic_scope": "stock price analysis",
+    "event_type": "data_request",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "TSLA"
+      }
+    ],
+    "context": {
+      "price": 417.44
+    }
   }
 ]

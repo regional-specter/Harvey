@@ -1,6 +1,3 @@
-// agent/core/intent-extractor.js
-
-// Import the LLM client to make the internal call for extraction.
 const { generateResponse } = require('./llm-client'); 
 
 /**
@@ -25,7 +22,16 @@ async function extractIntentAndEntities(userInput, llmResponse) {
         2.  **Entities:** Identify key financial entities mentioned. For each entity, specify its type and value.
             *   Valid entity types are: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR'.
             *   If no financial entities are present, return an empty array for the "entities" key.
-        3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation'.
+        3.  **Event Type:** Classify the user's query into ONE of the following types:
+            *   "data_request": Use this when the user is asking for a specific, real-time piece of data that can be looked up, like a stock price.
+                - Example queries: "What is the price of AAPL?", "how much is MSFT stock trading for?", "get me the current price of nvidia", "what is tesla's stock price today?".
+            *   "financial_query": Use this for broader questions about financial concepts or analysis that require explanation, not just a single data point.
+                - Example queries: "explain what a P/E ratio is", "compare the business models of Ford and GM".
+            *   "factual_question": For non-financial, factual questions (e.g., "What is the capital of France?").
+            *   "creative_request": For requests that require creative writing.
+            *   "user_feedback": When the user is providing feedback (e.g., "thanks", "that's helpful").
+            *   "greeting": For simple greetings.
+            *   "general_conversation": For any other conversational chat that doesn't fit the categories above.
 
         Return your answer ONLY as a valid JSON object with the keys "thematic_scope", "entities", and "event_type". Do not include any other text or formatting.
         

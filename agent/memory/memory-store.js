@@ -1,7 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-// Import the schema and validator defined previously.
-// Assuming schemas.js is in the same directory, hence './schemas'.
 const { ChatMemorySchemaV1, isValidMemoryEntry } = require('./schemas');
 const { log, error } = require('../core/logger');
 

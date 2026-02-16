@@ -1,7 +1,3 @@
-// agent/data_sources/finance_api.js
-
-// This module is responsible for fetching live data from external financial APIs.
-// The Alpha Vantage API key is expected to be loaded into process.env from the root .env file.
 const API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
 
 /**
