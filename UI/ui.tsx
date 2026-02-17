@@ -264,7 +264,8 @@ const App = () => {
             <Header />
             <ChatHistory messages={messages} />
             <Box flexGrow={1} />
-            {isLoading ? <LoadingSpinner /> : <LogBox logMessages={logMessages} />}
+            <LogBox logMessages={logMessages} />
+            {isLoading && <LoadingSpinner />}
             <InputBox value={inputValue} />
             {suggestionBoxVisible && (
                 <FileSuggestions 

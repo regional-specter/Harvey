@@ -101617,7 +101617,7 @@ var App = () => {
       }
     }
   });
-  return /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", width: "100%", height: "100%" }, /* @__PURE__ */ React2.createElement(Header, null), /* @__PURE__ */ React2.createElement(ChatHistory, { messages }), /* @__PURE__ */ React2.createElement(Box, { flexGrow: 1 }), isLoading ? /* @__PURE__ */ React2.createElement(LoadingSpinner, null) : /* @__PURE__ */ React2.createElement(LogBox, { logMessages }), /* @__PURE__ */ React2.createElement(InputBox, { value: inputValue }), suggestionBoxVisible && /* @__PURE__ */ React2.createElement(
+  return /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", width: "100%", height: "100%" }, /* @__PURE__ */ React2.createElement(Header, null), /* @__PURE__ */ React2.createElement(ChatHistory, { messages }), /* @__PURE__ */ React2.createElement(Box, { flexGrow: 1 }), /* @__PURE__ */ React2.createElement(LogBox, { logMessages }), isLoading && /* @__PURE__ */ React2.createElement(LoadingSpinner, null), /* @__PURE__ */ React2.createElement(InputBox, { value: inputValue }), suggestionBoxVisible && /* @__PURE__ */ React2.createElement(
     FileSuggestions,
     {
       suggestions,
