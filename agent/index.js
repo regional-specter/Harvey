@@ -40,45 +40,62 @@ async function handleUserInput(userInput) {
     // --- Command Handling ---
     // Check if the input starts with a '/' which indicates a command.
     if (trimmedInput.startsWith('/')) {
-        // Extract the command name by removing the leading '/'.
-        const command = trimmedInput.substring(1); 
+        // Correctly parse the base command (e.g., "summary" from "/summary --intent ...")
+        const commandParts = trimmedInput.split(' ');
+        const baseCommand = commandParts[0].substring(1);
 
-        switch (command) {
+        switch (baseCommand) { // Now 'baseCommand' is correctly defined
             case 'summary':
                 log("Agent core: Command received - /summary");
                 const allMemories = getMemoryEntries(); // Get all memories
+                let filteredMemories = allMemories; // Start with all memories, then filter
 
-                // Map over memories to truncate llm_response for cleaner display
-                const truncatedMemories = allMemories.map(entry => {
-                    const MAX_SUMMARY_LENGTH = 150; // Define maximum length for llm_response in summary
+                // --- Argument Parsing for Filters ---
+                // Using regex for more robust parsing of quoted strings
+                const filterIntentMatch = userInput.match(/--intent\s+"([^"]+)"/);
+                const filterEntityMatch = userInput.match(/--entity\s+"([^"]+)"/);
+
+                if (filterIntentMatch) {
+                    const intentValue = filterIntentMatch[1];
+                    log(`Agent core: Filtering summary by intent: "${intentValue}"`);
+                    filteredMemories = filteredMemories.filter(entry => 
+                        entry.thematic_scope.toLowerCase().includes(intentValue.toLowerCase())
+                    );
+                } else if (filterEntityMatch) { // prioritize intent if both are present
+                    const entityValue = filterEntityMatch[1];
+                    log(`Agent core: Filtering summary by entity: "${entityValue}"`);
+                    filteredMemories = filteredMemories.filter(entry => 
+                        entry.entities.some(entity => 
+                            entity.value.toLowerCase().includes(entityValue.toLowerCase())
+                        )
+                    );
+                }
+                // --- End Argument Parsing ---
+
+                // Map over (potentially filtered) memories to truncate llm_response for cleaner display
+                const truncatedMemories = filteredMemories.map(entry => { 
+                    const MAX_SUMMARY_LENGTH = 150; 
                     let displayResponse = entry.llm_response;
                     if (displayResponse.length > MAX_SUMMARY_LENGTH) {
                         displayResponse = displayResponse.substring(0, MAX_SUMMARY_LENGTH).trim() + "... (truncated)";
                     }
                     return {
-                        ...entry, // Copy all other properties of the memory entry
-                        llm_response: displayResponse // Override with the truncated response
+                        ...entry, 
+                        llm_response: displayResponse 
                     };
                 });
 
                 // Stringify the truncated memories for display
-                return `--- Memory Summary ---\n${JSON.stringify(truncatedMemories, null, 2)}\n----------------------`;
+                return `--- Memory Summary (${filteredMemories.length} entries) ---\n${JSON.stringify(truncatedMemories, null, 2)}\n----------------------`;
             
             case 'clear-mem':
                 log("Agent core: Command received - /clear-mem");
                 await clearMemory();
                 return "Memory has been cleared.";
 
-            // Future commands can be added here, e.g.:
-            // case 'help':
-            //     return "Available commands: /summary, /help";
-            // case 'clear_memory':
-            //     // logic to clear memory, then save
-            //     return "Memory cleared.";
-
             default:
                 // If the command is not recognized, inform the user.
-                return `Unknown command: /${command}. Type '/help' (not yet implemented) for available commands.`;
+                return `Unknown command: /${baseCommand}. Type '/help' (not yet implemented) for available commands.`;
         }
     } else {
         // --- Chat Input Handling ---

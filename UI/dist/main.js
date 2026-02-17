@@ -98954,12 +98954,32 @@ var require_agent = __commonJS({
     async function handleUserInput2(userInput) {
       const trimmedInput = userInput.trim();
       if (trimmedInput.startsWith("/")) {
-        const command = trimmedInput.substring(1);
-        switch (command) {
+        const commandParts = trimmedInput.split(" ");
+        const baseCommand = commandParts[0].substring(1);
+        switch (baseCommand) {
+          // Now 'baseCommand' is correctly defined
           case "summary":
             log("Agent core: Command received - /summary");
             const allMemories = getMemoryEntries();
-            const truncatedMemories = allMemories.map((entry) => {
+            let filteredMemories = allMemories;
+            const filterIntentMatch = userInput.match(/--intent\s+"([^"]+)"/);
+            const filterEntityMatch = userInput.match(/--entity\s+"([^"]+)"/);
+            if (filterIntentMatch) {
+              const intentValue = filterIntentMatch[1];
+              log(`Agent core: Filtering summary by intent: "${intentValue}"`);
+              filteredMemories = filteredMemories.filter(
+                (entry) => entry.thematic_scope.toLowerCase().includes(intentValue.toLowerCase())
+              );
+            } else if (filterEntityMatch) {
+              const entityValue = filterEntityMatch[1];
+              log(`Agent core: Filtering summary by entity: "${entityValue}"`);
+              filteredMemories = filteredMemories.filter(
+                (entry) => entry.entities.some(
+                  (entity) => entity.value.toLowerCase().includes(entityValue.toLowerCase())
+                )
+              );
+            }
+            const truncatedMemories = filteredMemories.map((entry) => {
               const MAX_SUMMARY_LENGTH = 150;
               let displayResponse = entry.llm_response;
               if (displayResponse.length > MAX_SUMMARY_LENGTH) {
@@ -98967,26 +98987,18 @@ var require_agent = __commonJS({
               }
               return {
                 ...entry,
-                // Copy all other properties of the memory entry
                 llm_response: displayResponse
-                // Override with the truncated response
               };
             });
-            return `--- Memory Summary ---
+            return `--- Memory Summary (${filteredMemories.length} entries) ---
 ${JSON.stringify(truncatedMemories, null, 2)}
 ----------------------`;
           case "clear-mem":
             log("Agent core: Command received - /clear-mem");
             await clearMemory();
             return "Memory has been cleared.";
-          // Future commands can be added here, e.g.:
-          // case 'help':
-          //     return "Available commands: /summary, /help";
-          // case 'clear_memory':
-          //     // logic to clear memory, then save
-          //     return "Memory cleared.";
           default:
-            return `Unknown command: /${command}. Type '/help' (not yet implemented) for available commands.`;
+            return `Unknown command: /${baseCommand}. Type '/help' (not yet implemented) for available commands.`;
         }
       } else {
         try {
