@@ -1,5 +1,5 @@
 Phase 1 (Beta Version) — Core Foundations :
-     ☐ Define the CLI entry point and command structure (init research, set goal, fetch data, review memory)
+     ✔ Define the CLI entry point and command structure (init research, set goal, fetch data, review memory) @done(26-02-17 18:02)
      ☐ Force explicit research intent selection before any data is fetched (long-term, short-term, risk, macro)
      ✔ Implement a minimal goal parser that normalizes user intent into a fixed schema @done(26-02-11 17:04)
      ✔ Create a lightweight memory store that saves facts with intent tags instead of embeddings @done(26-02-11 17:05)
@@ -34,10 +34,10 @@ Phase 5 — Change Tracking and Drift Detection :
      ☐ Allow users to review “what changed and why” for any entity
 
 Phase 6 — CLI Research Experience :
-     ☐ Add commands to inspect memory by intent, entity, and time
-     ☐ Enable exporting research summaries to markdown or plain text
+     ✔ Add commands to inspect memory by intent, entity, and time @done(26-02-17 17:59)
+     ✔ Enable exporting research summaries to markdown or plain text @done(26-02-17 17:59)
      ☐ Warn users when they attempt to mix incompatible research intents
-     ☐ Add a research reset that preserves raw data but clears reasoning
+     ✔ Add a research reset that preserves raw data but clears reasoning @done(26-02-17 18:02)
      ☐ Keep the interaction calm, structured, and repeatable
 
 Phase 7 — Evaluation and Benchmarking:
