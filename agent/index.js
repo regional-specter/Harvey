@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const { runAgentCycle } = require('./core/agent-loop');
 const { loadMemory, saveMemory, getMemoryEntries, clearMemory } = require('./memory/memory-store');
 const { setLogger, log, error } = require('./core/logger');
@@ -88,6 +90,49 @@ async function handleUserInput(userInput) {
                 // Stringify the truncated memories for display
                 return `--- Memory Summary (${filteredMemories.length} entries) ---\n${JSON.stringify(truncatedMemories, null, 2)}\n----------------------`;
             
+            case 'export':
+                log("Agent core: Command received - /export");
+                try {
+                    const memoriesToExport = getMemoryEntries();
+                    if (memoriesToExport.length === 0) {
+                        return "ℹ️ Memory is empty. Nothing to export.";
+                    }
+
+                    let markdownContent = `# Harvey Research Summary\n\n`;
+
+                    for (const entry of memoriesToExport) {
+                        const entitiesString = entry.entities.map(e => `\`${e.type}: ${e.value}\``).join(', ') || 'None';
+                        
+                        markdownContent += `---
+                            ### Memory Entry: ${entry.id}
+
+                            - **Timestamp:** ${entry.timestamp}
+                            - **Scope:** ${entry.thematic_scope}
+                            - **Event:** ${entry.event_type}
+                            - **Entities:** ${entitiesString}
+
+                            > **User:** ${entry.user_input}
+
+                            **Agent:**
+                            ${entry.llm_response}
+
+                            `;
+                    }
+
+                    const timestamp = new Date().toISOString().replace(/:/g, '-').slice(0, 19);
+                    const fileName = `harvey_research_${timestamp}.md`;
+                    // Save in the project root directory (one level up from 'agent/')
+                    const filePath = path.join(__dirname, '..', fileName);
+
+                    fs.writeFileSync(filePath, markdownContent);
+                    
+                    return `✅ Research summary exported to ${fileName}`;
+
+                } catch (e) {
+                    error("Failed to export memory:", e.message);
+                    return `❌ Error exporting memory: ${e.message}`;
+                }
+
             case 'clear-mem':
                 log("Agent core: Command received - /clear-mem");
                 await clearMemory();

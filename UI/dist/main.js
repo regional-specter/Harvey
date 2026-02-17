@@ -98935,6 +98935,8 @@ var require_agent_loop = __commonJS({
 // ../agent/index.js
 var require_agent = __commonJS({
   "../agent/index.js"(exports, module) {
+    var fs3 = __require("fs");
+    var path = __require("path");
     var { runAgentCycle } = require_agent_loop();
     var { loadMemory, saveMemory, getMemoryEntries, clearMemory } = require_memory_store();
     var { setLogger, log, error } = require_logger();
@@ -98993,6 +98995,42 @@ var require_agent = __commonJS({
             return `--- Memory Summary (${filteredMemories.length} entries) ---
 ${JSON.stringify(truncatedMemories, null, 2)}
 ----------------------`;
+          case "export":
+            log("Agent core: Command received - /export");
+            try {
+              const memoriesToExport = getMemoryEntries();
+              if (memoriesToExport.length === 0) {
+                return "\u2139\uFE0F Memory is empty. Nothing to export.";
+              }
+              let markdownContent = `# Harvey Research Summary
+
+`;
+              for (const entry of memoriesToExport) {
+                const entitiesString = entry.entities.map((e2) => `\`${e2.type}: ${e2.value}\``).join(", ") || "None";
+                markdownContent += `---
+                            ### Memory Entry: ${entry.id}
+
+                            - **Timestamp:** ${entry.timestamp}
+                            - **Scope:** ${entry.thematic_scope}
+                            - **Event:** ${entry.event_type}
+                            - **Entities:** ${entitiesString}
+
+                            > **User:** ${entry.user_input}
+
+                            **Agent:**
+                            ${entry.llm_response}
+
+                            `;
+              }
+              const timestamp = (/* @__PURE__ */ new Date()).toISOString().replace(/:/g, "-").slice(0, 19);
+              const fileName = `harvey_research_${timestamp}.md`;
+              const filePath = path.join(__dirname, "..", fileName);
+              fs3.writeFileSync(filePath, markdownContent);
+              return `\u2705 Research summary exported to ${fileName}`;
+            } catch (e2) {
+              error("Failed to export memory:", e2.message);
+              return `\u274C Error exporting memory: ${e2.message}`;
+            }
           case "clear-mem":
             log("Agent core: Command received - /clear-mem");
             await clearMemory();
