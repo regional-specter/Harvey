@@ -98829,6 +98829,48 @@ var require_intent_extractor = __commonJS({
   }
 });
 
+// ../agent/memory/memory-retriever.js
+var require_memory_retriever = __commonJS({
+  "../agent/memory/memory-retriever.js"(exports, module) {
+    var { getMemoryEntries } = require_memory_store();
+    function retrieveRelevantMemories(currentIntent, limit = 3) {
+      if (!currentIntent || !currentIntent.thematic_scope && (!currentIntent.entities || currentIntent.entities.length === 0)) {
+        console.warn("Retriever: No meaningful intent provided. Returning empty memories.");
+        return [];
+      }
+      const allMemories = getMemoryEntries();
+      let relevantMemories = [];
+      const currentScope = currentIntent.thematic_scope ? currentIntent.thematic_scope.toLowerCase() : "";
+      const currentEntityValues = currentIntent.entities ? currentIntent.entities.map((e2) => e2.value.toLowerCase()) : [];
+      for (const memory of allMemories) {
+        let isRelevant = false;
+        if (currentScope && memory.thematic_scope && memory.thematic_scope.toLowerCase() === currentScope) {
+          isRelevant = true;
+        }
+        if (!isRelevant && currentEntityValues.length > 0 && memory.entities && memory.entities.length > 0) {
+          const memoryEntityValues = memory.entities.map((e2) => e2.value.toLowerCase());
+          for (const currentVal of currentEntityValues) {
+            if (memoryEntityValues.includes(currentVal)) {
+              isRelevant = true;
+              break;
+            }
+          }
+        }
+        if (isRelevant) {
+          relevantMemories.push(memory);
+        }
+      }
+      relevantMemories.sort((a, b2) => new Date(a.timestamp).getTime() - new Date(b2.timestamp).getTime());
+      const latestRelevantMemories = relevantMemories.slice(-limit);
+      console.log(`Retriever: Found ${latestRelevantMemories.length} relevant memories for scope "${currentScope}" and entities [${currentEntityValues.join(", ")}]`);
+      return latestRelevantMemories;
+    }
+    module.exports = {
+      retrieveRelevantMemories
+    };
+  }
+});
+
 // ../agent/data_sources/finance_api.js
 var require_finance_api = __commonJS({
   "../agent/data_sources/finance_api.js"(exports, module) {
@@ -98874,46 +98916,55 @@ var require_agent_loop = __commonJS({
     var { generateResponse } = require_llm_client();
     var { appendMemory, saveMemory } = require_memory_store();
     var { extractIntentAndEntities } = require_intent_extractor();
+    var { retrieveRelevantMemories } = require_memory_retriever();
     var { fetchStockPrice } = require_finance_api();
     async function runAgentCycle(userInput) {
       if (!userInput || typeof userInput.trim() !== "string" || userInput.trim() === "") {
         throw new Error("Invalid user input provided for agent cycle. Input cannot be empty.");
       }
       try {
-        const { thematic_scope, entities, event_type } = await extractIntentAndEntities(userInput, "");
+        console.log(`Agent loop: Extracting intent from query: "${userInput}"`);
+        const initialIntent = await extractIntentAndEntities(userInput, "");
         let llmResponse;
-        let context = {};
-        if (event_type === "data_request" && entities.some((e2) => e2.type === "STOCK_TICKER")) {
-          console.log("Agent loop: Detected a data request. Attempting to use tools...");
-          const tickerEntity = entities.find((e2) => e2.type === "STOCK_TICKER");
+        let contextForMemory = {};
+        let augmentedPrompt = userInput;
+        if (initialIntent.event_type === "data_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
+          console.log("Agent loop: Detected a data request. Using finance tool...");
+          const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
           if (tickerEntity) {
             const price = await fetchStockPrice(tickerEntity.value);
             if (price !== null) {
-              context.price = price;
-              const enhancedPrompt = `The user asked: "${userInput}". Using the following data that I found: The price of ${tickerEntity.value} is $${price}. Please formulate a natural language response.`;
-              llmResponse = await generateResponse(enhancedPrompt);
-            } else {
-              llmResponse = await generateResponse(userInput);
+              contextForMemory.price = price;
+              augmentedPrompt = `The user asked: "${userInput}". Using the data I found: The live price of ${tickerEntity.value} is $${price}. Formulate a natural language response.`;
             }
-          } else {
-            llmResponse = await generateResponse(userInput);
           }
         } else {
-          console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
-          llmResponse = await generateResponse(userInput);
+          console.log("Agent loop: Retrieving relevant memories...");
+          const relevantMemories = retrieveRelevantMemories(initialIntent);
+          if (relevantMemories.length > 0) {
+            let contextString = "You are a helpful financial research assistant. Use the 'Previous Context' below to inform your answer to the 'Current User Query'.\n\n--- Previous Context ---\n";
+            for (const mem of relevantMemories) {
+              contextString += `- User asked: "${mem.user_input}"
+- You responded: "${mem.llm_response.substring(0, 150)}..."
+
+`;
+            }
+            contextString += "--- End of Previous Context ---\n\n";
+            augmentedPrompt = `${contextString}--- Current User Query ---
+${userInput}`;
+          }
         }
-        console.log(`Agent loop: Received response from LLM.`);
+        console.log(`Agent loop: Generating response with final prompt...`);
+        llmResponse = await generateResponse(augmentedPrompt);
+        console.log(`Agent loop: Received final response from LLM.`);
         const memoryEntryData = {
           user_input: userInput,
           llm_response: llmResponse,
-          thematic_scope,
-          // Use the dynamically extracted scope
-          event_type,
-          // Use the dynamically extracted event type
-          entities,
-          // Use the dynamically extracted entities
-          context
-          // Store the fetched data in memory
+          thematic_scope: initialIntent.thematic_scope,
+          event_type: initialIntent.event_type,
+          entities: initialIntent.entities,
+          context: contextForMemory
+          // Save any data that was fetched from tools.
         };
         const addedEntry = appendMemory(memoryEntryData);
         if (!addedEntry) {

@@ -5,6 +5,8 @@ const { generateResponse } = require('./llm-client');
 const { appendMemory, saveMemory } = require('../memory/memory-store'); 
 // Import our new intent extractor function.
 const { extractIntentAndEntities } = require('./intent-extractor');
+// Import the new retriever and the finance API tool
+const { retrieveRelevantMemories } = require('../memory/memory-retriever');
 const { fetchStockPrice } = require('../data_sources/finance_api');
 
 /**
@@ -21,61 +23,68 @@ async function runAgentCycle(userInput) {
   }
 
   try {
-    // First, extract intent from the user's initial query to see if it's a data request
-    const { thematic_scope, entities, event_type } = await extractIntentAndEntities(userInput, ""); // Pass empty response for initial check
+    // 1. Understand Intent: Extract intent from the current query *first* to decide what to do.
+    console.log(`Agent loop: Extracting intent from query: "${userInput}"`);
+    const initialIntent = await extractIntentAndEntities(userInput, "");
 
     let llmResponse;
-    let context = {}; // To hold any fetched data
+    let contextForMemory = {}; // Holds data fetched from tools, to be saved in memory.
+    let augmentedPrompt = userInput; // Default prompt is just the user's input.
 
-    // 2. NEW STEP: Check if the request is for data that we can fetch with a tool.
-    if (event_type === 'data_request' && entities.some(e => e.type === 'STOCK_TICKER')) {
-      console.log('Agent loop: Detected a data request. Attempting to use tools...');
-      const tickerEntity = entities.find(e => e.type === 'STOCK_TICKER');
+    // 2. Decide Action: Prioritize tool use (data_request) over memory retrieval.
+    if (initialIntent.event_type === 'data_request' && initialIntent.entities.some(e => e.type === 'STOCK_TICKER')) {
+      // --- Tool Use Path ---
+      console.log('Agent loop: Detected a data request. Using finance tool...');
+      const tickerEntity = initialIntent.entities.find(e => e.type === 'STOCK_TICKER');
       if (tickerEntity) {
-        // Use the new finance_api tool
         const price = await fetchStockPrice(tickerEntity.value);
         if (price !== null) {
-          context.price = price;
-          // Create an enhanced prompt for the LLM that includes the fetched data
-          const enhancedPrompt = `The user asked: "${userInput}". Using the following data that I found: The price of ${tickerEntity.value} is $${price}. Please formulate a natural language response.`;
-          llmResponse = await generateResponse(enhancedPrompt);
-        } else {
-          // If fetching fails, fall back to the normal response generation
-          llmResponse = await generateResponse(userInput);
+          contextForMemory.price = price; // Store fetched data in context for memory.
+          // Augment the prompt with the live data.
+          augmentedPrompt = `The user asked: "${userInput}". Using the data I found: The live price of ${tickerEntity.value} is $${price}. Formulate a natural language response.`;
         }
-      } else {
-        llmResponse = await generateResponse(userInput);
       }
     } else {
-      // 1. If not a data request, generate the main response from the LLM directly.
-      console.log(`Agent loop: Requesting LLM response for: "${userInput}"`);
-      llmResponse = await generateResponse(userInput);
-    }
-    
-    console.log(`Agent loop: Received response from LLM.`);
+      // --- Memory Retrieval Path ---
+      // 3. Retrieve Context: If not a tool request, retrieve relevant past memories.
+      console.log('Agent loop: Retrieving relevant memories...');
+      const relevantMemories = retrieveRelevantMemories(initialIntent);
 
-    // 3. Prepare the data for the new memory entry, now with dynamic scope and entities.
+      if (relevantMemories.length > 0) {
+        // 4. Augment Prompt: Build a context string from the retrieved memories.
+        let contextString = "You are a helpful financial research assistant. Use the 'Previous Context' below to inform your answer to the 'Current User Query'.\n\n--- Previous Context ---\n";
+        for (const mem of relevantMemories) {
+          contextString += `- User asked: "${mem.user_input}"\n- You responded: "${mem.llm_response.substring(0, 150)}..."\n\n`;
+        }
+        contextString += "--- End of Previous Context ---\n\n";
+        // Create the final augmented prompt.
+        augmentedPrompt = `${contextString}--- Current User Query ---\n${userInput}`;
+      }
+    }
+
+    // 5. Generate Response: Call the LLM with the final prompt (either augmented or original).
+    console.log(`Agent loop: Generating response with final prompt...`);
+    llmResponse = await generateResponse(augmentedPrompt);
+    console.log(`Agent loop: Received final response from LLM.`);
+
+    // 6. Save to Memory: Prepare the data for the memory entry.
     const memoryEntryData = {
       user_input: userInput,
       llm_response: llmResponse,
-      thematic_scope: thematic_scope, // Use the dynamically extracted scope
-      event_type: event_type,          // Use the dynamically extracted event type
-      entities: entities,              // Use the dynamically extracted entities
-      context: context                 // Store the fetched data in memory
+      thematic_scope: initialIntent.thematic_scope,
+      event_type: initialIntent.event_type,
+      entities: initialIntent.entities,
+      context: contextForMemory // Save any data that was fetched from tools.
     };
 
-    // 4. Append the new, richer memory entry to the in-memory store.
+    // 7. Persist Memory
     const addedEntry = appendMemory(memoryEntryData);
-
-    // If appendMemory returns null, it means validation failed.
     if (!addedEntry) {
       throw new Error("Failed to append a valid memory entry. Check logs for details.");
     }
-
-    // 5. Save the entire memory store to disk to persist the changes.
     await saveMemory();
 
-    // 6. Return only the primary LLM response to be displayed in the UI.
+    // 8. Return the final response to the UI.
     return llmResponse;
 
   } catch (error) {
