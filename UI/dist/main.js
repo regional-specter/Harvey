@@ -98783,8 +98783,15 @@ var require_intent_extractor = __commonJS({
         **Instructions:**
         1.  **Thematic Scope:** Summarize the user's core goal. Examples: "company overview", "stock price analysis", "understanding financial metric", "general chat".
         2.  **Entities:** Identify key financial entities from the "Current User Query". If the query uses a pronoun, infer the entity from the "Previous Turn".
-            *   Valid entity types: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR'.
-            *   **Crucially, for 'news_request' event types, ensure you always extract the relevant 'STOCK_TICKER' if present.**
+            *   Valid entity types: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR', 'DATE_FROM', 'DATE_TO'.
+            *   Crucially, for 'news_request' event types, ensure you always extract the relevant 'STOCK_TICKER' if present.
+            If a date range is specified (e.g., "news from yesterday", "news between 2023-01-01 and 2023-01-31", "news for last week", "news from last month"), extract 'DATE_FROM' and 'DATE_TO' entities. Format these dates as YYYYMMDDTHHMM. If only one date is given for a range, infer the other.
+            *   **Crucial for relative dates:** Calculate the exact YYYYMMDDTHHMM based on the *current date* (February 21, 2026).
+            *   Example for DATE_FROM/DATE_TO:
+                *   "news from last month for AAPL" (current date: Feb 21, 2026) -> DATE_FROM: '20260101T0000', DATE_TO: '20260131T2359'
+                *   "news from last week for AAPL" -> DATE_FROM: '20260214T0000', DATE_TO: '20260221T2359' (assuming today is 2026-02-21)
+                *   "news for MSFT on 2023-03-15" -> DATE_FROM: '20230315T0000', DATE_TO: '20230315T2359'
+                *   "news for GOOG between 2023-01-01 and 2023-01-07" -> DATE_FROM: '20230101T0000', DATE_TO: '20230107T2359'
             *   Example: If the previous turn was about "AAPL" and the current query is "what about its P/E ratio?", you MUST extract "AAPL" as an entity.
         3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation', 'news_request'.
             *   'news_request': For queries asking for news, headlines, or updates on a specific company or ticker.
@@ -98972,23 +98979,34 @@ var require_agent_loop = __commonJS({
           console.log("Agent loop: Detected a news request. Using news tool...");
           const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
           if (tickerEntity) {
-            const now = /* @__PURE__ */ new Date();
-            const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1e3);
-            const formatDateTime = (date) => {
-              return date.toISOString().replace(/[-:]|\..+/g, "").slice(0, 13);
-            };
-            const fromDateTime = formatDateTime(twentyFourHoursAgo);
-            const toDateTime = formatDateTime(now);
+            let fromDateTime = null;
+            let toDateTime = null;
+            const fromEntity = initialIntent.entities.find((e2) => e2.type === "DATE_FROM");
+            const toEntity = initialIntent.entities.find((e2) => e2.type === "DATE_TO");
+            if (fromEntity && toEntity) {
+              fromDateTime = fromEntity.value;
+              toDateTime = toEntity.value;
+              console.log(`Agent loop: Fetching news from ${fromDateTime} to ${toDateTime}`);
+            } else {
+              const now = /* @__PURE__ */ new Date();
+              const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1e3);
+              const formatDateTime = (date) => {
+                return date.toISOString().replace(/[-:]|\..+/g, "").slice(0, 13);
+              };
+              fromDateTime = formatDateTime(twentyFourHoursAgo);
+              toDateTime = formatDateTime(now);
+              console.log(`Agent loop: Fetching latest news (last 24 hours)`);
+            }
             const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
             if (newsArticles && newsArticles.length > 0) {
               contextForMemory.news = newsArticles;
               const newsSummary = newsArticles.map((article) => `- ${article.title} (Source: ${article.source})`).join("\n");
-              augmentedPrompt = `The user asked: "${userInput}". I found the following latest news articles for ${tickerEntity.value}:
+              augmentedPrompt = `The user asked: "${userInput}". I found the following news articles for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}:
 ${newsSummary}
 
 Formulate a natural language response based on these headlines.`;
             } else {
-              augmentedPrompt = `The user asked: "${userInput}". I could not find any latest news for ${tickerEntity.value}. Please inform the user.`;
+              augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
             }
           }
         } else {

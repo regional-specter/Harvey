@@ -48,30 +48,43 @@ async function runAgentCycle(userInput) {
     } else if (initialIntent.event_type === 'news_request' && initialIntent.entities.some(e => e.type === 'STOCK_TICKER')) {
       // --- Tool Use Path: Fetch News ---
       console.log('Agent loop: Detected a news request. Using news tool...');
-                const tickerEntity = initialIntent.entities.find(e => e.type === 'STOCK_TICKER');
-                if (tickerEntity) {
-                  // Calculate 'from' and 'to' for the last 24 hours
-                  const now = new Date();
-                  const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-      
-                  // Format dates to YYYYMMDDTHHMM
-                  const formatDateTime = (date) => {
-                    return date.toISOString().replace(/[-:]|\..+/g, '').slice(0, 13);
-                  };
-      
-                  const fromDateTime = formatDateTime(twentyFourHoursAgo);
-                  const toDateTime = formatDateTime(now);
-      
-                  const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
-                  if (newsArticles && newsArticles.length > 0) {
-                    contextForMemory.news = newsArticles; // Store fetched data in context for memory.
-                    // Augment the prompt with a summary of the news.
-                    const newsSummary = newsArticles.map(article => `- ${article.title} (Source: ${article.source})`).join('\n');
-                    augmentedPrompt = `The user asked: "${userInput}". I found the following latest news articles for ${tickerEntity.value}:\n${newsSummary}\n\nFormulate a natural language response based on these headlines.`;
-                  } else {
-                    augmentedPrompt = `The user asked: "${userInput}". I could not find any latest news for ${tickerEntity.value}. Please inform the user.`;
-                  }
-                }    }
+                          const tickerEntity = initialIntent.entities.find(e => e.type === 'STOCK_TICKER');
+                          if (tickerEntity) {
+                            let fromDateTime = null;
+                            let toDateTime = null;
+                
+                            const fromEntity = initialIntent.entities.find(e => e.type === 'DATE_FROM');
+                            const toEntity = initialIntent.entities.find(e => e.type === 'DATE_TO');
+                
+                            if (fromEntity && toEntity) {
+                              fromDateTime = fromEntity.value;
+                              toDateTime = toEntity.value;
+                              console.log(`Agent loop: Fetching news from ${fromDateTime} to ${toDateTime}`);
+                            } else {
+                              // Default to the last 24 hours if no specific date range is provided
+                              const now = new Date();
+                              const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                
+                              // Format dates to YYYYMMDDTHHMM
+                              const formatDateTime = (date) => {
+                                return date.toISOString().replace(/[-:]|\..+/g, '').slice(0, 13);
+                              };
+                
+                              fromDateTime = formatDateTime(twentyFourHoursAgo);
+                              toDateTime = formatDateTime(now);
+                              console.log(`Agent loop: Fetching latest news (last 24 hours)`);
+                            }
+                
+                            const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
+                            if (newsArticles && newsArticles.length > 0) {
+                              contextForMemory.news = newsArticles; // Store fetched data in context for memory.
+                              // Augment the prompt with a summary of the news.
+                              const newsSummary = newsArticles.map(article => `- ${article.title} (Source: ${article.source})`).join('\n');
+                              augmentedPrompt = `The user asked: "${userInput}". I found the following news articles for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}:\n${newsSummary}\n\nFormulate a natural language response based on these headlines.`;
+                            } else {
+                              augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
+                            }
+                          }    }
     else {
       // --- Memory Retrieval Path ---
       // 3. Retrieve Context: If not a tool request, retrieve relevant past memories.

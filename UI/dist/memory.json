@@ -786,5 +786,2849 @@
         }
       ]
     }
+  },
+  {
+    "id": 5,
+    "timestamp": "2026-02-21T17:38:40.221Z",
+    "user_input": "Whats the latest news on microsoft ?",
+    "llm_response": "Microsoft has been making significant headlines over the last few weeks, primarily driven by its major \"Build\" developer conference and a series of massive announcements regarding AI and Gaming.\n\nHere is the latest news on Microsoft as of late May 2024:\n\n### 1. The Era of \"Copilot+ PCs\"\nMicrosoft recently unveiled a new category of Windows PCs designed specifically for AI, called **Copilot+ PCs**. \n*   **Hardware:** These laptops (including the new Surface Pro and Surface Laptop) feature new \"Snapdragon X Elite\" chips from Qualcomm. They are designed to compete directly with Apple’s MacBook Air in terms of battery life and performance.\n*   **The \"Recall\" Feature:** This is the most talked-about (and controversial) feature. It uses AI to take constant screenshots of everything you do on your computer, allowing you to \"search your memory\" to find a specific website, document, or chat you saw weeks ago. While Microsoft says the data stays on the device, privacy advocates have raised concerns.\n\n### 2. Major Changes to Xbox and Game Pass\nIn a historic move for the gaming industry, Microsoft confirmed that **Call of Duty: Black Ops 6** will be available on **Xbox Game Pass on its launch day** later this year. \n*   This is a massive shift in strategy, as *Call of Duty* is one of the best-selling retail franchises in history. Microsoft is betting that giving the game \"for free\" to subscribers will drive a massive spike in Game Pass memberships.\n\n### 3. AI Innovations (Build 2024)\nAt the annual Build conference, Microsoft announced several updates to its AI ecosystem:\n*   **GPT-4o Integration:** OpenAI’s latest flagship model, GPT-4o, is now available via Azure AI, making it faster and cheaper for developers to build AI apps.\n*   **Team Copilot:** Copilot is moving beyond a personal assistant to a \"team member.\" It can now act as a meeting moderator, take notes, and manage project tasks in Microsoft Teams.\n*   **Phi-3-vision:** Microsoft released a new \"small language model\" that can process both text and images on mobile devices without needing a constant internet connection.\n\n### 4. Security as \"Priority Number One\"\nFollowing several high-profile security breaches (including one by a Chinese hacking group), CEO Satya Nadella sent a company-wide memo stating that **security is now Microsoft’s top priority**, even above releasing new features. This \"Secure Future Initiative\" (SFI) marks a cultural shift in how the company builds software.\n\n### 5. Financials and Market Position\n*   **Market Cap:** Microsoft remains one of the most valuable companies in the world, with a market cap hovering around **$3.2 trillion**. It is currently in a three-way race with Apple and NVIDIA for the title of the world's most valuable company.\n*   **Cloud Growth:** Azure continues to show strong growth, largely attributed to businesses integrating AI tools that require Microsoft’s cloud infrastructure.\n\n### 6. Regulatory Scrutiny\nIn Europe, Microsoft is still facing pressure regarding its bundling of **Microsoft Teams** with the Office 365 suite. Although Microsoft unbundled the apps globally earlier this year to appease regulators, the EU is still investigating whether the company gave itself an unfair advantage over competitors like Slack and Zoom.\n\n**In summary:** Microsoft is currently all-in on \"Edge AI\" (AI that runs locally on your laptop) and is making an aggressive play to dominate the gaming subscription market with *Call of Duty*.",
+    "thematic_scope": "general_chat",
+    "event_type": "general_conversation",
+    "entities": [],
+    "context": {}
+  },
+  {
+    "id": 6,
+    "timestamp": "2026-02-21T17:39:42.582Z",
+    "user_input": "Now show me the latest news on Microsoft from last month and state the month and year",
+    "llm_response": "Based on your request for news from **May 2024**, Microsoft had an exceptionally busy month, dominated by its annual **Build developer conference** and major hardware announcements.\n\nHere is the latest news on Microsoft from **May 2024**:\n\n### 1. The Launch of \"Copilot+ PCs\"\nMicrosoft announced a new category of Windows PCs called \"Copilot+ PCs.\" These devices are equipped with specialized AI hardware (NPUs) capable of performing 40+ trillion operations per second. \n*   **Surface Updates:** Microsoft unveiled the new Surface Pro and Surface Laptop, which are among the first to feature these AI-optimized Qualcomm Snapdragon X Elite and Plus chips, promising better battery life and performance than the MacBook Air M3.\n\n### 2. The \"Recall\" Feature Controversy\nOne of the most talked-about features announced in May was **Recall**, an AI-powered tool that takes snapshots of everything you do on your screen to help you find things later using natural language. \n*   **Privacy Backlash:** Security researchers and privacy advocates immediately raised concerns about the potential for hackers to access the local database of screenshots, leading Microsoft to clarify that the feature is encrypted and processed entirely on-device.\n\n### 3. Microsoft Build 2024 Highlights\nAt its flagship developer conference in late May, Microsoft introduced several software innovations:\n*   **Team Copilot:** An expansion of Copilot that acts as a project manager or meeting moderator within Microsoft Teams.\n*   **Phi-3-vision:** A new \"small language model\" that can process both text and images, designed to run efficiently on mobile devices.\n*   **Custom Chips:** Microsoft announced that its custom-designed **Cobalt 100** processors (ARM-based) are now available in preview for Azure customers, aiming to compete with Amazon’s Graviton chips.\n\n### 4. Gaming Strategy and Studio Closures\nEarly in May, Microsoft’s gaming division made headlines for more controversial reasons. \n*   **Xbox Studio Closures:** Microsoft announced the closure of several Bethesda-affiliated studios, including **Arkane Austin** (Redfall) and **Tango Gameworks** (Hi-Fi Rush). This sparked significant debate within the industry regarding Microsoft’s management of acquired talent and its focus on Game Pass growth.\n\n### 5. Financial Performance and Market Position\nThroughout May 2024, Microsoft’s stock continued to perform strongly, fueled by AI optimism. The company maintained its position as one of the world's most valuable public companies, frequently trading places with Apple and Nvidia for the top spot in market capitalization.\n\n**Month:** May  \n**Year:** 2024",
+    "thematic_scope": "general_chat",
+    "event_type": "general_conversation",
+    "entities": [],
+    "context": {}
+  },
+  {
+    "id": 7,
+    "timestamp": "2026-02-21T17:44:20.210Z",
+    "user_input": "Whats the news for Microsoft from last month ?",
+    "llm_response": "Based on the news articles from January 2026, there were no major headlines focused exclusively on Microsoft (MSFT). However, several significant developments in the broader tech, AI, and cloud sectors directly impact the company’s ecosystem and market position:\n\n### **AI and OpenAI Partnership**\n*   **Major OpenAI Investment:** Nvidia’s CEO signaled that an investment in OpenAI’s latest funding round could be the largest yet. As Microsoft is OpenAI’s primary partner and a lead investor, this highlights continued massive capital flowing into the ecosystem Microsoft relies on for its AI services.\n*   **AI Infrastructure:** Companies like **Constellation Energy** and **Brookfield Renewable** reported significant growth opportunities in AI data center expansion. These companies provide the power and infrastructure necessary for the \"backbone of the AI revolution,\" which supports Microsoft's Azure and AI scaling efforts.\n\n### **Cloud and Software Markets**\n*   **Cloud Sector Volatility:** The **SKYY ETF** (which tracks cloud computing stocks) saw some sliding momentum as investors anticipated earnings from Microsoft's primary competitors, Alphabet and Amazon. \n*   **Government Software Growth:** Reports on the **Federal Government Software Market** indicate the sector is moving in a positive direction, a key area where Microsoft maintains a dominant presence through its specialized government cloud and productivity tools.\n\n### **Market Context**\n*   **Competitor Performance:** Much of the month's tech news centered on **Alphabet (Google)**, with reports of insider stock sales and strong \"Buy\" ratings from analysts, as well as **IBM** and **Marvell Technology** seeing significant trading activity.\n*   **Investment Trends:** Microsoft remains a staple in high-profile portfolios; for example, it is frequently cited as a top pick in lists like \"Best Nancy Pelosi Stocks to Buy in 2026,\" reflecting its status as a core holding for institutional and influential investors.\n\nIn summary, while Microsoft itself didn't make major waves with specific corporate announcements in this period, its strategic position in **AI infrastructure** and **government software** remains a central theme in the 2026 tech outlook.",
+    "thematic_scope": "news request",
+    "event_type": "news_request",
+    "entities": [
+      {
+        "type": "COMPANY_NAME",
+        "value": "Microsoft"
+      },
+      {
+        "type": "STOCK_TICKER",
+        "value": "MSFT"
+      },
+      {
+        "type": "DATE_FROM",
+        "value": "20260101T0000"
+      },
+      {
+        "type": "DATE_TO",
+        "value": "20260131T2359"
+      }
+    ],
+    "context": {
+      "news": [
+        {
+          "title": "Constellation Energy's Opportunities in AI Data Center Expansion",
+          "url": "https://intellectia.ai/news/stock/constellation-energys-opportunities-in-ai-data-center-expansion",
+          "time_published": "20260131T232906",
+          "authors": [
+            "Emily J. Thompson"
+          ],
+          "summary": "Constellation Energy is well-positioned to capitalize on the increasing energy demand from AI data centers, having secured long-term power purchase agreements with Microsoft and Meta. The company's expansion through the acquisition of Calpine Corp. and its strong carbon-free nuclear assets provide reliable and sustainable power. Despite potential market challenges like future electricity auction price caps, Constellation's strategic moves and clean energy profile indicate continued benefits from the AI data center boom.",
+          "banner_image": null,
+          "source": "Intellectia AI",
+          "category_within_source": "General",
+          "source_domain": "Intellectia AI",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.929816"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.839342"
+            },
+            {
+              "topic": "mergers_and_acquisitions",
+              "relevance_score": "0.702555"
+            },
+            {
+              "topic": "energy_transportation",
+              "relevance_score": "0.934886"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.712355"
+            }
+          ],
+          "overall_sentiment_score": 0.321209,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "CEG",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.470988",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.738663",
+              "ticker_sentiment_score": "0.328907",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "META",
+              "relevance_score": "0.608021",
+              "ticker_sentiment_score": "0.316233",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GEV",
+              "relevance_score": "0.594398",
+              "ticker_sentiment_score": "0.278338",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NRG",
+              "relevance_score": "0.598637",
+              "ticker_sentiment_score": "0.278009",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "FDMO ETF Price Forecast - FDMO at $85.95: Fidelity Momentum Factor Targets More Gains in 2026",
+          "url": "https://www.tradingnews.com/news/fdmpetf-price-forecast-fdmo-high-octane-momentum",
+          "time_published": "20260131T220208",
+          "authors": [],
+          "summary": "The Fidelity Momentum Factor ETF (FDMO) is trading near its 52-week high, driven by its concentration in AI winners like NVIDIA and Microsoft, and supported by macroeconomic factors like anticipated rate cuts and strong earnings forecasts. Despite its premium valuation and higher volatility, the article suggests a \"Buy\" rating for investors comfortable with aggressive, factor-tilted strategies, given its historical outperformance and current favorable market conditions. The ETF's sector-neutral, cap-weighted methodology focuses on high-scoring momentum stocks within each sector.",
+          "banner_image": "https://www.tradingnews.com/Warehouse/content/pics/pic_40508_a_9ebd6cc3-0496-4f6a-8c36-03511c072de0.jpg?1=1",
+          "source": "TradingNEWS",
+          "category_within_source": "General",
+          "source_domain": "TradingNEWS",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.943792"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.805936"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.704718"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.612053"
+            }
+          ],
+          "overall_sentiment_score": 0.393483,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "FDMO",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.451346",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.874011",
+              "ticker_sentiment_score": "0.448469",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.803143",
+              "ticker_sentiment_score": "0.401890",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.754726",
+              "ticker_sentiment_score": "0.353338",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.679628",
+              "ticker_sentiment_score": "0.385313",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "TechTarget’s Outlook on 2026",
+          "url": "https://www.techtarget.com/searchcio/feature/TechTargets-Outlook-on-2026",
+          "time_published": "20260131T220155",
+          "authors": [
+            "Nick Martin"
+          ],
+          "summary": "This article provides TechTarget's outlook on key technology trends for 2026, featuring expert insights on AI, cybersecurity, data technologies, enterprise software, infrastructure, and IT strategy. It highlights the continued dominance of AI, the evolving challenges for CISOs, the importance of data governance, and the expanding role of the CIO. The publication aims to help IT leaders make informed decisions and stay prepared for the future technological landscape.",
+          "banner_image": "https://www.techtarget.com/rms/onlineimages/collab_a102381789_searchsitetablet_520X173.jpg",
+          "source": "TechTarget",
+          "category_within_source": "General",
+          "source_domain": "TechTarget",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.936744"
+            }
+          ],
+          "overall_sentiment_score": 0.305938,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "TTGT",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.431927",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.602940",
+              "ticker_sentiment_score": "0.301304",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "ORCL",
+              "relevance_score": "0.613801",
+              "ticker_sentiment_score": "0.238345",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "IBM",
+              "relevance_score": "0.640069",
+              "ticker_sentiment_score": "0.214531",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "ACN",
+              "relevance_score": "0.624636",
+              "ticker_sentiment_score": "0.248130",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Nvidia CEO signals investment in OpenAI round may be largest yet",
+          "url": "https://fortune.com/2026/01/31/nvidia-ceo-jensen-huang-investment-openai-fundraising-round-sam-altman/",
+          "time_published": "20260131T220119",
+          "authors": [
+            "Debby Wu",
+            "Bloomberg"
+          ],
+          "summary": "Nvidia CEO Jensen Huang stated that the company plans to make its largest investment ever in OpenAI's latest funding round, calling OpenAI \"one of the most consequential companies of our time.\" He dismissed a Wall Street Journal report suggesting he had doubts about a previous $100 billion investment plan, clarifying that Nvidia's contribution to the current round would be significant but not reach that figure. The investment highlights the circular nature of AI deals, where tech companies invest in AI businesses that are also their customers.",
+          "banner_image": "https://fortune.com/img-assets/wp-content/uploads/2026/01/GettyImages-2258612629-e1769900647666.jpg?format=webp&w=1440&q=100",
+          "source": "Fortune",
+          "category_within_source": "General",
+          "source_domain": "Fortune",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.835935"
+            }
+          ],
+          "overall_sentiment_score": 0.208131,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "NVDA",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.443649",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.743956",
+              "ticker_sentiment_score": "0.108928",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.640095",
+              "ticker_sentiment_score": "0.117206",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "SYNNEX Corporation and Tech Data Corporation Complete Merger, Become TD SYNNEX",
+          "url": "https://ravepubs.com/synnex-corporation-and-tech-data-corporation-complete-merger/",
+          "time_published": "20260131T215829",
+          "authors": [
+            "Gary Kayye"
+          ],
+          "summary": "SYNNEX Corporation and Tech Data Corporation have successfully completed their merger, forming a new entity called TD SYNNEX. Rich Hume is the CEO of the combined company, with former SYNNEX CEO Dennis Polk serving as executive chair. TD SYNNEX aims to strengthen its portfolio, offer a global distribution platform, and enhance value for customers and vendors within the IT ecosystem.",
+          "banner_image": "https://www.ravepubs.com/wp-content/uploads/2021/09/SYNNEX-Corporation-and-Tech-Data-Corporation-Complete-Merger.jpg",
+          "source": "rAVe [PUBS]",
+          "category_within_source": "General",
+          "source_domain": "rAVe [PUBS]",
+          "topics": [
+            {
+              "topic": "mergers_and_acquisitions",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.807183"
+            }
+          ],
+          "overall_sentiment_score": 0.3491,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "SNX",
+              "relevance_score": "0.957632",
+              "ticker_sentiment_score": "0.472666",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "DELL",
+              "relevance_score": "0.643458",
+              "ticker_sentiment_score": "0.315503",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.555963",
+              "ticker_sentiment_score": "0.270304",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "How Investors May Respond To Amer Sports (AS) Early Partial Redemption Of 6.750% Senior Notes",
+          "url": "https://simplywall.st/stocks/us/consumer-durables/nyse-as/amer-sports/news/how-investors-may-respond-to-amer-sports-as-early-partial-re",
+          "time_published": "20260131T203018",
+          "authors": [
+            "Simply Wall St"
+          ],
+          "summary": "Amer Sports (AS) announced an early partial redemption of US$80,000,000 of its 6.750% Senior Secured Notes due 2031, signaling management's focus on balance sheet structure. This move, while incremental, reinforces a strategy of managing leverage and precedes the release of Q4 and fiscal 2025 results, which are expected to be more impactful. Investors should consider the company's high earnings multiple, low return on equity, and a wide range of fair value estimates when assessing this development.",
+          "banner_image": null,
+          "source": "Simply Wall Street",
+          "category_within_source": "General",
+          "source_domain": "Simply Wall Street",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.840763"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.927443"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.832631"
+            },
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.624741"
+            }
+          ],
+          "overall_sentiment_score": 0.08019,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "AS",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.107714",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "LULU",
+              "relevance_score": "0.640918",
+              "ticker_sentiment_score": "0.107368",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "BKNG",
+              "relevance_score": "0.588691",
+              "ticker_sentiment_score": "0.258057",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "PLTR",
+              "relevance_score": "0.592241",
+              "ticker_sentiment_score": "-0.305328",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.568265",
+              "ticker_sentiment_score": "0.239736",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Surrozen announces routine board resignation with no disputes",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/SRZN-Q/pressreleases/37342071/surrozen-announces-routine-board-resignation-with-no-disputes/",
+          "time_published": "20260131T202732",
+          "authors": [
+            "Tipranks"
+          ],
+          "summary": "Surrozen (SRZN) announced the immediate resignation of board member Shao-Lee Lin, M.D., Ph.D., effective January 26, 2026. The company stated that the departure was a routine governance change and was not due to any disagreement regarding operations, policies, or practices. An analyst rating on SRZN stock indicates a Hold with a $22.00 price target, while TipRanks' AI Analyst assigned a Neutral score, citing weak financial performance but strong technicals.",
+          "banner_image": null,
+          "source": "The Globe and Mail",
+          "category_within_source": "General",
+          "source_domain": "The Globe and Mail",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.834074"
+            },
+            {
+              "topic": "life_sciences",
+              "relevance_score": "0.749015"
+            }
+          ],
+          "overall_sentiment_score": -0.179251,
+          "overall_sentiment_label": "Somewhat-Bearish",
+          "ticker_sentiment": [
+            {
+              "ticker": "SRZN",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.013897",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "INTC",
+              "relevance_score": "0.637657",
+              "ticker_sentiment_score": "-0.307617",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.641018",
+              "ticker_sentiment_score": "-0.311380",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.625341",
+              "ticker_sentiment_score": "-0.134896",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Lumentum Holdings (LITE) Soars 15% on PT Hike Ahead of Earnings",
+          "url": "https://www.insidermonkey.com/blog/lumentum-holdings-lite-soars-15-on-pt-hike-ahead-of-earnings-1686447/?amp=1",
+          "time_published": "20260131T200500",
+          "authors": [
+            "Angelica Ballesteros"
+          ],
+          "summary": "Lumentum Holdings (NASDAQ:LITE) experienced a 15.52% jump in share prices last week, driven by investor anticipation ahead of its Q2 2026 earnings report and an upgraded price target from Morgan Stanley. Morgan Stanley increased its price target for Lumentum to $350 from $304, while maintaining an \"equal weight\" rating, citing bullish sentiment on earnings power, OCS opportunities, and exposure to Google. The company is scheduled to announce its Q2 2026 financial results on Tuesday, February 3, 2026.",
+          "banner_image": null,
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.919341"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.846589"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.715444"
+            }
+          ],
+          "overall_sentiment_score": 0.322643,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "LITE",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.412097",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.703080",
+              "ticker_sentiment_score": "0.338240",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.626977",
+              "ticker_sentiment_score": "0.339539",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.606506",
+              "ticker_sentiment_score": "0.342399",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.624084",
+              "ticker_sentiment_score": "0.324360",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "IBM stock price: Insider buy, new board pick and shutdown risk set up Monday trade",
+          "url": "https://ts2.tech/en/ibm-stock-price-insider-buy-new-board-pick-and-shutdown-risk-set-up-monday-trade/",
+          "time_published": "20260131T195056",
+          "authors": [
+            "Khadija Saeed"
+          ],
+          "summary": "IBM shares closed lower on Friday after a turbulent week, with new developments including a board appointment and insider stock purchases setting the stage for Monday's trading. The market is also focused on Washington's funding talks and upcoming U.S. jobs data, which are expected to influence rates and tech stocks. IBM's recent quarterly results showed strong software and infrastructure gains, yet the company faces potential earnings dilution from acquisitions and risks from a possible government shutdown.",
+          "banner_image": "https://ts2.tech/wp-content/uploads/2026/01/ibm-stock-price-insider-buy-new-board-pick-and-shutdown-risk-set-up-monday-trade-featured.jpg",
+          "source": "TechStock²",
+          "category_within_source": "General",
+          "source_domain": "TechStock²",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.928540"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.819531"
+            },
+            {
+              "topic": "mergers_and_acquisitions",
+              "relevance_score": "0.702342"
+            },
+            {
+              "topic": "economy_monetary",
+              "relevance_score": "0.638128"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.817031"
+            }
+          ],
+          "overall_sentiment_score": -0.069413,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "IBM",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.087178",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.602864",
+              "ticker_sentiment_score": "-0.146444",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Obermeyer Loads Up On 187K TBIL Shares As the ETF May Soon Be Tokenized",
+          "url": "https://www.theglobeandmail.com/investing/markets/markets-news/motley/37344272/obermeyer-loads-up-on-187k-tbil-shares-as-the-etf-may-soon-be-tokenized/",
+          "time_published": "20260131T193300",
+          "authors": [
+            "Motley Fool"
+          ],
+          "summary": "Obermeyer Wealth Partners recently increased its stake in the F/m U.S. Treasury 3 Month Bill ETF (TBIL) by 186,777 shares, a transaction valued at approximately $9.33 million. This comes as F/m Investments has filed an application with the SEC to digitally tokenize shares of the TBIL ETF, a move that could revolutionize the market by making it the first U.S. ETF to be tokenized on a blockchain ledger, though primarily for institutional investors. The ETF aims to correspond to the performance of U.S. Treasury 3-month bills, offering lower risk compared to stocks.",
+          "banner_image": "https://barchart-news-media-prod.aws.barchart.com/FC/4bf4729d61519882c0ad8d760fd00999/pixel%3Fslug%3Dmotleyfoolgm-2026-2-1-obermeyer-loads-up-on-187k-tbil-shares-as-the-etf-may-soon-be-tokenized",
+          "source": "The Globe and Mail",
+          "category_within_source": "General",
+          "source_domain": "The Globe and Mail",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.904753"
+            },
+            {
+              "topic": "blockchain",
+              "relevance_score": "0.841949"
+            }
+          ],
+          "overall_sentiment_score": 0.232583,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "TBIL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.333179",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.740853",
+              "ticker_sentiment_score": "0.243434",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.621911",
+              "ticker_sentiment_score": "0.227890",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.649772",
+              "ticker_sentiment_score": "0.219180",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Bristol-Myers Squibb Expands Cancer Efforts With New AI And Drug Deals",
+          "url": "https://sg.finance.yahoo.com/news/bristol-myers-squibb-expands-cancer-191127932.html",
+          "time_published": "20260131T191641",
+          "authors": [
+            "Simply Wall St"
+          ],
+          "summary": "Bristol-Myers Squibb (BMY) has announced new collaborations to advance its cancer efforts. The company is partnering with Microsoft to utilize AI for earlier lung cancer detection, particularly in underserved communities, and with Janux Therapeutics to co-develop a cancer therapy for solid tumors. These deals underscore BMY's strategic expansion into digital health tools and novel drug development, adding new dimensions to its oncology focus beyond its existing drug portfolio.",
+          "banner_image": "https://s.yimg.com/ny/api/res/1.2/NUA2o3431PKjKDe430Ho5A--/YXBwaWQ9aGlnaGxhbmRlcjt3PTIwODtoPTQ4/https://s.yimg.com/os/creatr-uploaded-images/2021-03/7d6207c0-7d34-11eb-bbee-858baefb8682",
+          "source": "Yahoo Finance Singapore",
+          "category_within_source": "General",
+          "source_domain": "Yahoo Finance Singapore",
+          "topics": [
+            {
+              "topic": "life_sciences",
+              "relevance_score": "0.915352"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.817646"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.606831"
+            },
+            {
+              "topic": "mergers_and_acquisitions",
+              "relevance_score": "0.614210"
+            }
+          ],
+          "overall_sentiment_score": 0.35896,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "BMY",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.493994",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.736524",
+              "ticker_sentiment_score": "0.256072",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Cloud computing stocks: SKYY ETF slides as Alphabet, Amazon earnings and jobs data loom",
+          "url": "https://ts2.tech/en/cloud-computing-stocks-skyy-etf-slides-as-alphabet-amazon-earnings-and-jobs-data-loom/",
+          "time_published": "20260131T190252",
+          "authors": [
+            "Khadija Saeed"
+          ],
+          "summary": "Cloud computing stocks, as tracked by the SKYY ETF, experienced a slide on Friday as investors anticipate major earnings reports from Alphabet and Amazon, along with a crucial U.S. jobs report next week. The sector faces pressure from investor concerns regarding the monetization of AI investments and the impact of rising interest rates on future earnings valuations. Several major tech companies, including Microsoft, Amazon, Oracle, Snowflake, and Cloudflare, saw their stock prices dip, highlighting a turbulent end to January for growth names.",
+          "banner_image": "https://ts2.tech/wp-content/uploads/2026/01/cloud-computing-stocks-skyy-etf-slides-as-alphabet-amazon-earnings-and-jobs-data-loom-featured.jpg",
+          "source": "TechStock²",
+          "category_within_source": "General",
+          "source_domain": "TechStock²",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.946302"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.931923"
+            },
+            {
+              "topic": "economy_monetary",
+              "relevance_score": "0.834444"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.736546"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.819909"
+            }
+          ],
+          "overall_sentiment_score": -0.18524,
+          "overall_sentiment_label": "Somewhat-Bearish",
+          "ticker_sentiment": [
+            {
+              "ticker": "SKYY",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "-0.248681",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.844826",
+              "ticker_sentiment_score": "-0.212314",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.807891",
+              "ticker_sentiment_score": "-0.213357",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.737605",
+              "ticker_sentiment_score": "-0.101490",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "ORCL",
+              "relevance_score": "0.618733",
+              "ticker_sentiment_score": "-0.229311",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            }
+          ]
+        },
+        {
+          "title": "TeraWulf (WULF) Valuation Check As AI And HPC Financing And Contracts Gain Momentum",
+          "url": "https://simplywall.st/stocks/us/software/nasdaq-wulf/terawulf/news/terawulf-wulf-valuation-check-as-ai-and-hpc-financing-and-co",
+          "time_published": "20260131T170121",
+          "authors": [
+            "Simply Wall St"
+          ],
+          "summary": "TeraWulf (WULF) is gaining investor attention due to significant financing deal for its high-performance computing and AI facilities, supported by long-term contracts and partners like Google. Despite recent short-term share price pullbacks, longer-term indicators show strong momentum. Analysts suggest the stock is undervalued, with a fair value around $22.10, although some metrics like the P/S ratio indicate a stretched valuation compared to industry peers.",
+          "banner_image": null,
+          "source": "Simply Wall Street",
+          "category_within_source": "General",
+          "source_domain": "Simply Wall Street",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.918755"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.841282"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.709152"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.643951"
+            },
+            {
+              "topic": "blockchain",
+              "relevance_score": "0.645887"
+            }
+          ],
+          "overall_sentiment_score": 0.230381,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "WULF",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.310142",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.635922",
+              "ticker_sentiment_score": "0.308146",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.603946",
+              "ticker_sentiment_score": "0.265401",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "PLTR",
+              "relevance_score": "0.653355",
+              "ticker_sentiment_score": "0.081866",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.618217",
+              "ticker_sentiment_score": "0.231133",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Here’s Why MSCI Stock’s Recurring Index Fees Support 15% Upside in 2026",
+          "url": "https://www.tikr.com/blog/heres-why-msci-stocks-recurring-index-fees-support-15-upside-in-2026",
+          "time_published": "20260131T160907",
+          "authors": [
+            "Gian Estrada"
+          ],
+          "summary": "MSCI Inc. has strengthened its market position by extending its ETF index licensing agreement with BlackRock through 2035 and securing NYSE index options listings, reinforcing its distribution power. A valuation model, assuming 9% revenue growth, 58% operating margins, and a 31x exit multiple, forecasts MSCI stock could reach $876 by December 2028, representing a 44% upside and a 13% annualized return over three years from its current $609. The article highlights that MSCI Inc.'s recurring index fees and high operating margins provide durable positioning in the global investment workflow, mitigating risk despite its current 31x earnings valuation.",
+          "banner_image": "https://res.cloudinary.com/tikr/images/f_auto,q_auto,w_800/v1/images/FEATURED-IMAGE-MAKER-129/FEATURED-IMAGE-MAKER-129",
+          "source": "TIKR.com",
+          "category_within_source": "General",
+          "source_domain": "TIKR.com",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.906407"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.836979"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.714339"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.622125"
+            }
+          ],
+          "overall_sentiment_score": 0.123443,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "MSCI",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.491402",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "BLK",
+              "relevance_score": "0.644264",
+              "ticker_sentiment_score": "0.328462",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NOW",
+              "relevance_score": "0.557218",
+              "ticker_sentiment_score": "-0.260898",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "LUV",
+              "relevance_score": "0.591269",
+              "ticker_sentiment_score": "0.214140",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.570799",
+              "ticker_sentiment_score": "-0.205837",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            }
+          ]
+        },
+        {
+          "title": "10 Best Nancy Pelosi Stocks to Buy in 2026",
+          "url": "https://www.insidermonkey.com/blog/10-best-nancy-pelosi-stocks-to-buy-in-2026-1686223/3/",
+          "time_published": "20260131T160900",
+          "authors": [
+            "Abdul Rahman"
+          ],
+          "summary": "This article identifies Palo Alto Networks, Inc. (NASDAQ: PANW) as one of the best Nancy Pelosi stocks to buy in 2026, highlighting its recent acquisition of Chronosphere to boost AI-driven operations. The company is actively integrating observability, security, and AI, benefiting from industry consolidation and strategic partnerships like one with Google Cloud. Analysts maintain positive ratings due to its platformization potential and stable software demand.",
+          "banner_image": "https://imonkey-blog.imgix.net/blog/wp-content/uploads/2022/09/09083157/thisisengineering-raeng-GckgQqyHoa4-unsplash.jpg?auto=format&expires=1801267200&w=480&h=270&fit=crop",
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.846447"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.720417"
+            },
+            {
+              "topic": "mergers_and_acquisitions",
+              "relevance_score": "0.646577"
+            }
+          ],
+          "overall_sentiment_score": 0.213935,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "PANW",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.512895",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AVGO",
+              "relevance_score": "0.733610",
+              "ticker_sentiment_score": "0.140444",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.750988",
+              "ticker_sentiment_score": "0.115030",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.753030",
+              "ticker_sentiment_score": "0.119617",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.764268",
+              "ticker_sentiment_score": "0.147093",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "BLOK ETF: Investing in Blockchain Technology Beyond Crypto",
+          "url": "https://www.vtmarkets.com/opinion/blok-etf-investing-in-blockchain-technology-beyond-crypto/",
+          "time_published": "20260131T160128",
+          "authors": [
+            "VT Markets"
+          ],
+          "summary": "The Amplify Blockchain Technology ETF (BLOK) offers investors exposure to the blockchain revolution by investing in companies developing or utilizing the technology, rather than directly holding cryptocurrencies. This actively managed fund provides diversification across software developers, financial institutions, and semiconductor manufacturers. Despite cryptocurrency market volatility, BLOK has shown resilience, underscoring the growing value of blockchain technology beyond speculative digital assets.",
+          "banner_image": "https://www.vtmarkets.com/wp-content/uploads/2026/01/blockchain-technology-1024x559.webp",
+          "source": "VT Markets",
+          "category_within_source": "General",
+          "source_domain": "VT Markets",
+          "topics": [
+            {
+              "topic": "blockchain",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.929692"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.822914"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.711741"
+            }
+          ],
+          "overall_sentiment_score": 0.365231,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "BLOK",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.423308",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "IBM",
+              "relevance_score": "0.646950",
+              "ticker_sentiment_score": "0.318014",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.647814",
+              "ticker_sentiment_score": "0.324891",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.628604",
+              "ticker_sentiment_score": "0.304968",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Coherent Corp: Volatile Optics Champion Tests Investor Nerves As Wall Street Stays Cautiously Bullis",
+          "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/coherent-corp-volatile-optics-champion-tests-investor-nerves-as-wall/68538168",
+          "time_published": "20260131T153432",
+          "authors": [],
+          "summary": "Coherent Corp's stock is experiencing volatility due to its exposure to cyclical semiconductor and telecom markets, contrasted with long-term demand for lasers, photonics, and silicon carbide. Despite short-term fragility and mixed investor sentiment, Wall Street analysts maintain a cautiously bullish outlook, anticipating meaningful upside if the company successfully executes in its high-growth niches. The company's diversified portfolio has acted as a stabilizer, balancing cyclical segments with structurally growing end markets like AI-driven optical demand and power electronics.",
+          "banner_image": "https://www.ad-hoc-news.de/business-21681_1920.jpg",
+          "source": "AD HOC NEWS",
+          "category_within_source": "General",
+          "source_domain": "AD HOC NEWS",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.839193"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.937817"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.811078"
+            }
+          ],
+          "overall_sentiment_score": 0.190933,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "IIVI",
+              "relevance_score": "0.331797",
+              "ticker_sentiment_score": "0.004307",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AMAT",
+              "relevance_score": "0.605104",
+              "ticker_sentiment_score": "0.245777",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "LRCX",
+              "relevance_score": "0.598196",
+              "ticker_sentiment_score": "0.180263",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.640863",
+              "ticker_sentiment_score": "0.343297",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.667010",
+              "ticker_sentiment_score": "0.342168",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Berkshire Hathaway stock price outperforms as Wall Street slips; jobs report is next test",
+          "url": "https://ts2.tech/en/berkshire-hathaway-stock-price-outperforms-as-wall-street-slips-jobs-report-is-next-test/",
+          "time_published": "20260131T153228",
+          "authors": [
+            "Khadija Saeed"
+          ],
+          "summary": "Berkshire Hathaway's Class B shares rose 0.9% to $480.53 on Friday, outperforming the wider market slump due to hotter wholesale inflation numbers and uncertainties about the next Fed chair. The company is seen as a safe haven during market volatility, with investors closely watching the upcoming U.S. jobs report and earnings from major tech companies. Berkshire's strong cash position and strategic capital deployment will be key factors for investors in its defensive stock position.",
+          "banner_image": "https://ts2.tech/wp-content/uploads/2026/01/berkshire-hathaway-stock-price-outperforms-as-wall-street-slips-jobs-report-is-next-test-featured.jpg",
+          "source": "TechStock²",
+          "category_within_source": "General",
+          "source_domain": "TechStock²",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.914011"
+            },
+            {
+              "topic": "economy_monetary",
+              "relevance_score": "0.843450"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.741308"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.608124"
+            }
+          ],
+          "overall_sentiment_score": -0.069172,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "BRK-B",
+              "relevance_score": "0.328828",
+              "ticker_sentiment_score": "0.022563",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "C",
+              "relevance_score": "0.630343",
+              "ticker_sentiment_score": "0.147573",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "TMO",
+              "relevance_score": "0.645060",
+              "ticker_sentiment_score": "-0.118924",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "PEP",
+              "relevance_score": "0.745947",
+              "ticker_sentiment_score": "0.125155",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.633922",
+              "ticker_sentiment_score": "-0.246092",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            }
+          ]
+        },
+        {
+          "title": "Sprinklr, Inc. (NYSE:CXM) Receives Consensus Rating of \"Hold\" from Analysts",
+          "url": "https://www.marketbeat.com/instant-alerts/sprinklr-inc-nysecxm-receives-consensus-rating-of-hold-from-analysts-2026-01-31/",
+          "time_published": "20260131T145805",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Sprinklr, Inc. (NYSE:CXM) has received a consensus \"Hold\" rating from eleven analysts, with an average 12-month price target of $9.89. The company recently beat Q3 earnings and revenue estimates and provided FY2026 and Q4 2026 EPS guidance. Despite recent insider selling, insiders still own a significant portion of the company, and institutional ownership is substantial with major increases from firms like Vanguard and SG Americas.",
+          "banner_image": "https://www.marketbeat.com/logos/sprinklr-inc-logo-1200x675.png?v=20240308095920",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.923488"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.822180"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.644341"
+            }
+          ],
+          "overall_sentiment_score": 0.149023,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "CXM",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.108589",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.639553",
+              "ticker_sentiment_score": "0.328020",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "TXN",
+              "relevance_score": "0.608106",
+              "ticker_sentiment_score": "-0.140910",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Investors in América Móvil. de (BMV:AMXB) have seen respectable returns of 58% over the past five years",
+          "url": "https://simplywall.st/stocks/mx/telecom/bmv-amx-b/america-movil-de-shares/news/investors-in-amrica-mvil-de-bmvamxb-have-seen-respectable-re",
+          "time_published": "20260131T143047",
+          "authors": [
+            "Simply Wall St"
+          ],
+          "summary": "América Móvil, S.A.B. de C.V. (BMV:AMXB) shareholders have seen a respectable 58% total shareholder return over the last five years, largely due to dividend payments, even though the share price itself is up 32% in that period, underperforming the broader market. The company achieved a 20% annual compound EPS growth over the five years, which is higher than its share price increase, suggesting increased market caution towards the stock. While recent performance shows a 15% drop in the last quarter, the long-term total return paints a more positive picture.",
+          "banner_image": null,
+          "source": "Simply Wall Street",
+          "category_within_source": "General",
+          "source_domain": "Simply Wall Street",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.920278"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.835017"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.628533"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.611652"
+            }
+          ],
+          "overall_sentiment_score": 0.089726,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "AMX",
+              "relevance_score": "0.322639",
+              "ticker_sentiment_score": "0.002156",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "T",
+              "relevance_score": "0.739393",
+              "ticker_sentiment_score": "0.147521",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "BKNG",
+              "relevance_score": "0.630690",
+              "ticker_sentiment_score": "0.309501",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.625820",
+              "ticker_sentiment_score": "0.201645",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "PLTR",
+              "relevance_score": "0.572556",
+              "ticker_sentiment_score": "-0.286578",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            }
+          ]
+        },
+        {
+          "title": "Alphabet Stock Forecast: Trending Strong Buy Among Analysts",
+          "url": "https://www.tipranks.com/news/company-announcements/alphabet-stock-forecast-trending-strong-buy-among-analysts",
+          "time_published": "20260131T140732",
+          "authors": [
+            "TipRanks Daily Auto-Generated Newsdesk"
+          ],
+          "summary": "Alphabet's stock has shown significant growth, climbing 66.3% over the past year, leading analysts to maintain a Strong Buy consensus with a 12-month average price target of $352.46. Justin Post of Bank of America reiterated his Buy rating and a $370.00 price objective, projecting an upside quarter for Q4 driven by strong search and YouTube ad growth, AI advancements, and disciplined spending. While optimistic about long-term potential in Search and Cloud, he also noted risks such as high expectations, margin headwinds from capacity build-out, and increased competition in the AI sector.",
+          "banner_image": "https://blog.tipranks.com/wp-content/uploads/2025/06/884ea72f8a3868a03348539b3275a949-750x406.png",
+          "source": "TipRanks",
+          "category_within_source": "General",
+          "source_domain": "TipRanks",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.943290"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.808301"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.829692"
+            }
+          ],
+          "overall_sentiment_score": 0.520962,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.646959",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.602365",
+              "ticker_sentiment_score": "0.436611",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "GDS Holdings Limited's (NASDAQ:GDS) 28% Share Price Surge Not Quite Adding Up",
+          "url": "https://simplywall.st/stocks/us/software/nasdaq-gds/gds-holdings/news/gds-holdings-limiteds-nasdaqgds-28-share-price-surge-not-qui",
+          "time_published": "20260131T134818",
+          "authors": [
+            "Simply Wall St"
+          ],
+          "summary": "GDS Holdings Limited (NASDAQ:GDS) recently experienced a 28% share price jump, bringing its annual gain to 106%. Despite this surge, the article questions the sustainability of its high price-to-sales (P/S) ratio of 5.6x, noting that the company's revenue growth of 12% last year and a projected 14% annual increase for the next three years are below the industry average of 21%. This suggests that the current high P/S might not be justified by its growth prospects, indicating potential overvaluation.",
+          "banner_image": "https://images.simplywall.st/asset/chart/403751487-ps-multiple-vs-industry-1-dark-2/1769866597915",
+          "source": "Simply Wall Street",
+          "category_within_source": "General",
+          "source_domain": "Simply Wall Street",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.943062"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.820894"
+            }
+          ],
+          "overall_sentiment_score": -0.109416,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "GDS",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "-0.253858",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "BKNG",
+              "relevance_score": "0.591574",
+              "ticker_sentiment_score": "0.259868",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "PLTR",
+              "relevance_score": "0.545734",
+              "ticker_sentiment_score": "-0.435113",
+              "ticker_sentiment_label": "Bearish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.514655",
+              "ticker_sentiment_score": "0.076095",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Bristol-Myers Squibb Cancer And AI Deals Put Valuation In Focus",
+          "url": "https://simplywall.st/stocks/us/pharmaceuticals-biotech/nyse-bmy/bristol-myers-squibb/news/bristol-myers-squibb-cancer-and-ai-deals-put-valuation-in-fo",
+          "time_published": "20260131T133345",
+          "authors": [
+            "Simply Wall St",
+            "Bailey Pemberton"
+          ],
+          "summary": "Bristol-Myers Squibb recently announced collaborations with Janux Therapeutics for a tumor-activated cancer therapy and with Microsoft to apply AI for earlier lung cancer detection. These partnerships aim to expand the company's oncology capabilities in both treatment and diagnostics. The article notes these deals are significant for investors given Bristol-Myers Squibb's mixed multi-year stock performance and emphasizes monitoring their progress and impact on valuation.",
+          "banner_image": null,
+          "source": "Simply Wall Street",
+          "category_within_source": "General",
+          "source_domain": "Simply Wall Street",
+          "topics": [
+            {
+              "topic": "life_sciences",
+              "relevance_score": "0.910037"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.843411"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.731649"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.600691"
+            }
+          ],
+          "overall_sentiment_score": 0.211773,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "BMY",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.253939",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "JNJ",
+              "relevance_score": "0.637900",
+              "ticker_sentiment_score": "0.119187",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "LLY",
+              "relevance_score": "0.604210",
+              "ticker_sentiment_score": "0.108731",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.577148",
+              "ticker_sentiment_score": "0.231827",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Federated Hermes Inc. Acquires 72,274 Shares of Waystar Holding Corp. $WAY",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-federated-hermes-inc-acquires-72274-shares-of-waystar-holding-corp-way-2026-01-31/",
+          "time_published": "20260131T133129",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Federated Hermes Inc. increased its stake in Waystar Holding Corp. by 9.0% in the third quarter of 2025, purchasing 72,274 additional shares to hold a total of 873,992 shares valued at approximately $33.14 million. Despite this, Waystar insiders have been net sellers, disposing of 80,273 shares worth about $2.57 million in the last 90 days. Analysts maintain a consensus \"Buy\" rating for Waystar, with an average price target of $46.64, significantly higher than its recent trading price around $26.56.",
+          "banner_image": "https://www.marketbeat.com/logos/waystar-holding-corp-logo-1200x675.png?v=20240703143351",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.925478"
+            },
+            {
+              "topic": "life_sciences",
+              "relevance_score": "0.706493"
+            }
+          ],
+          "overall_sentiment_score": 0.109256,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "WAY",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.184706",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "KHC",
+              "relevance_score": "0.636868",
+              "ticker_sentiment_score": "0.022349",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "UNH",
+              "relevance_score": "0.645006",
+              "ticker_sentiment_score": "0.313329",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.611453",
+              "ticker_sentiment_score": "-0.112325",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Alphabet Inc: director Arnold sells $34,680 in stock",
+          "url": "https://www.investing.com/news/insider-trading-news/alphabet-inc-director-arnold-sells-34680-in-stock-93CH-4477564",
+          "time_published": "20260131T133112",
+          "authors": [
+            "Investing.com"
+          ],
+          "summary": "Frances Arnold, a director at Alphabet Inc (NASDAQ:GOOGL), sold 102 shares of Class C Capital Stock for $34,680 on January 29, 2026. This transaction occurred while Alphabet's stock was near its 52-week high, reflecting a strong 66% return over the past year. Following the sale, Arnold still holds 18,307 shares and numerous Google Stock Units.",
+          "banner_image": "https://i-invdn-com.investing.com/news/google_2_800x533_L_1411373488.jpg",
+          "source": "Investing.com",
+          "category_within_source": "General",
+          "source_domain": "Investing.com",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.940114"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.844549"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.714032"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.649579"
+            }
+          ],
+          "overall_sentiment_score": -0.069561,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "GOOG",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "-0.145559",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.920911",
+              "ticker_sentiment_score": "-0.149965",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.620645",
+              "ticker_sentiment_score": "0.148462",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "SanDisk, UnitedHealth, Meta Platforms And More: 5 Stocks Investors Couldn't Stop Buzzing About This Week",
+          "url": "https://finviz.com/news/294440/sandisk-unitedhealth-meta-platforms-and-more-5-stocks-investors-couldnt-stop-buzzing-about-this-week",
+          "time_published": "20260131T133030",
+          "authors": [
+            "Rishabh Mishra"
+          ],
+          "summary": "This article highlights five stocks — Microsoft, SanDisk, Meta Platforms, Apple, and UnitedHealth — that garnered significant investor attention on social media platforms like X and Reddit this week. Retail investor interest was driven by recent earnings reports, AI advancements, and other corporate announcements. The piece details each company's performance, key financial figures, and investor sentiment.",
+          "banner_image": "https://finviz.com/gfx/nic2x2.gif",
+          "source": "Finviz",
+          "category_within_source": "General",
+          "source_domain": "Finviz",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.919069"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.836291"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.721339"
+            },
+            {
+              "topic": "life_sciences",
+              "relevance_score": "0.613695"
+            }
+          ],
+          "overall_sentiment_score": 0.226674,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "SNDK",
+              "relevance_score": "0.960651",
+              "ticker_sentiment_score": "0.734170",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.886122",
+              "ticker_sentiment_score": "0.110550",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "META",
+              "relevance_score": "0.811316",
+              "ticker_sentiment_score": "0.301820",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.767580",
+              "ticker_sentiment_score": "0.209652",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "UNH",
+              "relevance_score": "0.749020",
+              "ticker_sentiment_score": "-0.403617",
+              "ticker_sentiment_label": "Bearish"
+            }
+          ]
+        },
+        {
+          "title": "Northland Raises Innovative Aerosystems, Inc. (ISSC) Price Target to $24, Maintains Outperform on Retrofits Momentum",
+          "url": "https://www.insidermonkey.com/blog/northland-raises-innovative-aerosystems-inc-issc-price-target-to-24-maintains-outperform-on-retrofits-momentum-1685759/?amp=1",
+          "time_published": "20260131T130027",
+          "authors": [
+            "Laiba Immad"
+          ],
+          "summary": "Northland has increased its price target for Innovative Aerosystems, Inc. (ISSC) to $24 from $17.50, reiterating an Outperform rating due to the company's strong momentum in retrofitting projects. The firm projects revenue growth of 7.5% in fiscal 2027 and an improvement in EBITDA margins to 29%. This follows ISSC's robust Q4 and FY2025 results, with significant increases in revenue and adjusted EBITDA, supported by a strong backlog and their \"IA Next\" growth plan.",
+          "banner_image": null,
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.929889"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.813555"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.710101"
+            }
+          ],
+          "overall_sentiment_score": 0.305634,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ISSC",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.536381",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.618594",
+              "ticker_sentiment_score": "0.340627",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.648340",
+              "ticker_sentiment_score": "0.222693",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.628736",
+              "ticker_sentiment_score": "0.249494",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.636215",
+              "ticker_sentiment_score": "0.240805",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "AE Wealth Management LLC Acquires 19,379 Shares of Marvell Technology, Inc. $MRVL",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-ae-wealth-management-llc-acquires-19379-shares-of-marvell-technology-inc-mrvl-2026-01-31/",
+          "time_published": "20260131T120021",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "AE Wealth Management LLC increased its stake in Marvell Technology, Inc. by 27.7%, acquiring an additional 19,379 shares, bringing its total holdings to 89,329 shares valued at $7.51 million. Marvell Technology, Inc. (NASDAQ:MRVL) reported strong Q3 earnings, beating analyst expectations with $0.76 EPS and $2.07 billion in revenue, and has a consensus \"Moderate Buy\" rating from analysts with an average target price of $115.09. The company also declared a quarterly dividend of $0.06 per share.",
+          "banner_image": "https://www.marketbeat.com/logos/marvell-technology-inc-logo-1200x675.jpg?v=20231226132558",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.902564"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.936718"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.847003"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.707746"
+            }
+          ],
+          "overall_sentiment_score": 0.170885,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MRVL",
+              "relevance_score": "0.967878",
+              "ticker_sentiment_score": "0.339815",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.645086",
+              "ticker_sentiment_score": "0.112696",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.603656",
+              "ticker_sentiment_score": "0.111648",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Marvell Technology, Inc. $MRVL Shares Sold by Pittenger & Anderson Inc.",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-marvell-technology-inc-mrvl-shares-sold-by-pittenger-anderson-inc-2026-01-31/",
+          "time_published": "20260131T120021",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Pittenger & Anderson Inc. significantly decreased its stake in Marvell Technology (MRVL) by 95.8% in Q3, selling over 17,000 shares. Concurrently, Marvell EVP Mark Casper sold 5,000 shares in early January, reducing his personal holdings. Despite these sales, analysts generally maintain a \"Moderate Buy\" rating with an average target price of $115.09, and the company reported strong Q3 earnings, surpassing expectations with robust revenue growth.",
+          "banner_image": "https://www.marketbeat.com/logos/marvell-technology-inc-logo-1200x675.jpg?v=20231226132558",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.946371"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.841323"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.714883"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.614893"
+            }
+          ],
+          "overall_sentiment_score": 0.191194,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MRVL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.259671",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.624401",
+              "ticker_sentiment_score": "0.133370",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.602363",
+              "ticker_sentiment_score": "0.110164",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "National Pension Service Raises Holdings in Uber Technologies, Inc. $UBER",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-national-pension-service-raises-holdings-in-uber-technologies-inc-uber-2026-01-31/",
+          "time_published": "20260131T115942",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "National Pension Service increased its stake in Uber Technologies (NYSE:UBER) by 2.8% in Q3, purchasing an additional 122,307 shares to own a total of 4,439,421 shares valued at approximately $434.93 million. This comes as Uber reported strong Q3 earnings with $3.11 EPS and $13.47 billion in revenue, exceeding analyst expectations. Despite positive developments like investments in autonomous vehicles and strategic partnerships, the company faces regulatory challenges and recent insider stock sales.",
+          "banner_image": "https://www.marketbeat.com/logos/uber-technologies-inc-logo-1200x675.png?v=20191127154752",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.912837"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.842612"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.745144"
+            },
+            {
+              "topic": "energy_transportation",
+              "relevance_score": "0.624932"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.627845"
+            }
+          ],
+          "overall_sentiment_score": 0.177351,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "UBER",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.263940",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.551588",
+              "ticker_sentiment_score": "0.130725",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "CRM",
+              "relevance_score": "0.579448",
+              "ticker_sentiment_score": "0.159638",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Jennison Associates LLC Has $3.45 Billion Stock Position in Alphabet Inc. $GOOG",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-jennison-associates-llc-has-345-billion-stock-position-in-alphabet-inc-goog-2026-01-31/",
+          "time_published": "20260131T115903",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Jennison Associates LLC significantly increased its stake in Alphabet Inc. (NASDAQ:GOOG) by 14.4% in Q3, now holding over 14 million shares valued at approximately $3.45 billion. Alphabet constitutes 2.0% of Jennison's portfolio, making it their 11th largest holding. Analyst sentiment remains largely positive with a consensus \"Buy\" rating and an average price target of $330.83, following Alphabet's strong Q3 earnings beat.",
+          "banner_image": "https://www.marketbeat.com/logos/google-inc-logo-1200x675.png",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.921965"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.923906"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.844419"
+            }
+          ],
+          "overall_sentiment_score": 0.336759,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.918112",
+              "ticker_sentiment_score": "0.461035",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.471771",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.646846",
+              "ticker_sentiment_score": "0.126444",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "V",
+              "relevance_score": "0.565918",
+              "ticker_sentiment_score": "0.266977",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MA",
+              "relevance_score": "0.577911",
+              "ticker_sentiment_score": "0.288579",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Alphabet Inc. $GOOGL Shares Sold by Bfsg LLC",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-alphabet-inc-googl-shares-sold-by-bfsg-llc-2026-01-31/",
+          "time_published": "20260131T114925",
+          "authors": [
+            "MarketBeat or NULL"
+          ],
+          "summary": "Bfsg LLC reduced its stake in Alphabet Inc. (NASDAQ:GOOGL) by 18.3% during the third quarter, selling 1,911 shares and holding 8,517 shares valued at $2.07 million. Despite institutional selling, analysts maintain a \"Moderate Buy\" rating with an average price target of $334.60, citing Google's AI advancements like Project Genie offsetting IP and regulatory concerns. Insider selling by 2017 Gp L.L.C. Gv and Director Frances Arnold, totaling over 2 million shares, has also been noted.",
+          "banner_image": "https://www.marketbeat.com/logos/google-inc-logo-1200x675.png",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.916743"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.821686"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.749408"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.645721"
+            }
+          ],
+          "overall_sentiment_score": 0.10921,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.127305",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.621028",
+              "ticker_sentiment_score": "0.126724",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.622681",
+              "ticker_sentiment_score": "-0.136878",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "ADBE",
+              "relevance_score": "0.646092",
+              "ticker_sentiment_score": "0.233010",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Ultrapar Participações S.A.'s (BVMF:UGPA3) Stock Has Seen Strong Momentum: Does That Call For Deeper Study Of Its Financial Prospects?",
+          "url": "https://simplywall.st/stocks/br/retail/bovespa-ugpa3/ultrapar-participacoes-shares/news/ultrapar-participaes-sas-bvmfugpa3-stock-has-seen-strong-mom",
+          "time_published": "20260131T113118",
+          "authors": [
+            "Simply Wall St"
+          ],
+          "summary": "Ultrapar Participações (BVMF:UGPA3) has seen its stock rise by 21% over the past month. The company's Return on Equity (ROE) is 17%, which is comparable to the industry average, and its net income has grown by 35% over the past five years. Despite a relatively low ROE, the company's high profit reinvestment and efficient management likely contribute to its strong earnings growth, though future earnings are projected to shrink.",
+          "banner_image": null,
+          "source": "Simply Wall Street",
+          "category_within_source": "General",
+          "source_domain": "Simply Wall Street",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.945555"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.823856"
+            }
+          ],
+          "overall_sentiment_score": 0.051568,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "UGP",
+              "relevance_score": "0.332026",
+              "ticker_sentiment_score": "0.000179",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "FCX",
+              "relevance_score": "0.632267",
+              "ticker_sentiment_score": "0.124681",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "PLTR",
+              "relevance_score": "0.618895",
+              "ticker_sentiment_score": "-0.103771",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.645623",
+              "ticker_sentiment_score": "0.112797",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.629047",
+              "ticker_sentiment_score": "0.107714",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Baillie Gifford & Co. Sells 62,880 Shares of Alphabet Inc. $GOOG",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-baillie-gifford-co-sells-62880-shares-of-alphabet-inc-goog-2026-01-31/",
+          "time_published": "20260131T110627",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Baillie Gifford & Co. reduced its stake in Alphabet Inc. (NASDAQ:GOOG) by 2.1% in the third quarter, selling 62,880 shares and retaining 2,906,948 shares valued at $707.99 million. This adjustment comes as analysts see Google's Project Genie AI model as a significant catalyst, potentially boosting ad and cloud revenues. Despite a consensus \"Buy\" rating and an average price target of $330.83, the company faces recent insider stock sales and regulatory challenges including an espionage conviction and an NHTSA probe into Waymo.",
+          "banner_image": "https://www.marketbeat.com/logos/google-inc-logo-1200x675.png",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.846078"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.924816"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.815346"
+            }
+          ],
+          "overall_sentiment_score": 0.08937,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.990322",
+              "ticker_sentiment_score": "-0.091962",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.853330",
+              "ticker_sentiment_score": "-0.079504",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.642219",
+              "ticker_sentiment_score": "0.306511",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Q Fund Management Hong Kong Ltd Takes Position in Marvell Technology, Inc. $MRVL",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-q-fund-management-hong-kong-ltd-takes-position-in-marvell-technology-inc-mrvl-2026-01-31/",
+          "time_published": "20260131T110021",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Q Fund Management Hong Kong Ltd recently acquired 148,700 shares of Marvell Technology (NASDAQ:MRVL), valued at approximately $12.5 million, making it their 5th largest holding, representing 8.7% of their portfolio. Marvell Technology, a semiconductor company, recently reported strong Q3 earnings, beating analyst estimates with $0.76 EPS and $2.07 billion in revenue, and has a consensus \"Moderate Buy\" rating from Wall Street analysts with a target price of $115.09. Other institutional investors have also adjusted their holdings in MRVL, while an EVP recently sold shares, though corporate insiders still own 0.19% of the company.",
+          "banner_image": "https://www.marketbeat.com/logos/marvell-technology-inc-logo-1200x675.jpg?v=20231226132558",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.933177"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.926433"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.839464"
+            }
+          ],
+          "overall_sentiment_score": 0.263027,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MRVL",
+              "relevance_score": "0.991500",
+              "ticker_sentiment_score": "0.302404",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.637134",
+              "ticker_sentiment_score": "0.208206",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.567584",
+              "ticker_sentiment_score": "0.224833",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Ziff Davis’ New AI Shopping Portfolio Might Change The Case For Investing In ZD",
+          "url": "https://www.sahmcapital.com/news/content/ziff-davis-new-ai-shopping-portfolio-might-change-the-case-for-investing-in-zd-2026-01-31",
+          "time_published": "20260131T105906",
+          "authors": [
+            "Simply Wall St"
+          ],
+          "summary": "Ziff Davis (ZD) is repositioning its business around AI-powered shopping through its new RetailMeNot Group, attempting to transform existing traffic and data into higher-value consumer interactions. This strategic shift aims to support advertising and subscription growth despite potential pressure on profitability from increased AI spending. Investors are evaluating this move in the context of the company's mix of cash-generating assets, disciplined buybacks, and analysts' widely varying fair value estimates for the stock.",
+          "banner_image": "https://images.simplywall.st/company/3cad906d-9c06-4cc1-912e-1e880e591d32/chart/quote-price",
+          "source": "Sahm",
+          "category_within_source": "General",
+          "source_domain": "Sahm",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.846776"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.701454"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.627943"
+            }
+          ],
+          "overall_sentiment_score": 0.035608,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "ZD",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.333551",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.637468",
+              "ticker_sentiment_score": "-0.119459",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.622595",
+              "ticker_sentiment_score": "-0.103080",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "A Dual-Strategy ETF: Balancing Income and Growth in a Record Market",
+          "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/a-dual-strategy-etf-balancing-income-and-growth-in-a-record-market/68537544",
+          "time_published": "20260131T102925",
+          "authors": [],
+          "summary": "The Global X S&P 500 Covered Call & Growth ETF offers a dual strategy to investors by balancing income generation and growth in a record market. It employs a \"half-buy-write\" mechanism, investing in S&P 500 constituents and selling call options on 50% of the portfolio, which provides consistent income from premiums while allowing for participation in market upside. The ETF, with holdings in major tech companies like Nvidia, Apple, and Microsoft, had a recent monthly distribution of $0.1213 per share and a distribution yield of 5.16%.",
+          "banner_image": "https://mdb.ad-hoc-news.de/img/icons/uhr_realtime.jpg",
+          "source": "AD HOC NEWS",
+          "category_within_source": "General",
+          "source_domain": "AD HOC NEWS",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.932149"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.733512"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.621945"
+            }
+          ],
+          "overall_sentiment_score": 0.307868,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "XYLG",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.267676",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.729005",
+              "ticker_sentiment_score": "0.315639",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.748118",
+              "ticker_sentiment_score": "0.319813",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.707528",
+              "ticker_sentiment_score": "0.336919",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Hightouch Leads 2025 Gartner® Magic Quadrant™ for Customer Data Platforms",
+          "url": "https://www.martechcube.com/hightouch-leads-2025-gartner-magic-quadrant-for-customer-data-platforms/",
+          "time_published": "20260131T102815",
+          "authors": [
+            "BusinessWire"
+          ],
+          "summary": "Hightouch has been recognized as a Leader in the 2025 Gartner® Magic Quadrant™ for Customer Data Platforms, marking its first inclusion in this Quadrant. The company's warehouse-native platform enables organizations to activate customer data directly from cloud data warehouses for personalized experiences and measurable business results. This recognition validates Hightouch's approach reflecting the market's shift towards composable architectures and warehouse-native activation for modern marketing and advertising teams.",
+          "banner_image": null,
+          "source": "MarTech Cube",
+          "category_within_source": "General",
+          "source_domain": "MarTech Cube",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.931223"
+            },
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.618741"
+            }
+          ],
+          "overall_sentiment_score": 0.341734,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "IT",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.412488",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.596927",
+              "ticker_sentiment_score": "0.273600",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Liberty All-Star Equity Fund January 2026 Monthly Update",
+          "url": "https://intellectia.ai/news/stock/liberty-allstar-equity-fund-january-2026-monthly-update",
+          "time_published": "20260131T102813",
+          "authors": [
+            "Emily J. Thompson"
+          ],
+          "summary": "The Liberty All-Star Equity Fund's January 2026 update reveals a large-cap core investment strategy focusing on a combination of value and growth managers. The fund's net assets were $2.0058 billion, with significant holdings in technology, financials, and healthcare, and its NAV and market price both declined in January, reflecting market volatility. The top 20 holdings, including NVIDIA, Alphabet, and Microsoft, comprised 37.1% of the equity portfolio.",
+          "banner_image": "https://d159e3ysga2l0q.cloudfront.net/image/icon/USA_icon.jpeg",
+          "source": "Intellectia AI",
+          "category_within_source": "General",
+          "source_domain": "Intellectia AI",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.903163"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.818598"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.749181"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.617304"
+            }
+          ],
+          "overall_sentiment_score": 0.248658,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "USA",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.028197",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.632049",
+              "ticker_sentiment_score": "0.305344",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.633345",
+              "ticker_sentiment_score": "0.306511",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Alphabet Inc. $GOOG Shares Purchased by Mn Services Vermogensbeheer B.V.",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-alphabet-inc-goog-shares-purchased-by-mn-services-vermogensbeheer-bv-2026-01-31/",
+          "time_published": "20260131T101524",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Mn Services Vermogensbeheer B.V. increased its stake in Alphabet Inc. (NASDAQ:GOOG) by 1.3% in the third quarter, bringing its total holdings to 1,611,180 shares valued at $392.4 million. The investment firm now holds Alphabet as its 8th largest position, accounting for 2.5% of its portfolio. Alphabet continues to show strong financial performance, beating earnings expectations with $2.87 EPS and revenues of $102.35 billion, leading to a largely positive market sentiment despite some insider selling and regulatory concerns.",
+          "banner_image": "https://www.marketbeat.com/logos/google-inc-logo-1200x675.png",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.914012"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.809977"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.724614"
+            }
+          ],
+          "overall_sentiment_score": 0.256558,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.332988",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.999668",
+              "ticker_sentiment_score": "0.341880",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.615722",
+              "ticker_sentiment_score": "0.130267",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Cisco Climbs Toward Highs While IREN Faces 10% Reality Check",
+          "url": "https://eand.co/cisco-climbs-toward-highs-while-iren-faces-10-reality-check",
+          "time_published": "20260131T101415",
+          "authors": [
+            "John Ondercin"
+          ],
+          "summary": "Cisco Systems (CSCO) is steadily approaching new highs, driven by institutional demand for AI infrastructure, while IREN Limited (IREN) is experiencing a sharp pullback. Cisco benefits from its role as a stable \"picks-and-shovels\" provider for enterprise AI, focusing on secure networking and long-term partnerships. In contrast, IREN's rapid rally fueled by an AI pivot and Microsoft deal is facing scrutiny due to execution risks, valuation concerns, and the capital-intensive nature of AI infrastructure.",
+          "banner_image": "https://eand.co/wp-content/uploads/2026/01/Cisco-Climbs-Toward-Highs-While-IREN-Faces-10.webp",
+          "source": "Eudaimonia and Co",
+          "category_within_source": "General",
+          "source_domain": "Eudaimonia and Co",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.940547"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.802670"
+            }
+          ],
+          "overall_sentiment_score": 0.314453,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "CSCO",
+              "relevance_score": "0.997443",
+              "ticker_sentiment_score": "0.457105",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.705699",
+              "ticker_sentiment_score": "0.147058",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Winnow Wealth LLC Invests $1.06 Million in Conagra Brands $CAG",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-winnow-wealth-llc-invests-106-million-in-conagra-brands-cag-2026-01-31/",
+          "time_published": "20260131T100612",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Winnow Wealth LLC has acquired a new stake in Conagra Brands (NYSE:CAG), purchasing over 55,000 shares valued at approximately $1.06 million in the third quarter. Despite this, analyst sentiment remains cautious, with several firms cutting price targets and ratings, leading to a \"Reduce\" consensus. Conagra has also declared a quarterly dividend of $0.35, representing a 7.6% yield.",
+          "banner_image": "https://www.marketbeat.com/logos/conagra-brands-inc-logo-1200x675.jpg?v=20221104063928",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.918249"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.821997"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.730741"
+            },
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.647702"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.648649"
+            }
+          ],
+          "overall_sentiment_score": 0.061343,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "CAG",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "-0.209531",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.622970",
+              "ticker_sentiment_score": "0.103541",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "V",
+              "relevance_score": "0.634542",
+              "ticker_sentiment_score": "0.107450",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "JPM",
+              "relevance_score": "0.638462",
+              "ticker_sentiment_score": "0.118019",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.643712",
+              "ticker_sentiment_score": "0.130640",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Federal Government Software Market Moving in the Right Direction | Tyler Technologies, Google, Infor",
+          "url": "https://www.openpr.com/news/4371880/federal-government-software-market-moving-in-the-right",
+          "time_published": "20260131T090049",
+          "authors": [
+            "HTF Market Intelligence Consulting Pvt. Ltd."
+          ],
+          "summary": "The Federal Government Software Market is experiencing significant growth driven by digital transformation initiatives, increasing cybersecurity threats, and the adoption of cloud-based solutions. Major players like Microsoft, Oracle, and Google are key contributors to this global industry. Opportunities abound in AI/machine learning and secure SaaS offerings, reflecting a push towards modernizing federal IT procurement and enhancing efficiency.",
+          "banner_image": "https://cdn.open-pr.com/L/1/L131491161_g.jpg",
+          "source": "openPR.com",
+          "category_within_source": "General",
+          "source_domain": "openPR.com",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "economy_fiscal",
+              "relevance_score": "0.801291"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.749921"
+            }
+          ],
+          "overall_sentiment_score": 0.419934,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "TYL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.400915",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.707916",
+              "ticker_sentiment_score": "0.325208",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.622174",
+              "ticker_sentiment_score": "0.542228",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.630186",
+              "ticker_sentiment_score": "0.305921",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Brookfield Renewable Is Building the Real Backbone of the AI Revolution",
+          "url": "https://finviz.com/news/294369/brookfield-renewable-is-building-the-real-backbone-of-the-ai-revolution",
+          "time_published": "20260131T090048",
+          "authors": [
+            "Reuben Gregg Brewer"
+          ],
+          "summary": "Brookfield Renewable is a diversified clean energy producer playing a crucial role in powering the energy-intensive artificial intelligence (AI) industry through long-term contracts. The company has partnered with tech giants like Microsoft and Google to provide clean energy for their data centers, fueling its own dividend growth targets of 5% to 9% annually. Investors can choose between a partnership structure (BEP) with a higher yield or a corporate structure (BEPC), both representing the same underlying business run by Brookfield Asset Management.",
+          "banner_image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F846517%2F22_06_30-a-person-hugging-a-piggy-bank-_gettyimages-1040557630.jpg&w=700",
+          "source": "Finviz",
+          "category_within_source": "General",
+          "source_domain": "Finviz",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.938690"
+            },
+            {
+              "topic": "energy_transportation",
+              "relevance_score": "0.943534"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.816166"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.612582"
+            }
+          ],
+          "overall_sentiment_score": 0.38326,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "BEP",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.527740",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.736000",
+              "ticker_sentiment_score": "0.317286",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.681408",
+              "ticker_sentiment_score": "0.340418",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Stock Yards Bank Buys $25 Million of Stock Yards Bancorp Stock",
+          "url": "https://www.fool.com/coverage/filings/2026/01/30/stock-yards-buys-25-million-stock-yards-bancorp-stock/",
+          "time_published": "20260131T083011",
+          "authors": [
+            "John Ballard"
+          ],
+          "summary": "Stock Yards Bank & Trust Co. increased its stake in Stock Yards Bancorp by buying 366,475 shares in the fourth quarter of 2025, an estimated $24.6 million transaction. This purchase signals confidence in the bank's future, despite potential near-term pressure on net interest margin due to expected interest rate cuts. The company's management might view its stock as undervalued, notably reducing positions in Microsoft and Apple to acquire its own shares.",
+          "banner_image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Fart%2Fcompanylogos%2Fmark%2FSYBT.png&w=128&op=resize",
+          "source": "The Motley Fool",
+          "category_within_source": "General",
+          "source_domain": "The Motley Fool",
+          "topics": [
+            {
+              "topic": "finance",
+              "relevance_score": "0.945456"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.812406"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.737605"
+            },
+            {
+              "topic": "economy_monetary",
+              "relevance_score": "0.621609"
+            }
+          ],
+          "overall_sentiment_score": -0.044142,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "SYBT",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.313518",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.636868",
+              "ticker_sentiment_score": "-0.148729",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.600016",
+              "ticker_sentiment_score": "-0.107430",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.627289",
+              "ticker_sentiment_score": "-0.129513",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Keefe, Bruyette & Woods Lift Esquire Financial Holdings, Inc. (ESQ) Target After In-Line Core Performance",
+          "url": "https://www.insidermonkey.com/blog/keefe-bruyette-woods-lift-esquire-financial-holdings-inc-esq-target-after-in-line-core-performance-1685740/?amp=1",
+          "time_published": "20260131T075900",
+          "authors": [
+            "Laiba Immad"
+          ],
+          "summary": "Keefe, Bruyette & Woods has raised its price target for Esquire Financial Holdings, Inc. (ESQ) to $85 from $80, maintaining a Market Perform rating, following the company's core net interest income aligning with expectations. Esquire Financial reported net interest income of $33.3 million, a net interest margin of 6.05%, and an increase in book value per share to $33.86. The company, a digital-first commercial bank, continues to focus on the legal industry and small businesses with tech-enabled financial solutions.",
+          "banner_image": null,
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.909705"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.810865"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.719860"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.643949"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.629879"
+            }
+          ],
+          "overall_sentiment_score": 0.315738,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ESQ",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.443562",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.610780",
+              "ticker_sentiment_score": "0.325809",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "TSLA",
+              "relevance_score": "0.605059",
+              "ticker_sentiment_score": "0.295554",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.634925",
+              "ticker_sentiment_score": "0.287732",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.641532",
+              "ticker_sentiment_score": "0.296605",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "The Truth About Automatic Data Processing Inc: Why Wall Street Won’t Shut Up About ADP",
+          "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/the-truth-about-automatic-data-processing-inc-why-wall-street-won-t/68537230",
+          "time_published": "20260131T075044",
+          "authors": [
+            "NULL"
+          ],
+          "summary": "Automatic Data Processing Inc (ADP) is a \"boring\" payroll giant that quietly processes paychecks for millions, generating substantial cash and attracting serious long-term investors. While it lacks the viral appeal of tech stocks on social media, ADP is highly regarded on Wall Street as a defensive play due to its stable, recurring revenue from essential HR and payroll services. The article explores why ADP is considered a reliable, dividend-friendly investment for those prioritizing consistency over rapid growth.",
+          "banner_image": "https://www.ad-hoc-news.de/wall-street-582921_1920.jpg",
+          "source": "AD HOC NEWS",
+          "category_within_source": "General",
+          "source_domain": "AD HOC NEWS",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.931177"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.832134"
+            }
+          ],
+          "overall_sentiment_score": 0.214294,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ADP",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.403597",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "PAYX",
+              "relevance_score": "0.814652",
+              "ticker_sentiment_score": "0.336158",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.611364",
+              "ticker_sentiment_score": "0.106795",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.604568",
+              "ticker_sentiment_score": "0.130023",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "TSLA",
+              "relevance_score": "0.611094",
+              "ticker_sentiment_score": "0.100694",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Is It Too Late To Consider Amkor Technology (AMKR) After Its 99% One Year Rally?",
+          "url": "https://simplywall.st/stocks/us/semiconductors/nasdaq-amkr/amkor-technology/news/is-it-too-late-to-consider-amkor-technology-amkr-after-its-9",
+          "time_published": "20260131T073102",
+          "authors": [
+            "Simply Wall St",
+            "Bailey Pemberton"
+          ],
+          "summary": "Amkor Technology (AMKR) has seen a 99% rally over the last year, prompting a valuation analysis. While a Dividend Discount Model suggests the stock is significantly overvalued, a P/E ratio comparison indicates it might be slightly undervalued relative to its industry and fair ratio. The article encourages investors to use \"Narratives\" for personalized valuation based on their own forecasts.",
+          "banner_image": "https://images.ctfassets.net/n07nr2koi959/6YVpCWgrk0c9DenG6UgW8m/d79e37d527c71a95e08b9ce1071ba986/Image_from_iOS.jpg?fit=thumb&w=64&h=64",
+          "source": "Simply Wall Street",
+          "category_within_source": "General",
+          "source_domain": "Simply Wall Street",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.904869"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.806772"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.726221"
+            }
+          ],
+          "overall_sentiment_score": 0.082476,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "AMKR",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.078097",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "KLAC",
+              "relevance_score": "0.635366",
+              "ticker_sentiment_score": "0.203405",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "TER",
+              "relevance_score": "0.613405",
+              "ticker_sentiment_score": "0.164482",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "PLTR",
+              "relevance_score": "0.555980",
+              "ticker_sentiment_score": "-0.346287",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.553051",
+              "ticker_sentiment_score": "0.113554",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Alphabet Inc: director Arnold sells $34,680 in stock By Investing.com",
+          "url": "https://za.investing.com/news/insider-trading-news/alphabet-inc-director-arnold-sells-34680-in-stock-93CH-4089170",
+          "time_published": "20260131T073016",
+          "authors": [
+            "Investing.com"
+          ],
+          "summary": "Frances Arnold, a director at Alphabet Inc (NASDAQ:GOOGL), sold 102 shares of Class C Capital Stock for $34,680 on January 29, 2026, when the stock was near its 52-week high. Following the sale, Arnold still directly owns 18,307 shares and various Google Stock Units. The transaction was executed under a Rule 10b5-1 trading plan adopted in August 2025.",
+          "banner_image": "https://i-invdn-com.investing.com/news/Microsoft_2_800x533_L_1412175603.jpg",
+          "source": "Investing.com South Africa",
+          "category_within_source": "General",
+          "source_domain": "Investing.com South Africa",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.801653"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.702151"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.609854"
+            }
+          ],
+          "overall_sentiment_score": 0.101983,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.104982",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.613250",
+              "ticker_sentiment_score": "0.141935",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Is It Too Late To Reassess SEI Investments (SEIC) After Strong Multi‑Year Share Price Gains",
+          "url": "https://simplywall.st/stocks/us/diversified-financials/nasdaq-seic/sei-investments/news/is-it-too-late-to-reassess-sei-investments-seic-after-strong",
+          "time_published": "20260131T064001",
+          "authors": [
+            "Simply Wall St",
+            "Bailey Pemberton"
+          ],
+          "summary": "SEI Investments (SEIC) has shown strong multi-year share price gains, leading to questions about its current valuation. According to Simply Wall St's analysis using an Excess Returns model, the stock appears approximately 24.6% overvalued, with an estimated intrinsic value of $70.49 per share against a market price of $87.85. While its P/E ratio of 15.01x is below the industry average, it's slightly above Simply Wall St's proprietary Fair Ratio of 14.35x, suggesting it may also be slightly expensive on this metric.",
+          "banner_image": null,
+          "source": "Simply Wall Street",
+          "category_within_source": "General",
+          "source_domain": "Simply Wall Street",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.911689"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.840281"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.701070"
+            }
+          ],
+          "overall_sentiment_score": -0.193568,
+          "overall_sentiment_label": "Somewhat-Bearish",
+          "ticker_sentiment": [
+            {
+              "ticker": "SEIC",
+              "relevance_score": "0.966191",
+              "ticker_sentiment_score": "-0.437051",
+              "ticker_sentiment_label": "Bearish"
+            },
+            {
+              "ticker": "BK",
+              "relevance_score": "0.610398",
+              "ticker_sentiment_score": "0.108536",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "PLTR",
+              "relevance_score": "0.552775",
+              "ticker_sentiment_score": "-0.374701",
+              "ticker_sentiment_label": "Bearish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.572945",
+              "ticker_sentiment_score": "0.058091",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        }
+      ]
+    }
   }
 ]
