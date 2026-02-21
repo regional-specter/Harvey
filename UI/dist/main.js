@@ -99000,29 +99000,41 @@ var require_agent_loop = __commonJS({
             const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
             if (newsArticles && newsArticles.length > 0) {
               contextForMemory.news = newsArticles;
-              let articlesForLLMSummary = newsArticles.map((article) => ({
-                title: article.title,
-                url: article.url,
-                summary: article.summary
-                // Use the summary provided by Alpha Vantage
-              }));
-              const summarizationPrompt = `
-                
-                                            The user is asking about news for ${tickerEntity.value}.
-                
-                                            I have retrieved the following news articles (titles and summaries):
-                
-                                            ${articlesForLLMSummary.map((art) => `Title: ${art.title}
+              let totalSentimentScore = 0;
+              let sentimentCounts = { "Positive": 0, "Negative": 0, "Neutral": 0, "Mixed": 0 };
+              const articleSummaries = [];
+              newsArticles.forEach((article) => {
+                totalSentimentScore += parseFloat(article.overall_sentiment_score);
+                if (article.overall_sentiment_label) {
+                  sentimentCounts[article.overall_sentiment_label]++;
+                }
+                articleSummaries.push({
+                  title: article.title,
+                  url: article.url,
+                  summary: article.summary,
+                  sentiment_score: article.overall_sentiment_score,
+                  sentiment_label: article.overall_sentiment_label
+                });
+              });
+              const averageSentimentScore = newsArticles.length > 0 ? (totalSentimentScore / newsArticles.length).toFixed(2) : "N/A";
+              const sentimentDistribution = Object.entries(sentimentCounts).filter(([label, count]) => count > 0).map(([label, count]) => `${count} ${label}`).join(", ");
+              const articlesForLLMSummary = articleSummaries.map(
+                (art) => `- Title: ${art.title}
 Summary: ${art.summary}
-URL: ${art.url}`).join("\n\n")}
-                
-                            
-                
-                                            Please provide a concise summary of these news articles, highlighting any key takeaways or significant developments related to ${tickerEntity.value}. Focus on what's most relevant to a financial researcher.
-                
-                                          `;
+URL: ${art.url}
+Sentiment: ${art.sentiment_label} (${art.sentiment_score})`
+              ).join("\n\n");
+              const summarizationPrompt = `
+                The user is asking about news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}.
+                I have retrieved the following news articles, including their titles, summaries, URLs, and sentiment analysis:
+                ${articlesForLLMSummary}
+
+                Overall Sentiment: The average sentiment score is approximately ${averageSentimentScore}. The distribution of sentiment labels is: ${sentimentDistribution}.
+
+                Please provide a concise summary of these news articles, highlighting any key takeaways or significant developments related to ${tickerEntity.value}. Critically, incorporate the sentiment analysis into your summary. For example, mention if the overall sentiment is positive or negative, and point out any particularly bullish or bearish articles that stand out. Focus on what's most relevant to a financial researcher.
+              `;
               const llmNewsSummary = await generateResponse(summarizationPrompt);
-              augmentedPrompt = `The user asked: "${userInput}". Here is a summary of the news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}:
+              augmentedPrompt = `The user asked: "${userInput}". Here is a summary of the news and its sentiment for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}:
 
 ${llmNewsSummary}
 
@@ -99031,21 +99043,20 @@ Formulate a natural language response based on this summary.`;
               augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
             }
           }
-        } else {
-          console.log("Agent loop: Retrieving relevant memories...");
-          const relevantMemories = retrieveRelevantMemories(initialIntent);
-          if (relevantMemories.length > 0) {
-            let contextString = "You are a helpful financial research assistant. Use the 'Previous Context' below to inform your answer to the 'Current User Query'.\n\n--- Previous Context ---\n";
-            for (const mem of relevantMemories) {
-              contextString += `- User asked: "${mem.user_input}"
+        }
+        console.log("Agent loop: Retrieving relevant memories...");
+        const relevantMemories = retrieveRelevantMemories(initialIntent);
+        if (relevantMemories.length > 0) {
+          let contextString = "You are a helpful financial research assistant. Use the 'Previous Context' below to inform your answer to the 'Current User Query'.\n\n--- Previous Context ---\n";
+          for (const mem of relevantMemories) {
+            contextString += `- User asked: "${mem.user_input}"
 - You responded: "${mem.llm_response.substring(0, 150)}..."
 
 `;
-            }
-            contextString += "--- End of Previous Context ---\n\n";
-            augmentedPrompt = `${contextString}--- Current User Query ---
-${userInput}`;
           }
+          contextString += "--- End of Previous Context ---\n\n";
+          augmentedPrompt = `${contextString}--- Current User Query ---
+${userInput}`;
         }
         console.log(`Agent loop: Generating response with final prompt...`);
         llmResponse = await generateResponse(augmentedPrompt);
@@ -99068,6 +99079,8 @@ ${userInput}`;
       } catch (error) {
         console.error(`Agent Cycle Error: ${error.message}`);
         throw error;
+      } finally {
+        console.log("Agent cycle finished.");
       }
     }
     module.exports = {
