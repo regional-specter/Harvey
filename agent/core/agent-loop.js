@@ -75,16 +75,57 @@ async function runAgentCycle(userInput) {
                               console.log(`Agent loop: Fetching latest news (last 24 hours)`);
                             }
                 
-                            const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
-                            if (newsArticles && newsArticles.length > 0) {
-                              contextForMemory.news = newsArticles; // Store fetched data in context for memory.
-                              // Augment the prompt with a summary of the news.
-                              const newsSummary = newsArticles.map(article => `- ${article.title} (Source: ${article.source})`).join('\n');
-                              augmentedPrompt = `The user asked: "${userInput}". I found the following news articles for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}:\n${newsSummary}\n\nFormulate a natural language response based on these headlines.`;
-                            } else {
-                              augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
-                            }
-                          }    }
+                                        const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
+                
+                                        if (newsArticles && newsArticles.length > 0) {
+                
+                                          contextForMemory.news = newsArticles; // Store fetched data in context for memory.
+                
+                                          
+                
+                                          // Prepare news content for LLM summarization
+                
+                                          let articlesForLLMSummary = newsArticles.map(article => ({
+                
+                                            title: article.title,
+                
+                                            url: article.url,
+                
+                                            summary: article.summary // Use the summary provided by Alpha Vantage
+                
+                                          }));
+                
+                            
+                
+                                          const summarizationPrompt = `
+                
+                                            The user is asking about news for ${tickerEntity.value}.
+                
+                                            I have retrieved the following news articles (titles and summaries):
+                
+                                            ${articlesForLLMSummary.map(art => `Title: ${art.title}\nSummary: ${art.summary}\nURL: ${art.url}`).join('\n\n')}
+                
+                            
+                
+                                            Please provide a concise summary of these news articles, highlighting any key takeaways or significant developments related to ${tickerEntity.value}. Focus on what's most relevant to a financial researcher.
+                
+                                          `;
+                
+                            
+                
+                                          const llmNewsSummary = await generateResponse(summarizationPrompt);
+                
+                            
+                
+                                          augmentedPrompt = `The user asked: "${userInput}". Here is a summary of the news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}:\n\n${llmNewsSummary}\n\nFormulate a natural language response based on this summary.`;
+                
+                                        } else {
+                
+                                          augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
+                
+                                        }
+                
+                                      }    }
     else {
       // --- Memory Retrieval Path ---
       // 3. Retrieve Context: If not a tool request, retrieve relevant past memories.

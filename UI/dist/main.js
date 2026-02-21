@@ -99000,11 +99000,33 @@ var require_agent_loop = __commonJS({
             const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
             if (newsArticles && newsArticles.length > 0) {
               contextForMemory.news = newsArticles;
-              const newsSummary = newsArticles.map((article) => `- ${article.title} (Source: ${article.source})`).join("\n");
-              augmentedPrompt = `The user asked: "${userInput}". I found the following news articles for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}:
-${newsSummary}
+              let articlesForLLMSummary = newsArticles.map((article) => ({
+                title: article.title,
+                url: article.url,
+                summary: article.summary
+                // Use the summary provided by Alpha Vantage
+              }));
+              const summarizationPrompt = `
+                
+                                            The user is asking about news for ${tickerEntity.value}.
+                
+                                            I have retrieved the following news articles (titles and summaries):
+                
+                                            ${articlesForLLMSummary.map((art) => `Title: ${art.title}
+Summary: ${art.summary}
+URL: ${art.url}`).join("\n\n")}
+                
+                            
+                
+                                            Please provide a concise summary of these news articles, highlighting any key takeaways or significant developments related to ${tickerEntity.value}. Focus on what's most relevant to a financial researcher.
+                
+                                          `;
+              const llmNewsSummary = await generateResponse(summarizationPrompt);
+              augmentedPrompt = `The user asked: "${userInput}". Here is a summary of the news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}:
 
-Formulate a natural language response based on these headlines.`;
+${llmNewsSummary}
+
+Formulate a natural language response based on this summary.`;
             } else {
               augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
             }
