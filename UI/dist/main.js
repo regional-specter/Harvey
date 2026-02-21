@@ -98784,8 +98784,10 @@ var require_intent_extractor = __commonJS({
         1.  **Thematic Scope:** Summarize the user's core goal. Examples: "company overview", "stock price analysis", "understanding financial metric", "general chat".
         2.  **Entities:** Identify key financial entities from the "Current User Query". If the query uses a pronoun, infer the entity from the "Previous Turn".
             *   Valid entity types: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR'.
+            *   **Crucially, for 'news_request' event types, ensure you always extract the relevant 'STOCK_TICKER' if present.**
             *   Example: If the previous turn was about "AAPL" and the current query is "what about its P/E ratio?", you MUST extract "AAPL" as an entity.
-        3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation'.
+        3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation', 'news_request'.
+            *   'news_request': For queries asking for news, headlines, or updates on a specific company or ticker.
 
         Return your answer ONLY as a valid JSON object with the keys "thematic_scope", "entities", and "event_type".
     `;
@@ -98893,6 +98895,50 @@ var require_finance_api = __commonJS({
   }
 });
 
+// ../agent/data_sources/news_api.js
+var require_news_api = __commonJS({
+  "../agent/data_sources/news_api.js"(exports, module) {
+    var API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
+    async function fetchNews(ticker, { from, to, limit = 50 } = {}) {
+      if (!API_KEY) {
+        console.error("[news_api] ERROR: ALPHA_VANTAGE_API_KEY is not set in the .env file.");
+        return null;
+      }
+      console.log(`[news_api] Fetching news for ${ticker} from Alpha Vantage...`);
+      let url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${ticker}&limit=${limit}&apikey=${API_KEY}`;
+      if (from) {
+        url += `&time_from=${from}`;
+      }
+      if (to) {
+        url += `&time_to=${to}`;
+      }
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.feed) {
+          console.log(`[news_api] Successfully fetched ${data.feed.length} news articles for ${ticker}.`);
+          return data.feed;
+        } else if (data["Note"]) {
+          console.warn(`[news_api] Alpha Vantage API Note: ${data["Note"]}`);
+          return null;
+        } else {
+          console.warn(`[news_api] Could not find news for ${ticker} in API response.`, data);
+          return null;
+        }
+      } catch (error) {
+        console.error(`[news_api] Error fetching news for ${ticker}:`, error.message);
+        return null;
+      }
+    }
+    module.exports = {
+      fetchNews
+    };
+  }
+});
+
 // ../agent/core/agent-loop.js
 var require_agent_loop = __commonJS({
   "../agent/core/agent-loop.js"(exports, module) {
@@ -98901,6 +98947,7 @@ var require_agent_loop = __commonJS({
     var { extractIntentAndEntities } = require_intent_extractor();
     var { retrieveRelevantMemories } = require_memory_retriever();
     var { fetchStockPrice } = require_finance_api();
+    var { fetchNews } = require_news_api();
     async function runAgentCycle(userInput) {
       if (!userInput || typeof userInput.trim() !== "string" || userInput.trim() === "") {
         throw new Error("Invalid user input provided for agent cycle. Input cannot be empty.");
@@ -98912,13 +98959,36 @@ var require_agent_loop = __commonJS({
         let contextForMemory = {};
         let augmentedPrompt = userInput;
         if (initialIntent.event_type === "data_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
-          console.log("Agent loop: Detected a data request. Using finance tool...");
+          console.log("Agent loop: Detected a data request for stock price. Using finance tool...");
           const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
           if (tickerEntity) {
             const price = await fetchStockPrice(tickerEntity.value);
             if (price !== null) {
               contextForMemory.price = price;
               augmentedPrompt = `The user asked: "${userInput}". Using the data I found: The live price of ${tickerEntity.value} is $${price}. Formulate a natural language response.`;
+            }
+          }
+        } else if (initialIntent.event_type === "news_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
+          console.log("Agent loop: Detected a news request. Using news tool...");
+          const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
+          if (tickerEntity) {
+            const now = /* @__PURE__ */ new Date();
+            const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1e3);
+            const formatDateTime = (date) => {
+              return date.toISOString().replace(/[-:]|\..+/g, "").slice(0, 13);
+            };
+            const fromDateTime = formatDateTime(twentyFourHoursAgo);
+            const toDateTime = formatDateTime(now);
+            const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
+            if (newsArticles && newsArticles.length > 0) {
+              contextForMemory.news = newsArticles;
+              const newsSummary = newsArticles.map((article) => `- ${article.title} (Source: ${article.source})`).join("\n");
+              augmentedPrompt = `The user asked: "${userInput}". I found the following latest news articles for ${tickerEntity.value}:
+${newsSummary}
+
+Formulate a natural language response based on these headlines.`;
+            } else {
+              augmentedPrompt = `The user asked: "${userInput}". I could not find any latest news for ${tickerEntity.value}. Please inform the user.`;
             }
           }
         } else {

@@ -8,6 +8,7 @@ const { extractIntentAndEntities } = require('./intent-extractor');
 // Import the new retriever and the finance API tool
 const { retrieveRelevantMemories } = require('../memory/memory-retriever');
 const { fetchStockPrice } = require('../data_sources/finance_api');
+const { fetchNews } = require('../data_sources/news_api');
 
 /**
  * Executes a single cycle of the agent's operation. This now includes intent extraction.
@@ -31,10 +32,10 @@ async function runAgentCycle(userInput) {
     let contextForMemory = {}; // Holds data fetched from tools, to be saved in memory.
     let augmentedPrompt = userInput; // Default prompt is just the user's input.
 
-    // 2. Decide Action: Prioritize tool use (data_request) over memory retrieval.
+    // 2. Decide Action: Prioritize tool use (data_request or news_request) over memory retrieval.
     if (initialIntent.event_type === 'data_request' && initialIntent.entities.some(e => e.type === 'STOCK_TICKER')) {
-      // --- Tool Use Path ---
-      console.log('Agent loop: Detected a data request. Using finance tool...');
+      // --- Tool Use Path: Fetch Stock Price ---
+      console.log('Agent loop: Detected a data request for stock price. Using finance tool...');
       const tickerEntity = initialIntent.entities.find(e => e.type === 'STOCK_TICKER');
       if (tickerEntity) {
         const price = await fetchStockPrice(tickerEntity.value);
@@ -44,7 +45,34 @@ async function runAgentCycle(userInput) {
           augmentedPrompt = `The user asked: "${userInput}". Using the data I found: The live price of ${tickerEntity.value} is $${price}. Formulate a natural language response.`;
         }
       }
-    } else {
+    } else if (initialIntent.event_type === 'news_request' && initialIntent.entities.some(e => e.type === 'STOCK_TICKER')) {
+      // --- Tool Use Path: Fetch News ---
+      console.log('Agent loop: Detected a news request. Using news tool...');
+                const tickerEntity = initialIntent.entities.find(e => e.type === 'STOCK_TICKER');
+                if (tickerEntity) {
+                  // Calculate 'from' and 'to' for the last 24 hours
+                  const now = new Date();
+                  const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+      
+                  // Format dates to YYYYMMDDTHHMM
+                  const formatDateTime = (date) => {
+                    return date.toISOString().replace(/[-:]|\..+/g, '').slice(0, 13);
+                  };
+      
+                  const fromDateTime = formatDateTime(twentyFourHoursAgo);
+                  const toDateTime = formatDateTime(now);
+      
+                  const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
+                  if (newsArticles && newsArticles.length > 0) {
+                    contextForMemory.news = newsArticles; // Store fetched data in context for memory.
+                    // Augment the prompt with a summary of the news.
+                    const newsSummary = newsArticles.map(article => `- ${article.title} (Source: ${article.source})`).join('\n');
+                    augmentedPrompt = `The user asked: "${userInput}". I found the following latest news articles for ${tickerEntity.value}:\n${newsSummary}\n\nFormulate a natural language response based on these headlines.`;
+                  } else {
+                    augmentedPrompt = `The user asked: "${userInput}". I could not find any latest news for ${tickerEntity.value}. Please inform the user.`;
+                  }
+                }    }
+    else {
       // --- Memory Retrieval Path ---
       // 3. Retrieve Context: If not a tool request, retrieve relevant past memories.
       console.log('Agent loop: Retrieving relevant memories...');

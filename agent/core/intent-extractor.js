@@ -31,8 +31,10 @@ async function extractIntentAndEntities(userInput, previousTurn = {}) {
         1.  **Thematic Scope:** Summarize the user's core goal. Examples: "company overview", "stock price analysis", "understanding financial metric", "general chat".
         2.  **Entities:** Identify key financial entities from the "Current User Query". If the query uses a pronoun, infer the entity from the "Previous Turn".
             *   Valid entity types: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR'.
+            *   **Crucially, for 'news_request' event types, ensure you always extract the relevant 'STOCK_TICKER' if present.**
             *   Example: If the previous turn was about "AAPL" and the current query is "what about its P/E ratio?", you MUST extract "AAPL" as an entity.
-        3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation'.
+        3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation', 'news_request'.
+            *   'news_request': For queries asking for news, headlines, or updates on a specific company or ticker.
 
         Return your answer ONLY as a valid JSON object with the keys "thematic_scope", "entities", and "event_type".
     `;

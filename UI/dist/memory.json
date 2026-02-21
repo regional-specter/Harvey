@@ -27,5 +27,764 @@
     "event_type": "financial_query",
     "entities": [],
     "context": {}
+  },
+  {
+    "id": 3,
+    "timestamp": "2026-02-21T17:28:47.510Z",
+    "user_input": "Whats the latest news on AAPL ?",
+    "llm_response": "It looks like there was a temporary glitch in the search for \"AAPL,\" but here is the latest major news regarding **Apple Inc. (AAPL)** as of mid-September 2024:\n\n### 1. iPhone 16 Pre-Order Data\nThe biggest news currently driving the stock is the early data from **iPhone 16 pre-orders**, which began on September 13.\n*   **Mixed Demand:** Some analysts, including Ming-Chi Kuo, reported that pre-order demand for the **iPhone 16 Pro** models may be lower than expected compared to the iPhone 15 launch last year.\n*   **Shipping Times:** Lead times (the time between ordering and delivery) for the Pro models are currently shorter than last year, which some investors interpret as softer demand, while others suggest it may be due to better supply chain preparation.\n\n### 2. \"It’s Glowtime\" Event Follow-up\nApple’s September 9 event introduced the **iPhone 16 lineup**, **Apple Watch Series 10**, and new **AirPods 4**.\n*   The iPhone 16 features a new \"Camera Control\" button and the A18 chip across all models to support **Apple Intelligence**.\n*   **Official Release:** The new devices will be available in stores starting this **Friday, September 20**.\n\n### 3. Apple Intelligence Rollout\nInvestors are closely watching the rollout of Apple’s AI suite. \n*   **Phased Launch:** Apple Intelligence will not be available on the devices at launch this Friday. It is expected to arrive as a beta update in **October** (iOS 18.1), with more advanced features arriving later in 2024 and early 2025.\n\n### 4. EU Tax Ruling\nApple recently lost a long-standing legal battle in the European Union. The EU’s top court ruled that Apple must pay **€13 billion ($14.4 billion)** in back taxes to Ireland, concluding that the company received illegal tax benefits. Apple has stated it is disappointed with the ruling, noting that the income was already taxed in the U.S.\n\n### 5. Stock Performance\n*   AAPL stock has seen some volatility over the last week as the market digests the iPhone pre-order numbers and the tax ruling. \n*   Despite the short-term fluctuations, many analysts remain \"Bullish\" for the long term, betting on an \"AI-driven supercycle\" as users with older iPhones upgrade to access the new AI features.\n\n**Summary for Investors:** The market is currently in a \"wait and see\" mode to determine if the iPhone 16 will trigger a massive upgrade cycle or if consumers will wait until the AI features are fully released later this year.",
+    "thematic_scope": "latest news for a specific stock ticker",
+    "event_type": "news_request",
+    "entities": [
+      {
+        "text": "AAPL",
+        "type": "STOCK_TICKER"
+      }
+    ],
+    "context": {}
+  },
+  {
+    "id": 4,
+    "timestamp": "2026-02-21T17:32:12.933Z",
+    "user_input": "Whats the latest news on AAPL ?",
+    "llm_response": "The latest news for Apple (AAPL) covers a mix of legal settlements, supply chain shifts, and strategic business moves. Here are the key highlights:\n\n*   **Siri Privacy Settlement:** Apple has agreed to pay **$95 million** to settle a class-action lawsuit. The suit alleged the \"unintended\" activation of Siri resulted in the unauthorized recording of users across various devices.\n*   **Supply Chain Changes:** According to reports from Omdia, the display manufacturer **BOE** is poised to become Apple’s leading supplier for MacBook display panels starting in 2025, marking a significant shift in their hardware production pipeline.\n*   **Strategic Shifts:** Analysts are noting that Apple is increasingly taking a \"page out of the Netflix playbook.\" This likely refers to a shift in how they manage their Services division or streaming content to drive recurring revenue.\n*   **Profitability Standings:** Recent reports indicate that while Apple remains a financial powerhouse, it is no longer the single most profitable company in America, as other firms have recently overtaken it in net earnings.\n*   **Investment Context:** In the broader market, there is continued focus on high-profile institutional activity. Updates on major hedge funds, including **Berkshire Hathaway** (one of Apple's largest shareholders), continue to influence investor sentiment around the stock.\n\nAdditionally, while the AR/VR smart glasses market is projected for significant growth through 2033, Apple continues to be a central figure in that conversation as it competes for dominance in the wearable tech space.",
+    "thematic_scope": "news update for a specific company",
+    "event_type": "news_request",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "AAPL"
+      }
+    ],
+    "context": {
+      "news": [
+        {
+          "title": "Medtronic: The Investment Appeal of a Medical Device Giant",
+          "url": "https://intellectia.ai/news/stock/medtronic-the-investment-appeal-of-a-medical-device-giant",
+          "time_published": "20260221T150729",
+          "authors": [
+            "Emily J. Thompson"
+          ],
+          "summary": "Medtronic, a leading medical device company, demonstrates strong investment appeal through its diversified business, innovation-driven growth, and stable dividend record. Despite the upcoming diabetes business spinoff, Medtronic projects 5.5% revenue growth for fiscal 2026, driven by new product launches and technological advancements like the Hugo surgical robot. Analysts have mixed views, with some upgrading to Outperform and others maintaining Neutral ratings, but the company's strong financial outlook and institutional investment suggest continued market confidence.",
+          "banner_image": "https://intellectia.ai/_next/image?url=https%3A%2F%2Fd5bp8bijhhba2.cloudfront.net%2Fimage%2Fcover_image%2F699692b1c249258d4508ea823091e0e2561fcbf70ca6ba73e807ae5a7dc57e28.jpeg&w=256&q=75",
+          "source": "Intellectia AI",
+          "category_within_source": "General",
+          "source_domain": "Intellectia AI",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.815690"
+            },
+            {
+              "topic": "life_sciences",
+              "relevance_score": "0.911359"
+            }
+          ],
+          "overall_sentiment_score": 0.360906,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MDT",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.300119",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "LUV",
+              "relevance_score": "0.611895",
+              "ticker_sentiment_score": "0.367719",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.748371",
+              "ticker_sentiment_score": "0.367537",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Meet the Most Profitable Company in America (It’s Not Apple or Microsoft)",
+          "url": "https://247wallst.com/investing/2026/02/21/meet-the-most-profitable-company-in-america-its-not-apple-or-microsoft/",
+          "time_published": "20260221T145531",
+          "authors": [
+            "Marc Guberti"
+          ],
+          "summary": "Alphabet has emerged as the most profitable company in America, surpassing Apple and Microsoft, largely due to the rapid growth of Google Cloud, fueled by AI demand. The company's investments in emerging technologies like the Gemini App and Waymo, alongside strong financial performance (including a 48% year-over-year revenue increase in Google Cloud for Q4), position it for continued margin expansion and make it a top-performing Magnificent Seven stock.",
+          "banner_image": "https://247wallst.com/wp-content/uploads/2022/03/imageForEntry17-6Zo.jpg",
+          "source": "24/7 Wall St.",
+          "category_within_source": "General",
+          "source_domain": "24/7 Wall St.",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.948995"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.803577"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.736907"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.607011"
+            }
+          ],
+          "overall_sentiment_score": 0.185872,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.788526",
+              "ticker_sentiment_score": "-0.215513",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.773558",
+              "ticker_sentiment_score": "-0.213490",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.983348",
+              "ticker_sentiment_score": "0.491878",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.990752",
+              "ticker_sentiment_score": "0.460671",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "UBER",
+              "relevance_score": "0.585965",
+              "ticker_sentiment_score": "0.286711",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "ASML Holding: The Secret Stock Powering Every AI Chip You Love",
+          "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/asml-holding-the-secret-stock-powering-every-ai-chip-you-love/68598612",
+          "time_published": "20260221T144958",
+          "authors": [],
+          "summary": "ASML Holding N.V. is a Dutch semiconductor equipment maker critical to the production of advanced AI chips, holding a near-monopoly on EUV lithography technology. The company's machines are essential for manufacturing chips used by tech giants like Nvidia, Apple, TSMC, and Intel. Despite geopolitical risks and chip industry cycles, ASML is considered a long-term investment for those seeking exposure to the underlying infrastructure of the AI and semiconductor markets.",
+          "banner_image": null,
+          "source": "AD HOC NEWS",
+          "category_within_source": "General",
+          "source_domain": "AD HOC NEWS",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.932370"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.942482"
+            }
+          ],
+          "overall_sentiment_score": 0.380256,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ASML",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.478033",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.879849",
+              "ticker_sentiment_score": "0.405816",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AMD",
+              "relevance_score": "0.720852",
+              "ticker_sentiment_score": "0.346967",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.780678",
+              "ticker_sentiment_score": "0.301910",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "INTC",
+              "relevance_score": "0.637618",
+              "ticker_sentiment_score": "0.253361",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Jupiter Asset Management Ltd. Sells 59,789 Shares of IMAX Corporation $IMAX",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-jupiter-asset-management-ltd-sells-59789-shares-of-imax-corporation-imax-2026-02-21/",
+          "time_published": "20260221T121823",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Jupiter Asset Management Ltd. reduced its stake in IMAX Corporation (NYSE:IMAX) by 14.5%, selling 59,789 shares, but still holds 352,171 shares valued at $11.53 million. Analysts recommend a \"Moderate Buy\" for IMAX with an average price target of $42.70, citing potential growth from a new Apple TV & F1 deal for live race screenings in IMAX theaters. However, significant put-option activity suggests elevated short-term bearish sentiment and volatility risk for the stock.",
+          "banner_image": "https://www.marketbeat.com/logos/imax-co-logo-1200x675.png?v=20240521154342",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.932361"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.819661"
+            }
+          ],
+          "overall_sentiment_score": 0.142372,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "IMAX",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "-0.095766",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.744215",
+              "ticker_sentiment_score": "0.310111",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "AR and VR Smart Glasses Market Size, Growth, Trends & Statistics by 2033",
+          "url": "https://straitsresearch.com/report/ar-and-vr-smart-glasses-market",
+          "time_published": "20260221T033056",
+          "authors": [
+            "Tejas Zamde"
+          ],
+          "summary": "The global AR and VR smart glasses market is projected to grow from USD 50.82 billion in 2025 to USD 120.87 billion by 2033, exhibiting a CAGR of 11.44%. This growth is fueled by factors like 5G deployment, rising demand for immersive experiences, and government support, despite challenges such as high costs and integration complexities. North America currently dominates the market, while Asia-Pacific is set for rapid growth.",
+          "banner_image": "https://straitsresearch.com/uploads/reports/ar-and-vr-smart-glasses-market-57046.jpg",
+          "source": "Straits Research",
+          "category_within_source": "General",
+          "source_domain": "Straits Research",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.919911"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.733381"
+            }
+          ],
+          "overall_sentiment_score": 0.321141,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "LUCY",
+              "relevance_score": "0.346982",
+              "ticker_sentiment_score": "0.025611",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.707798",
+              "ticker_sentiment_score": "0.411286",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.709660",
+              "ticker_sentiment_score": "0.444649",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.703831",
+              "ticker_sentiment_score": "0.414873",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "META",
+              "relevance_score": "0.734424",
+              "ticker_sentiment_score": "0.439823",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "SPY, IVV, VOO Battle for Top ETF Crown Amid S&P 500 Swings",
+          "url": "https://www.tradingview.com/news/zacks:241dbbb07094b:0-spy-ivv-voo-battle-for-top-etf-crown-amid-s-p-500-swings/",
+          "time_published": "20260221T013152",
+          "authors": [],
+          "summary": "The S&P 500 experienced significant volatility and a market correction following a recent tariff announcement, leading to a re-evaluation of its valuation. This market movement has intensified the competition among the three major S&P 500 tracking ETFs—SPY, IVV, and VOO—for asset under management (AUM) supremacy. While all three track the same index, differences in expense ratios, asset gathering, structure (UIT vs. open-end fund), and tax efficiency distinguish them for investors.",
+          "banner_image": null,
+          "source": "TradingView",
+          "category_within_source": "General",
+          "source_domain": "TradingView",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.941961"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.717870"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.646324"
+            }
+          ],
+          "overall_sentiment_score": 0.231787,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "FDS",
+              "relevance_score": "0.319680",
+              "ticker_sentiment_score": "0.029295",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.643679",
+              "ticker_sentiment_score": "0.320308",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.649141",
+              "ticker_sentiment_score": "0.310237",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Hedge Fund and Insider Trading News: David Tepper, Ken Griffin, Ray Dalio, Philippe Laffont, Berkshire Hathaway, Tiger Global Management, McGraw Hill Inc (MH), Gold.com Inc (GOLD), and More",
+          "url": "https://www.insidermonkey.com/blog/hedge-fund-and-insider-trading-news-david-tepper-ken-griffin-ray-dalio-philippe-laffont-berkshire-hathaway-tiger-global-management-mcgraw-hill-inc-mh-gold-com-inc-gold-and-more-1700072/",
+          "time_published": "20260220T225218",
+          "authors": [
+            "Insider Monkey Staff"
+          ],
+          "summary": "This article compiles recent hedge fund and insider trading news involving prominent figures like David Tepper, Ken Griffin, and Ray Dalio. It highlights Tepper's shift from banking stocks to tech, Dalio's family office's significant US stock bet, and Philippe Laffont's Nvidia sale and investment in a rapidly appreciating stock. The report also touches on Berkshire Hathaway trimming its Apple stake, a hedge fund's interest in cat-bond sales, and insider buying and selling activities for specific companies like McGraw Hill Inc (MH) and Gold.com Inc (GOLD).",
+          "banner_image": "https://imonkey-blog.imgix.net/blog/wp-content/uploads/2020/08/25110816/Investing-Trading-AdobeStock_283528648.jpeg?auto=format&fit=clip&expires=1803081600&width=480&height=319",
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.938167"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.803178"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.645266"
+            }
+          ],
+          "overall_sentiment_score": 0.169249,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MH",
+              "relevance_score": "0.838778",
+              "ticker_sentiment_score": "-0.112322",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MU",
+              "relevance_score": "0.720034",
+              "ticker_sentiment_score": "0.340780",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "META",
+              "relevance_score": "0.710008",
+              "ticker_sentiment_score": "0.314707",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.700846",
+              "ticker_sentiment_score": "0.339359",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.729505",
+              "ticker_sentiment_score": "-0.222298",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            }
+          ]
+        },
+        {
+          "title": "Don’t Overreact: Tariffs Overturned, but Fundamentals Still Rule",
+          "url": "https://www.morningstar.com/economy/dont-overreact-tariffs-overturned-fundamentals-still-rule",
+          "time_published": "20260220T221539",
+          "authors": [
+            "David Sekera",
+            "CFA"
+          ],
+          "summary": "Despite the Supreme Court striking down the president's use of IEEPA to implement tariffs, Morningstar predicts minimal changes to long-term intrinsic valuations, similar to when the tariffs were initially announced. The article emphasizes that fundamental analysis and company-specific valuations remain paramount for investors, as broader economic factors like AI buildout and consumer spending have had a more significant impact than previous tariffs. Various stock examples highlight how company fundamentals and current valuations often outweigh the direct impact of tariff changes.",
+          "banner_image": "https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/mrI7osC4qZZJ6rnZINgZoZD39i0=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/54f9f69f-0232-435e-9557-5edc4b17c660.jpg",
+          "source": "Morningstar",
+          "category_within_source": "General",
+          "source_domain": "Morningstar",
+          "topics": [
+            {
+              "topic": "economy_fiscal",
+              "relevance_score": "0.918722"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.843852"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.749484"
+            },
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.624858"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.631397"
+            }
+          ],
+          "overall_sentiment_score": -0.111662,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "MORN",
+              "relevance_score": "0.344411",
+              "ticker_sentiment_score": "0.004021",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NKE",
+              "relevance_score": "0.980822",
+              "ticker_sentiment_score": "-0.117431",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "WMT",
+              "relevance_score": "0.977520",
+              "ticker_sentiment_score": "-0.139504",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.975242",
+              "ticker_sentiment_score": "-0.139293",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "CDW Corp SEC 10-K Report",
+          "url": "https://www.tradingview.com/news/tradingview:94284136f28e3:0-cdw-corp-sec-10-k-report/",
+          "time_published": "20260220T211515",
+          "authors": [],
+          "summary": "CDW Corporation has released its 2025 Form 10-K report, detailing a 6.8% increase in net sales to $22,424.1 million, driven by improved customer spending. The company reported a slight decrease in Net Income to $1,066.6 million, impacted by higher interest expenses and taxes. CDW is strategically realigning its customer-facing organization into three new segments—Commercial, Government, and Education—effective January 1, 2026, to better meet market demands and enhance customer engagement, while also managing capital through share repurchases and dividends.",
+          "banner_image": null,
+          "source": "TradingView",
+          "category_within_source": "General",
+          "source_domain": "TradingView",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.918300"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.830010"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.704267"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.638915"
+            }
+          ],
+          "overall_sentiment_score": 0.133774,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "CDW",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.262799",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "DELL",
+              "relevance_score": "0.631768",
+              "ticker_sentiment_score": "0.142426",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.632173",
+              "ticker_sentiment_score": "0.147630",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "CSCO",
+              "relevance_score": "0.613056",
+              "ticker_sentiment_score": "0.139015",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.626112",
+              "ticker_sentiment_score": "0.109032",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Apple paying $95 million after class-action lawsuit over “unintended” use of Siri across devices",
+          "url": "https://www.nbcnewyork.com/news/apple-settlement-95-million-payments/6465861/",
+          "time_published": "20260220T211455",
+          "authors": [
+            "NBC New York Staff"
+          ],
+          "summary": "Apple is distributing payments from a $95 million class-action settlement regarding the \"unintended\" use of Siri across its devices. The settlement addresses claims that Siri-enabled devices inadvertently recorded confidential conversations which were then obtained by Apple or shared with third parties. Eligible consumers who filed claims before July 2, 2025, may receive up to $20 per Siri device, with payments already underway.",
+          "banner_image": "https://media.nbcnewyork.com/2025/10/WNBC_Rings_On_Dark@3x.png",
+          "source": "NBC New York",
+          "category_within_source": "General",
+          "source_domain": "NBC New York",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.838287"
+            }
+          ],
+          "overall_sentiment_score": -0.207862,
+          "overall_sentiment_label": "Somewhat-Bearish",
+          "ticker_sentiment": [
+            {
+              "ticker": "AAPL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "-0.206759",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            }
+          ]
+        },
+        {
+          "title": "BOE Poised to Become Apple’s Top MacBook Display Panel Supplier in 2025, Says Omdia",
+          "url": "https://www.businesswire.com/news/home/20250630458463/en/BOE-Poised-to-Become-Apples-Top-MacBook-Display-Panel-Supplier-in-2025-Says-Omdia",
+          "time_published": "20260220T211406",
+          "authors": [],
+          "summary": "Omdia predicts that BOE will become Apple's leading MacBook display panel supplier in 2025, securing 51% of the market share. This shift is primarily due to Apple redirecting MacBook Air display orders to BOE and a decline in demand for MacBook Pro models. While LG Display's share is expected to decrease, Sharp will continue supplying MacBook Pro panels, and Samsung Display is anticipated to join the MacBook supply chain in 2026 with the introduction of OLED technology.",
+          "banner_image": "https://mms.businesswire.com/media/20250630458463/en/2512221/4/Apple_annual_notebook_panel_purchase_by_volume_by_panel_makers_percentage.jpg?download=1",
+          "source": "Business Wire",
+          "category_within_source": "General",
+          "source_domain": "Business Wire",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.900030"
+            }
+          ],
+          "overall_sentiment_score": 0.152337,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "LPL",
+              "relevance_score": "0.306360",
+              "ticker_sentiment_score": "0.038185",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.932423",
+              "ticker_sentiment_score": "0.320360",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "U.S. stocks higher at close of trade; Dow Jones Industrial Average up 0.47%",
+          "url": "https://m.investing.com/news/stock-market-news/us-stocks-higher-at-close-of-trade-dow-jones-industrial-average-up-047-4517185?ampMode=1",
+          "time_published": "20260220T210931",
+          "authors": [
+            "Investing.com"
+          ],
+          "summary": "U.S. stocks closed higher on Friday, with the Dow Jones Industrial Average gaining 0.47%, the S&P 500 rising 0.69%, and the NASDAQ Composite climbing 0.90%. Gains were driven by the Consumer Services, Technology, and Telecoms sectors. Commodity prices also saw movement, with Gold Futures up and Crude oil slightly down.",
+          "banner_image": "https://i-invdn-com.investing.com/msite/img/install_apps/mobile-icon-banner.svg",
+          "source": "Investing.com",
+          "category_within_source": "General",
+          "source_domain": "Investing.com",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.917844"
+            }
+          ],
+          "overall_sentiment_score": 0.236226,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "RMSG",
+              "relevance_score": "0.831409",
+              "ticker_sentiment_score": "0.422313",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.744781",
+              "ticker_sentiment_score": "0.392362",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "TRV",
+              "relevance_score": "0.704206",
+              "ticker_sentiment_score": "0.392645",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.719986",
+              "ticker_sentiment_score": "0.388911",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "JNJ",
+              "relevance_score": "0.737832",
+              "ticker_sentiment_score": "-0.390431",
+              "ticker_sentiment_label": "Bearish"
+            }
+          ]
+        },
+        {
+          "title": "Apple Just Took a Page Straight Out of the Netflix Playbook. Here's Why It Could Be a Brilliant Move",
+          "url": "https://finance.yahoo.com/news/apple-just-took-page-straight-082200621.html",
+          "time_published": "20260220T202200",
+          "authors": [
+            "Danny Vena",
+            "CPA",
+            "The Motley Fool"
+          ],
+          "summary": "Apple has adopted a strategy similar to Netflix's by acquiring full ownership of its hit series \"Severance.\" This move allows Apple to produce future seasons in-house and potentially expand the franchise, aiming to avoid production delays and build its premium content library. The company's long-term strategy focuses on high-quality, creator-driven content to establish Apple TV+ as a premium brand, mirroring its successful approach with other Apple products.",
+          "banner_image": "https://s.yimg.com/ny/api/res/1.2/zUzeXMQaDsYVVOhQ7.XJpg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU3NjtjZj13ZWJw/https://media.zenfs.com/en/motleyfool.com/f0afb23f6dc87bb89f2c73680c1c4fd2",
+          "source": "Yahoo Finance",
+          "category_within_source": "General",
+          "source_domain": "Yahoo Finance",
+          "topics": [
+            {
+              "topic": "mergers_and_acquisitions",
+              "relevance_score": "0.947112"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.800287"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.703062"
+            }
+          ],
+          "overall_sentiment_score": 0.360731,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "NFLX",
+              "relevance_score": "0.850982",
+              "ticker_sentiment_score": "0.293768",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.431256",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "PayPal Is Back Near IPO-Era Prices—Value Setup or Value Trap?",
+          "url": "https://www.marketbeat.com/originals/paypal-is-back-near-ipo-era-pricesvalue-setup-or-value-trap/",
+          "time_published": "20260220T191324",
+          "authors": [
+            "Sam Quirke",
+            "Shannon Harms"
+          ],
+          "summary": "PayPal's stock (PYPL) has fallen to near its IPO-era prices, trading just above $40, and its P/E ratio has collapsed to a historic low of 7.67. This presents a potential contrarian opportunity due to its durable profitability, deep market embedment, and extremely oversold technical indicators, despite concerns about slowing growth and competitive pressures. With a leadership transition underway, a strategic reset could shift sentiment and unlock significant upside, according to some analysts who maintain Buy ratings.",
+          "banner_image": "https://www.marketbeat.com/logos/articles/med_20260219091107_paypal-is-back-near-ipo-era-pricesvalue-setup-or-v.png",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.936194"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.824805"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.727108"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.614612"
+            },
+            {
+              "topic": "ipo",
+              "relevance_score": "0.610191"
+            }
+          ],
+          "overall_sentiment_score": 0.174661,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "PYPL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.272543",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.675405",
+              "ticker_sentiment_score": "-0.127643",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "ORCL",
+              "relevance_score": "0.625942",
+              "ticker_sentiment_score": "0.312006",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.591562",
+              "ticker_sentiment_score": "0.119338",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "DVN",
+              "relevance_score": "0.594962",
+              "ticker_sentiment_score": "0.123027",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        }
+      ]
+    }
   }
 ]
