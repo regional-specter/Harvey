@@ -148,59 +148,74 @@ async function runAgentCycle(userInput) {
           console.log(`Agent loop: Filtering earnings from ${fromDateTime.toDateString()} to ${toDateTime.toDateString()}`);
         }
 
-        // Helper function to extract relevant EPS data
+        // Helper function to extract relevant EPS data (robust to key/units variations)
         const extractEpsData = (facts, isAnnual, fromFilter, toFilter) => {
           const epsData = [];
-          const epsBasicKey = 'EarningsPerShareBasic';
-          const epsDilutedKey = 'EarningsPerShareDiluted';
-
-          // Process Basic EPS
-          if (facts['us-gaap'][epsBasicKey] && facts['us-gaap'][epsBasicKey].units.USD) {
-            facts['us-gaap'][epsBasicKey].units.USD.forEach(unit => {
-              if (unit.form && unit.end && unit.val !== undefined) {
-                const fiscalDate = new Date(unit.end);
-                const reportPrefix = isAnnual ? '10-K' : '10-Q';
-                // Accept variants like 10-K/A, 10-Q/A, etc.
-                if (unit.form.startsWith(reportPrefix)) {
-                  if ((!fromFilter || fiscalDate >= fromFilter) && (!toFilter || fiscalDate <= toFilter)) {
-                    epsData.push({
-                      date: fiscalDate.toISOString().split('T')[0],
-                      epsBasic: unit.val,
-                      form: unit.form,
-                      fy: unit.fy, // Fiscal Year
-                      fp: unit.fp  // Fiscal Period (Q1, Q2, etc.)
-                    });
-                  }
-                }
-              }
-            });
+          if (!facts || !facts['us-gaap']) {
+            return epsData;
           }
 
-          // Process Diluted EPS, merging with basic if dates match
-          if (facts['us-gaap'][epsDilutedKey] && facts['us-gaap'][epsDilutedKey].units.USD) {
-            facts['us-gaap'][epsDilutedKey].units.USD.forEach(unit => {
-              if (unit.form && unit.end && unit.val !== undefined) {
-                const fiscalDate = new Date(unit.end);
-                const reportPrefix = isAnnual ? '10-K' : '10-Q';
-                if (unit.form.startsWith(reportPrefix)) {
-                  if ((!fromFilter || fiscalDate >= fromFilter) && (!toFilter || fiscalDate <= toFilter)) {
-                    const existingEntry = epsData.find(e => e.date === fiscalDate.toISOString().split('T')[0] && e.form === unit.form);
-                    if (existingEntry) {
-                      existingEntry.epsDiluted = unit.val;
-                    } else {
-                      epsData.push({
-                        date: fiscalDate.toISOString().split('T')[0],
-                        epsDiluted: unit.val,
-                        form: unit.form,
-                        fy: unit.fy,
-                        fp: unit.fp
-                      });
-                    }
-                  }
-                }
+          const usGaap = facts['us-gaap'];
+
+          const findMetricKeys = (needle) =>
+            Object.keys(usGaap).filter((key) =>
+              key.toLowerCase().includes(needle)
+            );
+
+          const basicKeys = findMetricKeys('earningspersharebasic');
+          const dilutedKeys = findMetricKeys('earningspersharediluted');
+
+          const processUnitsArray = (unitsArray, isBasic) => {
+            if (!Array.isArray(unitsArray)) return;
+            unitsArray.forEach((unit) => {
+              if (!unit || !unit.form || !unit.end || unit.val === undefined) return;
+              const fiscalDate = new Date(unit.end);
+              const reportPrefix = isAnnual ? '10-K' : '10-Q';
+              // Accept variants like 10-K/A, 10-Q/A, etc.
+              if (!unit.form.startsWith(reportPrefix)) return;
+              if (fromFilter && fiscalDate < fromFilter) return;
+              if (toFilter && fiscalDate > toFilter) return;
+
+              const dateStr = fiscalDate.toISOString().split('T')[0];
+              let existingEntry = epsData.find(
+                (e) => e.date === dateStr && e.form === unit.form
+              );
+
+              if (!existingEntry) {
+                existingEntry = {
+                  date: dateStr,
+                  form: unit.form,
+                  fy: unit.fy,
+                  fp: unit.fp,
+                };
+                epsData.push(existingEntry);
+              }
+
+              if (isBasic) {
+                existingEntry.epsBasic = unit.val;
+              } else {
+                existingEntry.epsDiluted = unit.val;
               }
             });
-          }
+          };
+
+          // Process Basic EPS across any units (USD, USD/shares, etc.)
+          basicKeys.forEach((metricKey) => {
+            const metric = usGaap[metricKey];
+            if (!metric || !metric.units || typeof metric.units !== 'object') return;
+            Object.keys(metric.units).forEach((unitName) => {
+              processUnitsArray(metric.units[unitName], true);
+            });
+          });
+
+          // Process Diluted EPS across any units (USD, USD/shares, etc.)
+          dilutedKeys.forEach((metricKey) => {
+            const metric = usGaap[metricKey];
+            if (!metric || !metric.units || typeof metric.units !== 'object') return;
+            Object.keys(metric.units).forEach((unitName) => {
+              processUnitsArray(metric.units[unitName], false);
+            });
+          });
 
           // Sort by fiscal period and year descending
           epsData.sort((a, b) => {

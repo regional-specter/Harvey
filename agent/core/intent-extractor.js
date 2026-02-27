@@ -56,6 +56,24 @@ async function extractIntentAndEntities(userInput, previousTurn = {}) {
         const cleanedJsonString = jsonResponseString.replace(/```json/g, '').replace(/```/g, '').trim();
         const extractedData = JSON.parse(cleanedJsonString);
 
+        // Normalize entities: some models may return an object instead of an array.
+        if (extractedData && !Array.isArray(extractedData.entities) && extractedData.entities && typeof extractedData.entities === 'object') {
+            const normalizedEntities = [];
+            for (const [key, value] of Object.entries(extractedData.entities)) {
+                if (value == null) continue;
+                if (Array.isArray(value)) {
+                    value.forEach(v => {
+                        if (v != null) {
+                            normalizedEntities.push({ type: key, value: v });
+                        }
+                    });
+                } else {
+                    normalizedEntities.push({ type: key, value });
+                }
+            }
+            extractedData.entities = normalizedEntities;
+        }
+
         // Validate the response structure
         if (extractedData && 
             typeof extractedData.thematic_scope === 'string' && 

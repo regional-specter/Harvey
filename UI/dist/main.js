@@ -98806,6 +98806,22 @@ var require_intent_extractor = __commonJS({
         const jsonResponseString = await generateResponse(extractionPrompt);
         const cleanedJsonString = jsonResponseString.replace(/```json/g, "").replace(/```/g, "").trim();
         const extractedData = JSON.parse(cleanedJsonString);
+        if (extractedData && !Array.isArray(extractedData.entities) && extractedData.entities && typeof extractedData.entities === "object") {
+          const normalizedEntities = [];
+          for (const [key, value] of Object.entries(extractedData.entities)) {
+            if (value == null) continue;
+            if (Array.isArray(value)) {
+              value.forEach((v2) => {
+                if (v2 != null) {
+                  normalizedEntities.push({ type: key, value: v2 });
+                }
+              });
+            } else {
+              normalizedEntities.push({ type: key, value });
+            }
+          }
+          extractedData.entities = normalizedEntities;
+        }
         if (extractedData && typeof extractedData.thematic_scope === "string" && Array.isArray(extractedData.entities) && typeof extractedData.event_type === "string") {
           console.log(`Intent Extractor: Successfully extracted scope ("${extractedData.thematic_scope}") and event type ("${extractedData.event_type}").`);
           return extractedData;
@@ -99173,53 +99189,58 @@ var require_agent_loop = __commonJS({
             }
             const extractEpsData = (facts, isAnnual, fromFilter, toFilter) => {
               const epsData = [];
-              const epsBasicKey = "EarningsPerShareBasic";
-              const epsDilutedKey = "EarningsPerShareDiluted";
-              if (facts["us-gaap"][epsBasicKey] && facts["us-gaap"][epsBasicKey].units.USD) {
-                facts["us-gaap"][epsBasicKey].units.USD.forEach((unit) => {
-                  if (unit.form && unit.end && unit.val !== void 0) {
-                    const fiscalDate = new Date(unit.end);
-                    const reportPrefix = isAnnual ? "10-K" : "10-Q";
-                    if (unit.form.startsWith(reportPrefix)) {
-                      if ((!fromFilter || fiscalDate >= fromFilter) && (!toFilter || fiscalDate <= toFilter)) {
-                        epsData.push({
-                          date: fiscalDate.toISOString().split("T")[0],
-                          epsBasic: unit.val,
-                          form: unit.form,
-                          fy: unit.fy,
-                          // Fiscal Year
-                          fp: unit.fp
-                          // Fiscal Period (Q1, Q2, etc.)
-                        });
-                      }
-                    }
+              if (!facts || !facts["us-gaap"]) {
+                return epsData;
+              }
+              const usGaap = facts["us-gaap"];
+              const findMetricKeys = (needle) => Object.keys(usGaap).filter(
+                (key) => key.toLowerCase().includes(needle)
+              );
+              const basicKeys = findMetricKeys("earningspersharebasic");
+              const dilutedKeys = findMetricKeys("earningspersharediluted");
+              const processUnitsArray = (unitsArray, isBasic) => {
+                if (!Array.isArray(unitsArray)) return;
+                unitsArray.forEach((unit) => {
+                  if (!unit || !unit.form || !unit.end || unit.val === void 0) return;
+                  const fiscalDate = new Date(unit.end);
+                  const reportPrefix = isAnnual ? "10-K" : "10-Q";
+                  if (!unit.form.startsWith(reportPrefix)) return;
+                  if (fromFilter && fiscalDate < fromFilter) return;
+                  if (toFilter && fiscalDate > toFilter) return;
+                  const dateStr = fiscalDate.toISOString().split("T")[0];
+                  let existingEntry = epsData.find(
+                    (e2) => e2.date === dateStr && e2.form === unit.form
+                  );
+                  if (!existingEntry) {
+                    existingEntry = {
+                      date: dateStr,
+                      form: unit.form,
+                      fy: unit.fy,
+                      fp: unit.fp
+                    };
+                    epsData.push(existingEntry);
+                  }
+                  if (isBasic) {
+                    existingEntry.epsBasic = unit.val;
+                  } else {
+                    existingEntry.epsDiluted = unit.val;
                   }
                 });
-              }
-              if (facts["us-gaap"][epsDilutedKey] && facts["us-gaap"][epsDilutedKey].units.USD) {
-                facts["us-gaap"][epsDilutedKey].units.USD.forEach((unit) => {
-                  if (unit.form && unit.end && unit.val !== void 0) {
-                    const fiscalDate = new Date(unit.end);
-                    const reportPrefix = isAnnual ? "10-K" : "10-Q";
-                    if (unit.form.startsWith(reportPrefix)) {
-                      if ((!fromFilter || fiscalDate >= fromFilter) && (!toFilter || fiscalDate <= toFilter)) {
-                        const existingEntry = epsData.find((e2) => e2.date === fiscalDate.toISOString().split("T")[0] && e2.form === unit.form);
-                        if (existingEntry) {
-                          existingEntry.epsDiluted = unit.val;
-                        } else {
-                          epsData.push({
-                            date: fiscalDate.toISOString().split("T")[0],
-                            epsDiluted: unit.val,
-                            form: unit.form,
-                            fy: unit.fy,
-                            fp: unit.fp
-                          });
-                        }
-                      }
-                    }
-                  }
+              };
+              basicKeys.forEach((metricKey) => {
+                const metric = usGaap[metricKey];
+                if (!metric || !metric.units || typeof metric.units !== "object") return;
+                Object.keys(metric.units).forEach((unitName) => {
+                  processUnitsArray(metric.units[unitName], true);
                 });
-              }
+              });
+              dilutedKeys.forEach((metricKey) => {
+                const metric = usGaap[metricKey];
+                if (!metric || !metric.units || typeof metric.units !== "object") return;
+                Object.keys(metric.units).forEach((unitName) => {
+                  processUnitsArray(metric.units[unitName], false);
+                });
+              });
               epsData.sort((a, b2) => {
                 if (b2.fy !== a.fy) return b2.fy - a.fy;
                 const fpOrder = { "Q4": 4, "Q3": 3, "Q2": 2, "Q1": 1, "FY": 5 };
@@ -102006,7 +102027,7 @@ var App = () => {
   inputValueRef.current = inputValue;
   useEffect2(() => {
     (0, import_agent.setAgentLogger)((logMessage) => {
-      setLogMessages((prevLogs) => [...prevLogs, logMessage].slice(-5));
+      setLogMessages((prevLogs) => [...prevLogs, logMessage].slice(-7));
     });
     const init = async () => {
       const success = await (0, import_agent.initializeAgent)();

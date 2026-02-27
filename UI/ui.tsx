@@ -143,7 +143,7 @@ const App = () => {
     useEffect(() => {
         // Set up the logger to capture agent output in the UI state
         setAgentLogger((logMessage) => {
-            setLogMessages(prevLogs => [...prevLogs, logMessage].slice(-5)); // Keep last 5 logs
+            setLogMessages(prevLogs => [...prevLogs, logMessage].slice(-7)); // Keep last 7 logs
         });
 
         const init = async () => {
