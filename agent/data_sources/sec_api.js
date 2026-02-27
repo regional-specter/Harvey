@@ -33,11 +33,24 @@ async function loadCikTickerMap() {
     const data = await response.json();
 
     cikTickerMap = {};
-    // The JSON is an array of objects like { "cik_str": 123, "ticker": "AAPL", "title": "Apple Inc" }
-    for (const entry of data) {
-        // Pad CIK to 10 digits with leading zeros
-        const cik = String(entry.cik_str).padStart(10, '0');
-        cikTickerMap[entry.ticker.toUpperCase()] = cik;
+    // Handle both array and object shapes from the SEC endpoint
+    // - Array: [ { cik_str, ticker, title }, ... ]
+    // - Object: { "0": { cik_str, ticker, title }, "1": { ... }, ... }
+    if (Array.isArray(data)) {
+        for (const entry of data) {
+            if (!entry || !entry.ticker || entry.cik_str == null) continue;
+            const cik = String(entry.cik_str).padStart(10, '0');
+            cikTickerMap[entry.ticker.toUpperCase()] = cik;
+        }
+    } else if (data && typeof data === 'object') {
+        for (const key of Object.keys(data)) {
+            const entry = data[key];
+            if (!entry || !entry.ticker || entry.cik_str == null) continue;
+            const cik = String(entry.cik_str).padStart(10, '0');
+            cikTickerMap[entry.ticker.toUpperCase()] = cik;
+        }
+    } else {
+        throw new Error('[sec_api] Unexpected CIK-ticker map format from SEC.');
     }
     console.log('[sec_api] CIK-ticker map loaded and cached.');
     return cikTickerMap;

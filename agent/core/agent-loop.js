@@ -9,6 +9,7 @@ const { extractIntentAndEntities } = require('./intent-extractor');
 const { retrieveRelevantMemories } = require('../memory/memory-retriever');
 const { fetchStockPrice } = require('../data_sources/finance_api');
 const { fetchNews } = require('../data_sources/news_api');
+const { getCik, fetchCompanyFacts, fetchSubmissionMetadata } = require('../data_sources/sec_api');
 
 
 
@@ -34,7 +35,7 @@ async function runAgentCycle(userInput) {
     let contextForMemory = {}; // Holds data fetched from tools, to be saved in memory.
     let augmentedPrompt = userInput; // Default prompt is just the user's input.
 
-    // 2. Decide Action: Prioritize tool use (data_request or news_request) over memory retrieval.
+    // 2. Decide Action: Prioritize tool use (data_request, news_request, earnings_request, filing_request) over memory retrieval.
     if (initialIntent.event_type === 'data_request' && initialIntent.entities.some(e => e.type === 'STOCK_TICKER')) {
       // --- Tool Use Path: Fetch Stock Price ---
       console.log('Agent loop: Detected a data request for stock price. Using finance tool...');
@@ -50,57 +51,292 @@ async function runAgentCycle(userInput) {
     } else if (initialIntent.event_type === 'news_request' && initialIntent.entities.some(e => e.type === 'STOCK_TICKER')) {
       // --- Tool Use Path: Fetch News ---
       console.log('Agent loop: Detected a news request. Using news tool...');
-                          const tickerEntity = initialIntent.entities.find(e => e.type === 'STOCK_TICKER');
-                          if (tickerEntity) {
-                            let fromDateTime = null;
-                            let toDateTime = null;
-                
-                            const fromEntity = initialIntent.entities.find(e => e.type === 'DATE_FROM');
-                            const toEntity = initialIntent.entities.find(e => e.type === 'DATE_TO');
-                
-                            if (fromEntity && toEntity) {
-                              fromDateTime = fromEntity.value;
-                              toDateTime = toEntity.value;
-                              console.log(`Agent loop: Fetching news from ${fromDateTime} to ${toDateTime}`);
-                            } else {
-                              // Default to the last 24 hours if no specific date range is provided
-                              const now = new Date();
-                              const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-                
-                              // Format dates to YYYYMMDDTHHMM
-                              const formatDateTime = (date) => {
-                                return date.toISOString().replace(/[-:]|\..+/g, '').slice(0, 13);
-                              };
-                
-                              fromDateTime = formatDateTime(twentyFourHoursAgo);
-                              toDateTime = formatDateTime(now);
-                              console.log(`Agent loop: Fetching latest news (last 24 hours)`);
-                            }
-                
-            const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
-            if (newsArticles && newsArticles.length > 0) {
-              contextForMemory.news = newsArticles; // Store fetched data in context for memory.
-              
-              // Format news with sentiment score
-              const formattedNews = newsArticles.map(article => {
-                const sentimentScore = parseFloat(article.overall_sentiment_score).toFixed(2);
-                return `- ${article.title} (Source: ${article.source}) [Sentiment: ${sentimentScore}]`;
-              }).join('\n');
+      const tickerEntity = initialIntent.entities.find(e => e.type === 'STOCK_TICKER');
+      if (tickerEntity) {
+        let fromDateTime = null;
+        let toDateTime = null;
 
-              augmentedPrompt = `
-                The user asked: "${userInput}".
-                Here are the relevant news headlines I found for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}.
-                Present this list to the user exactly as it is written, without any changes or summarization.
+        const fromEntity = initialIntent.entities.find(e => e.type === 'DATE_FROM');
+        const toEntity = initialIntent.entities.find(e => e.type === 'DATE_TO');
 
-                --- News Headlines ---
-                ${formattedNews}
-                ---
-              `;
-            } else {
-            augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
-          }
+        if (fromEntity && toEntity) {
+          fromDateTime = fromEntity.value;
+          toDateTime = toEntity.value;
+          console.log(`Agent loop: Fetching news from ${fromDateTime} to ${toDateTime}`);
+        } else {
+          // Default to the last 24 hours if no specific date range is provided
+          const now = new Date();
+          const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+
+          // Format dates to YYYYMMDDTHHMM
+          const formatDateTime = (date) => {
+            return date.toISOString().replace(/[-:]|\..+/g, '').slice(0, 13);
+          };
+
+          fromDateTime = formatDateTime(twentyFourHoursAgo);
+          toDateTime = formatDateTime(now);
+          console.log(`Agent loop: Fetching latest news (last 24 hours)`);
         }
-    }
+
+        const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
+        if (newsArticles && newsArticles.length > 0) {
+          contextForMemory.news = newsArticles; // Store fetched data in context for memory.
+
+          // Format news with sentiment score
+          const formattedNews = newsArticles.map(article => {
+            const sentimentScore = parseFloat(article.overall_sentiment_score).toFixed(2);
+            return `- ${article.title} (Source: ${article.source}) [Sentiment: ${sentimentScore}]`;
+          }).join('\n');
+
+          augmentedPrompt = `
+            The user asked: "${userInput}".
+            Here are the relevant news headlines I found for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}.
+            Present this list to the user exactly as it is written, without any changes or summarization.
+
+            --- News Headlines ---
+            ${formattedNews}
+            ---
+          `;
+        } else {
+          augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
+        }
+      }
+    } else if (initialIntent.event_type === 'earnings_request' && initialIntent.entities.some(e => e.type === 'STOCK_TICKER')) {
+      // --- Tool Use Path: Fetch Earnings Data from SEC EDGAR API ---
+      console.log('Agent loop: Detected an earnings request. Using SEC EDGAR API...');
+      const tickerEntity = initialIntent.entities.find(e => e.type === 'STOCK_TICKER');
+      if (tickerEntity) {
+        const ticker = tickerEntity.value;
+        const cik = await getCik(ticker);
+        if (!cik) {
+          augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker}. Please inform the user.`;
+          llmResponse = await generateResponse(augmentedPrompt);
+          console.log(`Agent loop: Could not find CIK for ${ticker}.`);
+          return llmResponse;
+        }
+
+        const companyFacts = await fetchCompanyFacts(cik);
+        if (!companyFacts || !companyFacts.facts || !companyFacts.facts['us-gaap']) {
+          augmentedPrompt = `The user asked: "${userInput}". I could not retrieve company facts for ${ticker} (CIK: ${cik}). Please inform the user.`;
+          llmResponse = await generateResponse(augmentedPrompt);
+          console.log(`Agent loop: Could not retrieve company facts for ${ticker}.`);
+          return llmResponse;
+        }
+
+        contextForMemory.companyFacts = companyFacts; // Store fetched data in context for memory.
+
+        let fromDateTime = null;
+        let toDateTime = null;
+
+        const fromEntity = initialIntent.entities.find(e => e.type === 'DATE_FROM');
+        const toEntity = initialIntent.entities.find(e => e.type === 'DATE_TO');
+
+        if (fromEntity && toEntity) {
+          // Assuming YYYYMMDDTHHMM format from entities; use the date portion
+          const fromStr = fromEntity.value.substring(0, 8);
+          const toStr = toEntity.value.substring(0, 8);
+          fromDateTime = new Date(
+            parseInt(fromStr.substring(0, 4)),
+            parseInt(fromStr.substring(4, 6)) - 1,
+            parseInt(fromStr.substring(6, 8))
+          );
+          toDateTime = new Date(
+            parseInt(toStr.substring(0, 4)),
+            parseInt(toStr.substring(4, 6)) - 1,
+            parseInt(toStr.substring(6, 8))
+          );
+          console.log(`Agent loop: Filtering earnings from ${fromDateTime.toDateString()} to ${toDateTime.toDateString()}`);
+        }
+
+        // Helper function to extract relevant EPS data
+        const extractEpsData = (facts, isAnnual, fromFilter, toFilter) => {
+          const epsData = [];
+          const epsBasicKey = 'EarningsPerShareBasic';
+          const epsDilutedKey = 'EarningsPerShareDiluted';
+
+          // Process Basic EPS
+          if (facts['us-gaap'][epsBasicKey] && facts['us-gaap'][epsBasicKey].units.USD) {
+            facts['us-gaap'][epsBasicKey].units.USD.forEach(unit => {
+              if (unit.form && unit.end && unit.val !== undefined) {
+                const fiscalDate = new Date(unit.end);
+                const reportPrefix = isAnnual ? '10-K' : '10-Q';
+                // Accept variants like 10-K/A, 10-Q/A, etc.
+                if (unit.form.startsWith(reportPrefix)) {
+                  if ((!fromFilter || fiscalDate >= fromFilter) && (!toFilter || fiscalDate <= toFilter)) {
+                    epsData.push({
+                      date: fiscalDate.toISOString().split('T')[0],
+                      epsBasic: unit.val,
+                      form: unit.form,
+                      fy: unit.fy, // Fiscal Year
+                      fp: unit.fp  // Fiscal Period (Q1, Q2, etc.)
+                    });
+                  }
+                }
+              }
+            });
+          }
+
+          // Process Diluted EPS, merging with basic if dates match
+          if (facts['us-gaap'][epsDilutedKey] && facts['us-gaap'][epsDilutedKey].units.USD) {
+            facts['us-gaap'][epsDilutedKey].units.USD.forEach(unit => {
+              if (unit.form && unit.end && unit.val !== undefined) {
+                const fiscalDate = new Date(unit.end);
+                const reportPrefix = isAnnual ? '10-K' : '10-Q';
+                if (unit.form.startsWith(reportPrefix)) {
+                  if ((!fromFilter || fiscalDate >= fromFilter) && (!toFilter || fiscalDate <= toFilter)) {
+                    const existingEntry = epsData.find(e => e.date === fiscalDate.toISOString().split('T')[0] && e.form === unit.form);
+                    if (existingEntry) {
+                      existingEntry.epsDiluted = unit.val;
+                    } else {
+                      epsData.push({
+                        date: fiscalDate.toISOString().split('T')[0],
+                        epsDiluted: unit.val,
+                        form: unit.form,
+                        fy: unit.fy,
+                        fp: unit.fp
+                      });
+                    }
+                  }
+                }
+              }
+            });
+          }
+
+          // Sort by fiscal period and year descending
+          epsData.sort((a, b) => {
+            if (b.fy !== a.fy) return b.fy - a.fy;
+            const fpOrder = { 'Q4': 4, 'Q3': 3, 'Q2': 2, 'Q1': 1, 'FY': 5 }; // FY usually means Q4 consolidated
+            return (fpOrder[b.fp] || 0) - (fpOrder[a.fp] || 0);
+          });
+          return epsData;
+        };
+
+        let annualReports = extractEpsData(companyFacts.facts, true, fromDateTime, toDateTime);
+        let quarterlyReports = extractEpsData(companyFacts.facts, false, fromDateTime, toDateTime);
+
+        // Fallback: if the specified window yields no data, return the most recent available instead of an empty result.
+        if (fromDateTime && toDateTime && annualReports.length === 0 && quarterlyReports.length === 0) {
+          console.log('Agent loop: No earnings found strictly within requested window; falling back to most recent earnings data.');
+          annualReports = extractEpsData(companyFacts.facts, true, null, null);
+          quarterlyReports = extractEpsData(companyFacts.facts, false, null, null);
+        }
+
+        let annualEarningsSummary = 'No annual earnings data available for the specified period.';
+        if (annualReports && annualReports.length > 0) {
+          annualEarningsSummary = annualReports.slice(0, 3).map(report =>
+            `Fiscal Year End: ${report.date} (FY: ${report.fy}), Basic EPS: ${report.epsBasic || 'N/A'}, Diluted EPS: ${report.epsDiluted || 'N/A'}`
+          ).join('\n');
+        }
+
+        let quarterlyEarningsSummary = 'No quarterly earnings data available for the specified period.';
+        if (quarterlyReports && quarterlyReports.length > 0) {
+          quarterlyEarningsSummary = quarterlyReports.slice(0, 3).map(report =>
+            `Fiscal Qtr End: ${report.date} (FY: ${report.fy}, FP: ${report.fp}), Basic EPS: ${report.epsBasic || 'N/A'}, Diluted EPS: ${report.epsDiluted || 'N/A'}`
+          ).join('\n');
+        }
+
+        augmentedPrompt = `
+          The user asked: "${userInput}".
+          Here is the earnings data for ${ticker} (CIK: ${cik}):
+
+          --- Annual Earnings Reports ---
+          ${annualEarningsSummary}
+
+          --- Quarterly Earnings Reports ---
+          ${quarterlyEarningsSummary}
+
+          Please summarize this earnings data for the user, highlighting key figures, recent trends, and any significant surprises within the specified date range. Note that this data is derived from SEC filings.
+        `;
+      } else {
+        augmentedPrompt = `The user asked: "${userInput}". I could not find earnings data for the requested ticker. Please inform the user.`;
+      }
+    } else if (initialIntent.event_type === 'filing_request' && initialIntent.entities.some(e => e.type === 'STOCK_TICKER')) {
+      // --- Tool Use Path: Fetch SEC Filings from SEC EDGAR API ---
+      console.log('Agent loop: Detected a filing request. Using SEC EDGAR API...');
+      const tickerEntity = initialIntent.entities.find(e => e.type === 'STOCK_TICKER');
+      if (tickerEntity) {
+          const ticker = tickerEntity.value;
+          const cik = await getCik(ticker);
+          if (!cik) {
+            augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker}. Please inform the user.`;
+            llmResponse = await generateResponse(augmentedPrompt);
+            console.log(`Agent loop: Could not find CIK for ${ticker}.`);
+            return llmResponse;
+          }
+
+          const submissionMetadata = await fetchSubmissionMetadata(cik);
+          if (!submissionMetadata || !submissionMetadata.filings || !submissionMetadata.filings.recent) {
+            augmentedPrompt = `The user asked: "${userInput}". I could not retrieve submission metadata for ${ticker} (CIK: ${cik}). Please inform the user.`;
+            llmResponse = await generateResponse(augmentedPrompt);
+            console.log(`Agent loop: Could not retrieve submission metadata for ${ticker}.`);
+            return llmResponse;
+          }
+
+          contextForMemory.submissionMetadata = submissionMetadata;
+
+          const recentFilings = submissionMetadata.filings.recent;
+          // Filter for 10-K and 10-Q, limit to top 3 of each.
+          const filingForms = recentFilings.form;
+          const accessionNumbers = recentFilings.accessionNumber;
+          const reportDates = recentFilings.reportDate;
+
+          const tenKFilings = [];
+          const tenQFilings = [];
+          let kCount = 0;
+          let qCount = 0;
+
+          for (let i = 0; i < filingForms.length && (kCount < 3 || qCount < 3); i++) {
+              const form = filingForms[i];
+              const accessionNumber = accessionNumbers[i];
+              const reportDate = reportDates[i];
+              
+              // Basic filtering for form type and date (we'll assume latest are at the start of the list based on SEC API behavior)
+              if (form === '10-K' && kCount < 3) {
+                  tenKFilings.push({
+                      reportDate: reportDate,
+                      accessionNumber: accessionNumber,
+                      form: form
+                  });
+                  kCount++;
+              } else if (form === '10-Q' && qCount < 3) {
+                  tenQFilings.push({
+                      reportDate: reportDate,
+                      accessionNumber: accessionNumber,
+                      form: form
+                  });
+                  qCount++;
+              }
+          }
+
+          const formatFilings = (filingList, type) => {
+            if (!filingList || filingList.length === 0) {
+              return `No recent ${type} filings found.`;
+            }
+            return filingList.map(filing => {
+              const filingUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${filing.accessionNumber.replace(/-/g, '')}/${filing.accessionNumber}.txt`;
+              return `- ${type} filed on ${filing.reportDate} ([Link](${filingUrl}))`;
+            }).join('\n');
+          };
+
+          const tenKSummary = formatFilings(tenKFilings, '10-K');
+          const tenQSummary = formatFilings(tenQFilings, '10-Q');
+
+          augmentedPrompt = `
+            The user asked: "${userInput}".
+            Here are the most recent SEC filings for ${ticker} (CIK: ${cik}):
+
+            --- 10-K Filings (Annual Reports) ---
+            ${tenKSummary}
+
+            --- 10-Q Filings (Quarterly Reports) ---
+            ${tenQSummary}
+
+            Please present this list of filings to the user.
+          `;
+        } else {
+          augmentedPrompt = `The user asked: "${userInput}". I could not find filing metadata for ${ticker}. Please inform the user.`;
+        }
+      }
     // Re-structure the final part of the agent loop to handle the direct response
     if (!llmResponse) { // If a response wasn't generated by a tool-specific path
         console.log(`Agent loop: Generating response with final prompt...`);

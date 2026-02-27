@@ -98784,17 +98784,20 @@ var require_intent_extractor = __commonJS({
         1.  **Thematic Scope:** Summarize the user's core goal. Examples: "company overview", "stock price analysis", "understanding financial metric", "general chat".
         2.  **Entities:** Identify key financial entities from the "Current User Query". If the query uses a pronoun, infer the entity from the "Previous Turn".
             *   Valid entity types: 'STOCK_TICKER', 'COMPANY_NAME', 'FINANCIAL_METRIC', 'ECONOMIC_INDICATOR', 'DATE_FROM', 'DATE_TO'.
-            *   Crucially, for 'news_request' event types, ensure you always extract the relevant 'STOCK_TICKER' if present.
-            If a date range is specified (e.g., "news from yesterday", "news between 2023-01-01 and 2023-01-31", "news for last week", "news from last month"), extract 'DATE_FROM' and 'DATE_TO' entities. Format these dates as YYYYMMDDTHHMM. If only one date is given for a range, infer the other.
-            *   **Crucial for relative dates:** Calculate the exact YYYYMMDDTHHMM based on the *current date* (February 21, 2026).
+            *   Crucially, for 'news_request', 'earnings_request', and 'filing_request' event types, you MUST extract the relevant 'STOCK_TICKER' if present.
+            *   If a date, year, or date range is specified (e.g., "news from yesterday", "news between 2023-01-01 and 2023-01-31", "news for last week", "news from last month", "earnings for 2024"), extract 'DATE_FROM' and 'DATE_TO' entities. Format these dates as YYYYMMDDTHHMM. If only one date or year is given for a range, infer the other.
+            *   **Crucial for relative dates and year-only ranges:** Calculate the exact YYYYMMDDTHHMM based on the *current date* (February 21, 2026), and for a year like "2024" set DATE_FROM to the start of the year (20240101T0000) and DATE_TO to the end of the year (20241231T2359).
             *   Example for DATE_FROM/DATE_TO:
                 *   "news from last month for AAPL" (current date: Feb 21, 2026) -> DATE_FROM: '20260101T0000', DATE_TO: '20260131T2359'
                 *   "news from last week for AAPL" -> DATE_FROM: '20260214T0000', DATE_TO: '20260221T2359' (assuming today is 2026-02-21)
+                *   "earnings of AAPL in 2024" -> DATE_FROM: '20240101T0000', DATE_TO: '20241231T2359'
                 *   "news for MSFT on 2023-03-15" -> DATE_FROM: '20230315T0000', DATE_TO: '20230315T2359'
                 *   "news for GOOG between 2023-01-01 and 2023-01-07" -> DATE_FROM: '20230101T0000', DATE_TO: '20230107T2359'
             *   Example: If the previous turn was about "AAPL" and the current query is "what about its P/E ratio?", you MUST extract "AAPL" as an entity.
-        3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation', 'news_request'.
+        3.  **Event Type:** Classify the user's query into ONE of the following types: 'data_request', 'financial_query', 'factual_question', 'creative_request', 'user_feedback', 'greeting', 'general_conversation', 'news_request', 'earnings_request', 'filing_request'.
             *   'news_request': For queries asking for news, headlines, or updates on a specific company or ticker.
+            *   'earnings_request': For queries about a company's earnings, revenue, profit, or other financial performance metrics, often for a specific period (e.g., a year or quarter).
+            *   'filing_request': For queries asking for SEC filings like 10-K, 10-Q, or other official documents.
 
         Return your answer ONLY as a valid JSON object with the keys "thematic_scope", "entities", and "event_type".
     `;
@@ -98867,13 +98870,13 @@ var require_memory_retriever = __commonJS({
 var require_finance_api = __commonJS({
   "../agent/data_sources/finance_api.js"(exports, module) {
     var API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
-    async function fetchStockPrice(ticker) {
+    async function fetchStockPrice(ticker2) {
       if (!API_KEY) {
         console.error("[finance_api] ERROR: ALPHA_VANTAGE_API_KEY is not set in the .env file.");
         return null;
       }
-      console.log(`[finance_api] Fetching LIVE stock price for ${ticker} from Alpha Vantage...`);
-      const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${API_KEY}`;
+      console.log(`[finance_api] Fetching LIVE stock price for ${ticker2} from Alpha Vantage...`);
+      const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker2}&apikey=${API_KEY}`;
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -98882,17 +98885,17 @@ var require_finance_api = __commonJS({
         const data = await response.json();
         if (data["Global Quote"] && data["Global Quote"]["05. price"]) {
           const price = parseFloat(data["Global Quote"]["05. price"]);
-          console.log(`[finance_api] Successfully fetched price for ${ticker}: ${price}`);
+          console.log(`[finance_api] Successfully fetched price for ${ticker2}: ${price}`);
           return price;
         } else if (data["Note"]) {
           console.warn(`[finance_api] Alpha Vantage API Note: ${data["Note"]}`);
           return null;
         } else {
-          console.warn(`[finance_api] Could not find price for ${ticker} in API response.`, data);
+          console.warn(`[finance_api] Could not find price for ${ticker2} in API response.`, data);
           return null;
         }
       } catch (error) {
-        console.error(`[finance_api] Error fetching stock price for ${ticker}:`, error.message);
+        console.error(`[finance_api] Error fetching stock price for ${ticker2}:`, error.message);
         return null;
       }
     }
@@ -98906,13 +98909,13 @@ var require_finance_api = __commonJS({
 var require_news_api = __commonJS({
   "../agent/data_sources/news_api.js"(exports, module) {
     var API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
-    async function fetchNews(ticker, { from, to, limit = 50 } = {}) {
+    async function fetchNews(ticker2, { from, to, limit = 50 } = {}) {
       if (!API_KEY) {
         console.error("[news_api] ERROR: ALPHA_VANTAGE_API_KEY is not set in the .env file.");
         return null;
       }
-      console.log(`[news_api] Fetching news for ${ticker} from Alpha Vantage...`);
-      let url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${ticker}&limit=${limit}&apikey=${API_KEY}`;
+      console.log(`[news_api] Fetching news for ${ticker2} from Alpha Vantage...`);
+      let url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${ticker2}&limit=${limit}&apikey=${API_KEY}`;
       if (from) {
         url += `&time_from=${from}`;
       }
@@ -98926,22 +98929,133 @@ var require_news_api = __commonJS({
         }
         const data = await response.json();
         if (data.feed) {
-          console.log(`[news_api] Successfully fetched ${data.feed.length} news articles for ${ticker}.`);
+          console.log(`[news_api] Successfully fetched ${data.feed.length} news articles for ${ticker2}.`);
           return data.feed;
         } else if (data["Note"]) {
           console.warn(`[news_api] Alpha Vantage API Note: ${data["Note"]}`);
           return null;
         } else {
-          console.warn(`[news_api] Could not find news for ${ticker} in API response.`, data);
+          console.warn(`[news_api] Could not find news for ${ticker2} in API response.`, data);
           return null;
         }
       } catch (error) {
-        console.error(`[news_api] Error fetching news for ${ticker}:`, error.message);
+        console.error(`[news_api] Error fetching news for ${ticker2}:`, error.message);
         return null;
       }
     }
     module.exports = {
       fetchNews
+    };
+  }
+});
+
+// ../agent/data_sources/sec_api.js
+var require_sec_api = __commonJS({
+  "../agent/data_sources/sec_api.js"(exports, module) {
+    var CIK_TICKER_MAP_URL = "https://www.sec.gov/files/company_tickers.json";
+    var cikTickerMap = null;
+    var SEC_RATE_LIMIT_INTERVAL = 100;
+    var lastSecRequestTime = 0;
+    async function rateLimitSecApi() {
+      const now = Date.now();
+      const timeSinceLastRequest = now - lastSecRequestTime;
+      if (timeSinceLastRequest < SEC_RATE_LIMIT_INTERVAL) {
+        const timeToWait = SEC_RATE_LIMIT_INTERVAL - timeSinceLastRequest;
+        await new Promise((resolve) => setTimeout(resolve, timeToWait));
+      }
+      lastSecRequestTime = Date.now();
+    }
+    async function loadCikTickerMap() {
+      if (cikTickerMap) {
+        return cikTickerMap;
+      }
+      console.log("[sec_api] Loading CIK-ticker map from SEC...");
+      await rateLimitSecApi();
+      const response = await fetch(CIK_TICKER_MAP_URL);
+      if (!response.ok) {
+        throw new Error(`Failed to load CIK-ticker map: ${response.statusText}`);
+      }
+      const data = await response.json();
+      cikTickerMap = {};
+      if (Array.isArray(data)) {
+        for (const entry of data) {
+          if (!entry || !entry.ticker || entry.cik_str == null) continue;
+          const cik = String(entry.cik_str).padStart(10, "0");
+          cikTickerMap[entry.ticker.toUpperCase()] = cik;
+        }
+      } else if (data && typeof data === "object") {
+        for (const key of Object.keys(data)) {
+          const entry = data[key];
+          if (!entry || !entry.ticker || entry.cik_str == null) continue;
+          const cik = String(entry.cik_str).padStart(10, "0");
+          cikTickerMap[entry.ticker.toUpperCase()] = cik;
+        }
+      } else {
+        throw new Error("[sec_api] Unexpected CIK-ticker map format from SEC.");
+      }
+      console.log("[sec_api] CIK-ticker map loaded and cached.");
+      return cikTickerMap;
+    }
+    async function getCik(ticker2) {
+      if (!cikTickerMap) {
+        await loadCikTickerMap();
+      }
+      return cikTickerMap[ticker2.toUpperCase()] || null;
+    }
+    async function fetchCompanyFacts(cik) {
+      if (!cik) {
+        console.error("[sec_api] CIK is required to fetch company facts.");
+        return null;
+      }
+      console.log(`[sec_api] Fetching company facts for CIK ${cik} from SEC...`);
+      await rateLimitSecApi();
+      const url = `https://data.sec.gov/api/xbrl/companyfacts/CIK${cik}.json`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          if (response.status === 404) {
+            console.warn(`[sec_api] No company facts found for CIK ${cik}.`);
+            return null;
+          }
+          throw new Error(`HTTP error fetching company facts! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(`[sec_api] Successfully fetched company facts for CIK ${cik}.`);
+        return data;
+      } catch (error) {
+        console.error(`[sec_api] Error fetching company facts for CIK ${cik}:`, error.message);
+        return null;
+      }
+    }
+    async function fetchSubmissionMetadata(cik) {
+      if (!cik) {
+        console.error("[sec_api] CIK is required to fetch submission metadata.");
+        return null;
+      }
+      console.log(`[sec_api] Fetching submission metadata for CIK ${cik} from SEC...`);
+      await rateLimitSecApi();
+      const url = `https://data.sec.gov/submissions/CIK${cik}.json`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          if (response.status === 404) {
+            console.warn(`[sec_api] No submission metadata found for CIK ${cik}.`);
+            return null;
+          }
+          throw new Error(`HTTP error fetching submission metadata! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(`[sec_api] Successfully fetched submission metadata for CIK ${cik}.`);
+        return data;
+      } catch (error) {
+        console.error(`[sec_api] Error fetching submission metadata for CIK ${cik}:`, error.message);
+        return null;
+      }
+    }
+    module.exports = {
+      getCik,
+      fetchCompanyFacts,
+      fetchSubmissionMetadata
     };
   }
 });
@@ -98955,6 +99069,7 @@ var require_agent_loop = __commonJS({
     var { retrieveRelevantMemories } = require_memory_retriever();
     var { fetchStockPrice } = require_finance_api();
     var { fetchNews } = require_news_api();
+    var { getCik, fetchCompanyFacts, fetchSubmissionMetadata } = require_sec_api();
     async function runAgentCycle(userInput) {
       if (!userInput || typeof userInput.trim() !== "string" || userInput.trim() === "") {
         throw new Error("Invalid user input provided for agent cycle. Input cannot be empty.");
@@ -99005,17 +99120,220 @@ var require_agent_loop = __commonJS({
                 return `- ${article.title} (Source: ${article.source}) [Sentiment: ${sentimentScore}]`;
               }).join("\n");
               augmentedPrompt = `
-                The user asked: "${userInput}".
-                Here are the relevant news headlines I found for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}.
-                Present this list to the user exactly as it is written, without any changes or summarization.
+            The user asked: "${userInput}".
+            Here are the relevant news headlines I found for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}.
+            Present this list to the user exactly as it is written, without any changes or summarization.
 
-                --- News Headlines ---
-                ${formattedNews}
-                ---
-              `;
+            --- News Headlines ---
+            ${formattedNews}
+            ---
+          `;
             } else {
               augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
             }
+          }
+        } else if (initialIntent.event_type === "earnings_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
+          console.log("Agent loop: Detected an earnings request. Using SEC EDGAR API...");
+          const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
+          if (tickerEntity) {
+            const ticker2 = tickerEntity.value;
+            const cik = await getCik(ticker2);
+            if (!cik) {
+              augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker2}. Please inform the user.`;
+              llmResponse = await generateResponse(augmentedPrompt);
+              console.log(`Agent loop: Could not find CIK for ${ticker2}.`);
+              return llmResponse;
+            }
+            const companyFacts = await fetchCompanyFacts(cik);
+            if (!companyFacts || !companyFacts.facts || !companyFacts.facts["us-gaap"]) {
+              augmentedPrompt = `The user asked: "${userInput}". I could not retrieve company facts for ${ticker2} (CIK: ${cik}). Please inform the user.`;
+              llmResponse = await generateResponse(augmentedPrompt);
+              console.log(`Agent loop: Could not retrieve company facts for ${ticker2}.`);
+              return llmResponse;
+            }
+            contextForMemory.companyFacts = companyFacts;
+            let fromDateTime = null;
+            let toDateTime = null;
+            const fromEntity = initialIntent.entities.find((e2) => e2.type === "DATE_FROM");
+            const toEntity = initialIntent.entities.find((e2) => e2.type === "DATE_TO");
+            if (fromEntity && toEntity) {
+              const fromStr = fromEntity.value.substring(0, 8);
+              const toStr = toEntity.value.substring(0, 8);
+              fromDateTime = new Date(
+                parseInt(fromStr.substring(0, 4)),
+                parseInt(fromStr.substring(4, 6)) - 1,
+                parseInt(fromStr.substring(6, 8))
+              );
+              toDateTime = new Date(
+                parseInt(toStr.substring(0, 4)),
+                parseInt(toStr.substring(4, 6)) - 1,
+                parseInt(toStr.substring(6, 8))
+              );
+              console.log(`Agent loop: Filtering earnings from ${fromDateTime.toDateString()} to ${toDateTime.toDateString()}`);
+            }
+            const extractEpsData = (facts, isAnnual, fromFilter, toFilter) => {
+              const epsData = [];
+              const epsBasicKey = "EarningsPerShareBasic";
+              const epsDilutedKey = "EarningsPerShareDiluted";
+              if (facts["us-gaap"][epsBasicKey] && facts["us-gaap"][epsBasicKey].units.USD) {
+                facts["us-gaap"][epsBasicKey].units.USD.forEach((unit) => {
+                  if (unit.form && unit.end && unit.val !== void 0) {
+                    const fiscalDate = new Date(unit.end);
+                    const reportPrefix = isAnnual ? "10-K" : "10-Q";
+                    if (unit.form.startsWith(reportPrefix)) {
+                      if ((!fromFilter || fiscalDate >= fromFilter) && (!toFilter || fiscalDate <= toFilter)) {
+                        epsData.push({
+                          date: fiscalDate.toISOString().split("T")[0],
+                          epsBasic: unit.val,
+                          form: unit.form,
+                          fy: unit.fy,
+                          // Fiscal Year
+                          fp: unit.fp
+                          // Fiscal Period (Q1, Q2, etc.)
+                        });
+                      }
+                    }
+                  }
+                });
+              }
+              if (facts["us-gaap"][epsDilutedKey] && facts["us-gaap"][epsDilutedKey].units.USD) {
+                facts["us-gaap"][epsDilutedKey].units.USD.forEach((unit) => {
+                  if (unit.form && unit.end && unit.val !== void 0) {
+                    const fiscalDate = new Date(unit.end);
+                    const reportPrefix = isAnnual ? "10-K" : "10-Q";
+                    if (unit.form.startsWith(reportPrefix)) {
+                      if ((!fromFilter || fiscalDate >= fromFilter) && (!toFilter || fiscalDate <= toFilter)) {
+                        const existingEntry = epsData.find((e2) => e2.date === fiscalDate.toISOString().split("T")[0] && e2.form === unit.form);
+                        if (existingEntry) {
+                          existingEntry.epsDiluted = unit.val;
+                        } else {
+                          epsData.push({
+                            date: fiscalDate.toISOString().split("T")[0],
+                            epsDiluted: unit.val,
+                            form: unit.form,
+                            fy: unit.fy,
+                            fp: unit.fp
+                          });
+                        }
+                      }
+                    }
+                  }
+                });
+              }
+              epsData.sort((a, b2) => {
+                if (b2.fy !== a.fy) return b2.fy - a.fy;
+                const fpOrder = { "Q4": 4, "Q3": 3, "Q2": 2, "Q1": 1, "FY": 5 };
+                return (fpOrder[b2.fp] || 0) - (fpOrder[a.fp] || 0);
+              });
+              return epsData;
+            };
+            let annualReports = extractEpsData(companyFacts.facts, true, fromDateTime, toDateTime);
+            let quarterlyReports = extractEpsData(companyFacts.facts, false, fromDateTime, toDateTime);
+            if (fromDateTime && toDateTime && annualReports.length === 0 && quarterlyReports.length === 0) {
+              console.log("Agent loop: No earnings found strictly within requested window; falling back to most recent earnings data.");
+              annualReports = extractEpsData(companyFacts.facts, true, null, null);
+              quarterlyReports = extractEpsData(companyFacts.facts, false, null, null);
+            }
+            let annualEarningsSummary = "No annual earnings data available for the specified period.";
+            if (annualReports && annualReports.length > 0) {
+              annualEarningsSummary = annualReports.slice(0, 3).map(
+                (report) => `Fiscal Year End: ${report.date} (FY: ${report.fy}), Basic EPS: ${report.epsBasic || "N/A"}, Diluted EPS: ${report.epsDiluted || "N/A"}`
+              ).join("\n");
+            }
+            let quarterlyEarningsSummary = "No quarterly earnings data available for the specified period.";
+            if (quarterlyReports && quarterlyReports.length > 0) {
+              quarterlyEarningsSummary = quarterlyReports.slice(0, 3).map(
+                (report) => `Fiscal Qtr End: ${report.date} (FY: ${report.fy}, FP: ${report.fp}), Basic EPS: ${report.epsBasic || "N/A"}, Diluted EPS: ${report.epsDiluted || "N/A"}`
+              ).join("\n");
+            }
+            augmentedPrompt = `
+          The user asked: "${userInput}".
+          Here is the earnings data for ${ticker2} (CIK: ${cik}):
+
+          --- Annual Earnings Reports ---
+          ${annualEarningsSummary}
+
+          --- Quarterly Earnings Reports ---
+          ${quarterlyEarningsSummary}
+
+          Please summarize this earnings data for the user, highlighting key figures, recent trends, and any significant surprises within the specified date range. Note that this data is derived from SEC filings.
+        `;
+          } else {
+            augmentedPrompt = `The user asked: "${userInput}". I could not find earnings data for the requested ticker. Please inform the user.`;
+          }
+        } else if (initialIntent.event_type === "filing_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
+          console.log("Agent loop: Detected a filing request. Using SEC EDGAR API...");
+          const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
+          if (tickerEntity) {
+            const ticker2 = tickerEntity.value;
+            const cik = await getCik(ticker2);
+            if (!cik) {
+              augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker2}. Please inform the user.`;
+              llmResponse = await generateResponse(augmentedPrompt);
+              console.log(`Agent loop: Could not find CIK for ${ticker2}.`);
+              return llmResponse;
+            }
+            const submissionMetadata = await fetchSubmissionMetadata(cik);
+            if (!submissionMetadata || !submissionMetadata.filings || !submissionMetadata.filings.recent) {
+              augmentedPrompt = `The user asked: "${userInput}". I could not retrieve submission metadata for ${ticker2} (CIK: ${cik}). Please inform the user.`;
+              llmResponse = await generateResponse(augmentedPrompt);
+              console.log(`Agent loop: Could not retrieve submission metadata for ${ticker2}.`);
+              return llmResponse;
+            }
+            contextForMemory.submissionMetadata = submissionMetadata;
+            const recentFilings = submissionMetadata.filings.recent;
+            const filingForms = recentFilings.form;
+            const accessionNumbers = recentFilings.accessionNumber;
+            const reportDates = recentFilings.reportDate;
+            const tenKFilings = [];
+            const tenQFilings = [];
+            let kCount = 0;
+            let qCount = 0;
+            for (let i2 = 0; i2 < filingForms.length && (kCount < 3 || qCount < 3); i2++) {
+              const form = filingForms[i2];
+              const accessionNumber = accessionNumbers[i2];
+              const reportDate = reportDates[i2];
+              if (form === "10-K" && kCount < 3) {
+                tenKFilings.push({
+                  reportDate,
+                  accessionNumber,
+                  form
+                });
+                kCount++;
+              } else if (form === "10-Q" && qCount < 3) {
+                tenQFilings.push({
+                  reportDate,
+                  accessionNumber,
+                  form
+                });
+                qCount++;
+              }
+            }
+            const formatFilings = (filingList, type) => {
+              if (!filingList || filingList.length === 0) {
+                return `No recent ${type} filings found.`;
+              }
+              return filingList.map((filing) => {
+                const filingUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${filing.accessionNumber.replace(/-/g, "")}/${filing.accessionNumber}.txt`;
+                return `- ${type} filed on ${filing.reportDate} ([Link](${filingUrl}))`;
+              }).join("\n");
+            };
+            const tenKSummary = formatFilings(tenKFilings, "10-K");
+            const tenQSummary = formatFilings(tenQFilings, "10-Q");
+            augmentedPrompt = `
+            The user asked: "${userInput}".
+            Here are the most recent SEC filings for ${ticker2} (CIK: ${cik}):
+
+            --- 10-K Filings (Annual Reports) ---
+            ${tenKSummary}
+
+            --- 10-Q Filings (Quarterly Reports) ---
+            ${tenQSummary}
+
+            Please present this list of filings to the user.
+          `;
+          } else {
+            augmentedPrompt = `The user asked: "${userInput}". I could not find filing metadata for ${ticker}. Please inform the user.`;
           }
         }
         if (!llmResponse) {
