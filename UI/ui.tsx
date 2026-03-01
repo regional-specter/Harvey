@@ -25,7 +25,7 @@ const HEADER_ASCII = `
 `.trim();
 
 const Header = () => (
-    <Box flexDirection="column" alignItems="center" paddingBottom={1}>
+    <Box flexDirection="column" alignItems="left" paddingBottom={1}>
         <Gradient colors={['#1A1A1B', '#A39382']} multiline>
             <Text bold>
                 {HEADER_ASCII}
@@ -33,7 +33,7 @@ const Header = () => (
         </Gradient>
         
         <Box marginTop={1} width={80}>
-            <Text color="gray" dimColor italic wrap="wrap" textAlign="center">
+            <Text color="gray" dimColor italic wrap="wrap" textAlign="left">
                 An intelligent research agent that tracks your goals, recalls contextually relevant 
                 information, and reasons across long, interleaved tasks to provide precise insights.
             </Text>

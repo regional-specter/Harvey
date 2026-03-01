@@ -1,58 +1,60 @@
-Phase 1 (Beta Version) — Core Foundations :
-     ✔ Define the CLI entry point and command structure (init research, set goal, fetch data, review memory) @done(26-02-17 18:02)
+Core Agent Features :
      ☐ Force explicit research intent selection before any data is fetched (long-term, short-term, risk, macro)
      ✔ Implement a minimal goal parser that normalizes user intent into a fixed schema @done(26-02-11 17:04)
-     ✔ Create a lightweight memory store that saves facts with intent tags instead of embeddings @done(26-02-11 17:05)
-     ☐ Enforce source attribution for every stored item with a direct URL reference
 
-Phase 2 — Data Ingestion Layer :
+Data Sources :
      ✔ Integrate stock price and fundamentals ingestion from Alpha Vantage @done(26-02-16 14:39)
      ☐ Add macroeconomic time-series data ingestion using FRED
      ☐ Pull structured market indicators and historical data from Alpha Vantage
      ☐ Fetch and parse SEC filings (10-K, 10-Q, 8-K) via EDGAR
      ☐ Normalize all incoming data into a shared internal format with timestamps and entity labels
-
-Phase 3 — Intent-Based Memory System :
-     ✔ Define intent schemas (goal context, entity scope, event type, data category) @done(26-02-11 17:05)
-     ✔ Store research notes strictly under their originating intent bucket @done(26-02-11 17:05)
-     ☐ Block similarity-based retrieval across incompatible intents by default
-     ☐ Implement memory stitching so new facts update existing intent threads
-     ☐ Add explicit cross-intent access only when the user requests it
-
-Phase 4 — Research Reasoning Engine :
-     ✔ Create reasoning templates per intent (valuation, risk, catalysts, macro exposure) @done(26-02-21 21:10)
-     ☐ Enforce explanations that stay inside the active research goal
-     ✔ Compare new data against stored assumptions instead of restating facts @done(26-02-21 21:10)
-     ☐ Detect and highlight assumption breaks or weakening theses
-     ☐ Prevent generic summaries unless explicitly requested
-
-Phase 5 — Change Tracking and Drift Detection :
-     ☐ Detect material changes in earnings, guidance, ratios, or macro indicators
-     ☐ Track how each change impacts previously stored conclusions
-     ☐ Maintain a timeline of belief evolution per intent
-     ☐ Flag contradictions between old assumptions and new evidence
-     ☐ Allow users to review “what changed and why” for any entity
-
-Phase 6 — CLI Research Experience :
-     ✔ Add commands to inspect memory by intent, entity, and time @done(26-02-17 17:59)
-     ✔ Enable exporting research summaries to markdown or plain text @done(26-02-17 17:59)
-     ☐ Warn users when they attempt to mix incompatible research intents
-     ✔ Add a research reset that preserves raw data but clears reasoning @done(26-02-17 18:02)
-     ☐ Keep the interaction calm, structured, and repeatable
-
-Phase 7 — Evaluation and Benchmarking:
-     ☐ Compare outputs against one-shot AI chat tools for the same queries
-     ☐ Demonstrate how intent separation prevents mixed conclusions
-     ☐ Log failure cases where traditional RAG retrieves the wrong context
-     ☐ Document qualitative improvements in consistency and trust
-     ☐ Prepare comparison notes against tools like ChatGPT, Perplexity, and finance platforms
-
-Phase 8 — Agentic Capabilities Expansion:
      ✔ Research possible SEC and Earning Reports sources for data collection @done(26-02-27 19:23)
      ✔ Integrate SEC documents access for financial reports (10-K, 10-Q, 8-K) @done(26-02-27 19:23)
      ✔ Implement historical data integration for SEC and Earning Reports tool call @done(26-02-27 19:38)
      ✔ Implement financial reports access for quarterly research and evaluations @done(26-02-27 19:38)
      ✔ Add API for financial news access for company evaluations and market sentiment @done(26-02-21 21:32)
      ✔ Implement specific historical news queries with date ranges @done(26-02-21 21:44)
+
+Memory System :
+     ✔ Create a lightweight memory store that saves facts with intent tags instead of embeddings @done(26-02-11 17:05)
+     ☐ Enforce source attribution for every stored item with a direct URL reference
+     ✔ Define intent schemas (goal context, entity scope, event type, data category) @done(26-02-11 17:05)
+     ✔ Store research notes strictly under their originating intent bucket @done(26-02-11 17:05)
+     ☐ Block similarity-based retrieval across incompatible intents by default
+     ☐ Implement memory stitching so new facts update existing intent threads
+     ☐ Add explicit cross-intent access only when the user requests it
+     ☐ Maintain a timeline of belief evolution per intent
+
+Reasoning & Analysis :
+     ✔ Create reasoning templates per intent (valuation, risk, catalysts, macro exposure) @done(26-02-21 21:10)
+     ☐ Enforce explanations that stay inside the active research goal
+     ✔ Compare new data against stored assumptions instead of restating facts @done(26-02-21 21:10)
+     ☐ Detect and highlight assumption breaks or weakening theses
+     ☐ Prevent generic summaries unless explicitly requested
+     ☐ Detect material changes in earnings, guidance, ratios, or macro indicators
+     ☐ Track how each change impacts previously stored conclusions
+     ☐ Flag contradictions between old assumptions and new evidence
      ✔ Implement LLM-powered summarization and key takeaways for news articles @done(26-02-21 21:48)
      ✔ Develop news sentiment analysis and categorization capabilities @done(26-02-24 15:20)
+
+CLI Experience :
+     ✔ Define the CLI entry point and command structure (init research, set goal, fetch data, review memory) @done(26-02-17 18:02)
+     ☐ Allow users to review “what changed and why” for any entity
+     ✔ Add commands to inspect memory by intent, entity, and time @done(26-02-17 17:59)
+     ✔ Enable exporting research summaries to markdown or plain text @done(26-02-17 17:59)
+     ☐ Warn users when they attempt to mix incompatible research intents
+     ✔ Add a research reset that preserves raw data but clears reasoning @done(26-02-17 18:02)
+     ☐ Keep the interaction calm, structured, and repeatable
+
+UI :
+     ✔ Setup basic UI framework and component library @done(26-02-28 16:52)
+     ✔ Implement UI for displaying research results @done(26-02-28 16:52)
+     ☐ Implement UI for managing research goals
+     ✔ Implementing new header and subheading position @done(26-02-28 16:52)
+
+Evaluation & Benchmarking :
+     ☐ Compare outputs against one-shot AI chat tools for the same queries
+     ☐ Demonstrate how intent separation prevents mixed conclusions
+     ☐ Log failure cases where traditional RAG retrieves the wrong context
+     ☐ Document qualitative improvements in consistency and trust
+     ☐ Prepare comparison notes against tools like ChatGPT, Perplexity, and finance platforms
