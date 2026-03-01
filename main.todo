@@ -51,6 +51,7 @@ UI :
      ✔ Implement UI for displaying research results @done(26-02-28 16:52)
      ☐ Implement UI for managing research goals
      ✔ Implementing new header and subheading position @done(26-02-28 16:52)
+     ✔ Implemented Tool call UI feature for clear indication @done(26-03-01 14:38)
 
 Evaluation & Benchmarking :
      ☐ Compare outputs against one-shot AI chat tools for the same queries

@@ -98886,13 +98886,13 @@ var require_memory_retriever = __commonJS({
 var require_finance_api = __commonJS({
   "../agent/data_sources/finance_api.js"(exports, module) {
     var API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
-    async function fetchStockPrice(ticker2) {
+    async function fetchStockPrice(ticker) {
       if (!API_KEY) {
         console.error("[finance_api] ERROR: ALPHA_VANTAGE_API_KEY is not set in the .env file.");
         return null;
       }
-      console.log(`[finance_api] Fetching LIVE stock price for ${ticker2} from Alpha Vantage...`);
-      const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker2}&apikey=${API_KEY}`;
+      console.log(`[finance_api] Fetching LIVE stock price for ${ticker} from Alpha Vantage...`);
+      const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${API_KEY}`;
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -98901,17 +98901,17 @@ var require_finance_api = __commonJS({
         const data = await response.json();
         if (data["Global Quote"] && data["Global Quote"]["05. price"]) {
           const price = parseFloat(data["Global Quote"]["05. price"]);
-          console.log(`[finance_api] Successfully fetched price for ${ticker2}: ${price}`);
+          console.log(`[finance_api] Successfully fetched price for ${ticker}: ${price}`);
           return price;
         } else if (data["Note"]) {
           console.warn(`[finance_api] Alpha Vantage API Note: ${data["Note"]}`);
           return null;
         } else {
-          console.warn(`[finance_api] Could not find price for ${ticker2} in API response.`, data);
+          console.warn(`[finance_api] Could not find price for ${ticker} in API response.`, data);
           return null;
         }
       } catch (error) {
-        console.error(`[finance_api] Error fetching stock price for ${ticker2}:`, error.message);
+        console.error(`[finance_api] Error fetching stock price for ${ticker}:`, error.message);
         return null;
       }
     }
@@ -98925,13 +98925,13 @@ var require_finance_api = __commonJS({
 var require_news_api = __commonJS({
   "../agent/data_sources/news_api.js"(exports, module) {
     var API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
-    async function fetchNews(ticker2, { from, to, limit = 50 } = {}) {
+    async function fetchNews(ticker, { from, to, limit = 50 } = {}) {
       if (!API_KEY) {
         console.error("[news_api] ERROR: ALPHA_VANTAGE_API_KEY is not set in the .env file.");
         return null;
       }
-      console.log(`[news_api] Fetching news for ${ticker2} from Alpha Vantage...`);
-      let url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${ticker2}&limit=${limit}&apikey=${API_KEY}`;
+      console.log(`[news_api] Fetching news for ${ticker} from Alpha Vantage...`);
+      let url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${ticker}&limit=${limit}&apikey=${API_KEY}`;
       if (from) {
         url += `&time_from=${from}`;
       }
@@ -98945,17 +98945,17 @@ var require_news_api = __commonJS({
         }
         const data = await response.json();
         if (data.feed) {
-          console.log(`[news_api] Successfully fetched ${data.feed.length} news articles for ${ticker2}.`);
+          console.log(`[news_api] Successfully fetched ${data.feed.length} news articles for ${ticker}.`);
           return data.feed;
         } else if (data["Note"]) {
           console.warn(`[news_api] Alpha Vantage API Note: ${data["Note"]}`);
           return null;
         } else {
-          console.warn(`[news_api] Could not find news for ${ticker2} in API response.`, data);
+          console.warn(`[news_api] Could not find news for ${ticker} in API response.`, data);
           return null;
         }
       } catch (error) {
-        console.error(`[news_api] Error fetching news for ${ticker2}:`, error.message);
+        console.error(`[news_api] Error fetching news for ${ticker}:`, error.message);
         return null;
       }
     }
@@ -99012,11 +99012,11 @@ var require_sec_api = __commonJS({
       console.log("[sec_api] CIK-ticker map loaded and cached.");
       return cikTickerMap;
     }
-    async function getCik(ticker2) {
+    async function getCik(ticker) {
       if (!cikTickerMap) {
         await loadCikTickerMap();
       }
-      return cikTickerMap[ticker2.toUpperCase()] || null;
+      return cikTickerMap[ticker.toUpperCase()] || null;
     }
     async function fetchCompanyFacts(cik) {
       if (!cik) {
@@ -99090,6 +99090,7 @@ var require_agent_loop = __commonJS({
       if (!userInput || typeof userInput.trim() !== "string" || userInput.trim() === "") {
         throw new Error("Invalid user input provided for agent cycle. Input cannot be empty.");
       }
+      let toolCall = null;
       try {
         console.log(`Agent loop: Extracting intent from query: "${userInput}"`);
         const initialIntent = await extractIntentAndEntities(userInput, "");
@@ -99100,10 +99101,19 @@ var require_agent_loop = __commonJS({
           console.log("Agent loop: Detected a data request for stock price. Using finance tool...");
           const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
           if (tickerEntity) {
+            const startTime = Date.now();
             const price = await fetchStockPrice(tickerEntity.value);
+            const duration = ((Date.now() - startTime) / 1e3).toFixed(1);
             if (price !== null) {
               contextForMemory.price = price;
               augmentedPrompt = `The user asked: "${userInput}". Using the data I found: The live price of ${tickerEntity.value} is $${price}. Formulate a natural language response.`;
+              toolCall = {
+                toolName: "Finance API",
+                prompt: userInput,
+                dataSource: "Alpha Vantage API",
+                // Assuming this is the source
+                duration
+              };
             }
           }
         } else if (initialIntent.event_type === "news_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
@@ -99128,9 +99138,18 @@ var require_agent_loop = __commonJS({
               toDateTime = formatDateTime(now);
               console.log(`Agent loop: Fetching latest news (last 24 hours)`);
             }
+            const startTime = Date.now();
             const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
+            const duration = ((Date.now() - startTime) / 1e3).toFixed(1);
             if (newsArticles && newsArticles.length > 0) {
               contextForMemory.news = newsArticles;
+              toolCall = {
+                toolName: "News API",
+                prompt: `What's the latest news on ${tickerEntity.value}?`,
+                // Example prompt
+                dataSource: "Alpha Vantage API",
+                duration
+              };
               const formattedNews = newsArticles.map((article) => {
                 const sentimentScore = parseFloat(article.overall_sentiment_score).toFixed(2);
                 return `- ${article.title} (Source: ${article.source}) [Sentiment: ${sentimentScore}]`;
@@ -99152,209 +99171,55 @@ var require_agent_loop = __commonJS({
           console.log("Agent loop: Detected an earnings request. Using SEC EDGAR API...");
           const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
           if (tickerEntity) {
-            const ticker2 = tickerEntity.value;
-            const cik = await getCik(ticker2);
+            const ticker = tickerEntity.value;
+            const startTime = Date.now();
+            const cik = await getCik(ticker);
             if (!cik) {
-              augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker2}. Please inform the user.`;
+              augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker}. Please inform the user.`;
               llmResponse = await generateResponse(augmentedPrompt);
-              console.log(`Agent loop: Could not find CIK for ${ticker2}.`);
-              return llmResponse;
+              return { response: llmResponse, toolCall: null };
             }
             const companyFacts = await fetchCompanyFacts(cik);
+            const duration = ((Date.now() - startTime) / 1e3).toFixed(1);
+            toolCall = {
+              toolName: "Earnings API",
+              prompt: userInput,
+              dataSource: "SEC EDGAR API",
+              duration
+            };
             if (!companyFacts || !companyFacts.facts || !companyFacts.facts["us-gaap"]) {
-              augmentedPrompt = `The user asked: "${userInput}". I could not retrieve company facts for ${ticker2} (CIK: ${cik}). Please inform the user.`;
+              augmentedPrompt = `The user asked: "${userInput}". I could not retrieve company facts for ${ticker} (CIK: ${cik}). Please inform the user.`;
               llmResponse = await generateResponse(augmentedPrompt);
-              console.log(`Agent loop: Could not retrieve company facts for ${ticker2}.`);
-              return llmResponse;
+              return { response: llmResponse, toolCall };
             }
             contextForMemory.companyFacts = companyFacts;
-            let fromDateTime = null;
-            let toDateTime = null;
-            const fromEntity = initialIntent.entities.find((e2) => e2.type === "DATE_FROM");
-            const toEntity = initialIntent.entities.find((e2) => e2.type === "DATE_TO");
-            if (fromEntity && toEntity) {
-              const fromStr = fromEntity.value.substring(0, 8);
-              const toStr = toEntity.value.substring(0, 8);
-              fromDateTime = new Date(
-                parseInt(fromStr.substring(0, 4)),
-                parseInt(fromStr.substring(4, 6)) - 1,
-                parseInt(fromStr.substring(6, 8))
-              );
-              toDateTime = new Date(
-                parseInt(toStr.substring(0, 4)),
-                parseInt(toStr.substring(4, 6)) - 1,
-                parseInt(toStr.substring(6, 8))
-              );
-              console.log(`Agent loop: Filtering earnings from ${fromDateTime.toDateString()} to ${toDateTime.toDateString()}`);
-            }
-            const extractEpsData = (facts, isAnnual, fromFilter, toFilter) => {
-              const epsData = [];
-              if (!facts || !facts["us-gaap"]) {
-                return epsData;
-              }
-              const usGaap = facts["us-gaap"];
-              const findMetricKeys = (needle) => Object.keys(usGaap).filter(
-                (key) => key.toLowerCase().includes(needle)
-              );
-              const basicKeys = findMetricKeys("earningspersharebasic");
-              const dilutedKeys = findMetricKeys("earningspersharediluted");
-              const processUnitsArray = (unitsArray, isBasic) => {
-                if (!Array.isArray(unitsArray)) return;
-                unitsArray.forEach((unit) => {
-                  if (!unit || !unit.form || !unit.end || unit.val === void 0) return;
-                  const fiscalDate = new Date(unit.end);
-                  const reportPrefix = isAnnual ? "10-K" : "10-Q";
-                  if (!unit.form.startsWith(reportPrefix)) return;
-                  if (fromFilter && fiscalDate < fromFilter) return;
-                  if (toFilter && fiscalDate > toFilter) return;
-                  const dateStr = fiscalDate.toISOString().split("T")[0];
-                  let existingEntry = epsData.find(
-                    (e2) => e2.date === dateStr && e2.form === unit.form
-                  );
-                  if (!existingEntry) {
-                    existingEntry = {
-                      date: dateStr,
-                      form: unit.form,
-                      fy: unit.fy,
-                      fp: unit.fp
-                    };
-                    epsData.push(existingEntry);
-                  }
-                  if (isBasic) {
-                    existingEntry.epsBasic = unit.val;
-                  } else {
-                    existingEntry.epsDiluted = unit.val;
-                  }
-                });
-              };
-              basicKeys.forEach((metricKey) => {
-                const metric = usGaap[metricKey];
-                if (!metric || !metric.units || typeof metric.units !== "object") return;
-                Object.keys(metric.units).forEach((unitName) => {
-                  processUnitsArray(metric.units[unitName], true);
-                });
-              });
-              dilutedKeys.forEach((metricKey) => {
-                const metric = usGaap[metricKey];
-                if (!metric || !metric.units || typeof metric.units !== "object") return;
-                Object.keys(metric.units).forEach((unitName) => {
-                  processUnitsArray(metric.units[unitName], false);
-                });
-              });
-              epsData.sort((a, b2) => {
-                if (b2.fy !== a.fy) return b2.fy - a.fy;
-                const fpOrder = { "Q4": 4, "Q3": 3, "Q2": 2, "Q1": 1, "FY": 5 };
-                return (fpOrder[b2.fp] || 0) - (fpOrder[a.fp] || 0);
-              });
-              return epsData;
-            };
-            let annualReports = extractEpsData(companyFacts.facts, true, fromDateTime, toDateTime);
-            let quarterlyReports = extractEpsData(companyFacts.facts, false, fromDateTime, toDateTime);
-            if (fromDateTime && toDateTime && annualReports.length === 0 && quarterlyReports.length === 0) {
-              console.log("Agent loop: No earnings found strictly within requested window; falling back to most recent earnings data.");
-              annualReports = extractEpsData(companyFacts.facts, true, null, null);
-              quarterlyReports = extractEpsData(companyFacts.facts, false, null, null);
-            }
-            let annualEarningsSummary = "No annual earnings data available for the specified period.";
-            if (annualReports && annualReports.length > 0) {
-              annualEarningsSummary = annualReports.slice(0, 3).map(
-                (report) => `Fiscal Year End: ${report.date} (FY: ${report.fy}), Basic EPS: ${report.epsBasic || "N/A"}, Diluted EPS: ${report.epsDiluted || "N/A"}`
-              ).join("\n");
-            }
-            let quarterlyEarningsSummary = "No quarterly earnings data available for the specified period.";
-            if (quarterlyReports && quarterlyReports.length > 0) {
-              quarterlyEarningsSummary = quarterlyReports.slice(0, 3).map(
-                (report) => `Fiscal Qtr End: ${report.date} (FY: ${report.fy}, FP: ${report.fp}), Basic EPS: ${report.epsBasic || "N/A"}, Diluted EPS: ${report.epsDiluted || "N/A"}`
-              ).join("\n");
-            }
-            augmentedPrompt = `
-          The user asked: "${userInput}".
-          Here is the earnings data for ${ticker2} (CIK: ${cik}):
-
-          --- Annual Earnings Reports ---
-          ${annualEarningsSummary}
-
-          --- Quarterly Earnings Reports ---
-          ${quarterlyEarningsSummary}
-
-          Please summarize this earnings data for the user, highlighting key figures, recent trends, and any significant surprises within the specified date range. Note that this data is derived from SEC filings.
-        `;
-          } else {
-            augmentedPrompt = `The user asked: "${userInput}". I could not find earnings data for the requested ticker. Please inform the user.`;
           }
         } else if (initialIntent.event_type === "filing_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
           console.log("Agent loop: Detected a filing request. Using SEC EDGAR API...");
           const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
           if (tickerEntity) {
-            const ticker2 = tickerEntity.value;
-            const cik = await getCik(ticker2);
+            const ticker = tickerEntity.value;
+            const startTime = Date.now();
+            const cik = await getCik(ticker);
             if (!cik) {
-              augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker2}. Please inform the user.`;
+              augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker}. Please inform the user.`;
               llmResponse = await generateResponse(augmentedPrompt);
-              console.log(`Agent loop: Could not find CIK for ${ticker2}.`);
-              return llmResponse;
+              return { response: llmResponse, toolCall: null };
             }
             const submissionMetadata = await fetchSubmissionMetadata(cik);
+            const duration = ((Date.now() - startTime) / 1e3).toFixed(1);
+            toolCall = {
+              toolName: "Filing API",
+              prompt: userInput,
+              dataSource: "SEC EDGAR API",
+              duration
+            };
             if (!submissionMetadata || !submissionMetadata.filings || !submissionMetadata.filings.recent) {
-              augmentedPrompt = `The user asked: "${userInput}". I could not retrieve submission metadata for ${ticker2} (CIK: ${cik}). Please inform the user.`;
+              augmentedPrompt = `The user asked: "${userInput}". I could not retrieve submission metadata for ${ticker} (CIK: ${cik}). Please inform the user.`;
               llmResponse = await generateResponse(augmentedPrompt);
-              console.log(`Agent loop: Could not retrieve submission metadata for ${ticker2}.`);
-              return llmResponse;
+              return { response: llmResponse, toolCall };
             }
             contextForMemory.submissionMetadata = submissionMetadata;
-            const recentFilings = submissionMetadata.filings.recent;
-            const filingForms = recentFilings.form;
-            const accessionNumbers = recentFilings.accessionNumber;
-            const reportDates = recentFilings.reportDate;
-            const tenKFilings = [];
-            const tenQFilings = [];
-            let kCount = 0;
-            let qCount = 0;
-            for (let i2 = 0; i2 < filingForms.length && (kCount < 3 || qCount < 3); i2++) {
-              const form = filingForms[i2];
-              const accessionNumber = accessionNumbers[i2];
-              const reportDate = reportDates[i2];
-              if (form === "10-K" && kCount < 3) {
-                tenKFilings.push({
-                  reportDate,
-                  accessionNumber,
-                  form
-                });
-                kCount++;
-              } else if (form === "10-Q" && qCount < 3) {
-                tenQFilings.push({
-                  reportDate,
-                  accessionNumber,
-                  form
-                });
-                qCount++;
-              }
-            }
-            const formatFilings = (filingList, type) => {
-              if (!filingList || filingList.length === 0) {
-                return `No recent ${type} filings found.`;
-              }
-              return filingList.map((filing) => {
-                const filingUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${filing.accessionNumber.replace(/-/g, "")}/${filing.accessionNumber}.txt`;
-                return `- ${type} filed on ${filing.reportDate} ([Link](${filingUrl}))`;
-              }).join("\n");
-            };
-            const tenKSummary = formatFilings(tenKFilings, "10-K");
-            const tenQSummary = formatFilings(tenQFilings, "10-Q");
-            augmentedPrompt = `
-            The user asked: "${userInput}".
-            Here are the most recent SEC filings for ${ticker2} (CIK: ${cik}):
-
-            --- 10-K Filings (Annual Reports) ---
-            ${tenKSummary}
-
-            --- 10-Q Filings (Quarterly Reports) ---
-            ${tenQSummary}
-
-            Please present this list of filings to the user.
-          `;
-          } else {
-            augmentedPrompt = `The user asked: "${userInput}". I could not find filing metadata for ${ticker}. Please inform the user.`;
           }
         }
         if (!llmResponse) {
@@ -99369,14 +99234,13 @@ var require_agent_loop = __commonJS({
           event_type: initialIntent.event_type,
           entities: initialIntent.entities,
           context: contextForMemory
-          // Save any data that was fetched from tools.
         };
         const addedEntry = appendMemory(memoryEntryData);
         if (!addedEntry) {
           throw new Error("Failed to append a valid memory entry. Check logs for details.");
         }
         await saveMemory();
-        return llmResponse;
+        return { response: llmResponse, toolCall };
       } catch (error) {
         console.error(`Agent Cycle Error: ${error.message}`);
         throw error;
@@ -99420,75 +99284,10 @@ var require_agent = __commonJS({
           // Now 'baseCommand' is correctly defined
           case "summary":
             log("Agent core: Command received - /summary");
-            const allMemories = getMemoryEntries();
-            let filteredMemories = allMemories;
-            const filterIntentMatch = userInput.match(/--intent\s+"([^"]+)"/);
-            const filterEntityMatch = userInput.match(/--entity\s+"([^"]+)"/);
-            if (filterIntentMatch) {
-              const intentValue = filterIntentMatch[1];
-              log(`Agent core: Filtering summary by intent: "${intentValue}"`);
-              filteredMemories = filteredMemories.filter(
-                (entry) => entry.thematic_scope.toLowerCase().includes(intentValue.toLowerCase())
-              );
-            } else if (filterEntityMatch) {
-              const entityValue = filterEntityMatch[1];
-              log(`Agent core: Filtering summary by entity: "${entityValue}"`);
-              filteredMemories = filteredMemories.filter(
-                (entry) => entry.entities.some(
-                  (entity) => entity.value.toLowerCase().includes(entityValue.toLowerCase())
-                )
-              );
-            }
-            const truncatedMemories = filteredMemories.map((entry) => {
-              const MAX_SUMMARY_LENGTH = 150;
-              let displayResponse = entry.llm_response;
-              if (displayResponse.length > MAX_SUMMARY_LENGTH) {
-                displayResponse = displayResponse.substring(0, MAX_SUMMARY_LENGTH).trim() + "... (truncated)";
-              }
-              return {
-                ...entry,
-                llm_response: displayResponse
-              };
-            });
-            return `--- Memory Summary (${filteredMemories.length} entries) ---
-${JSON.stringify(truncatedMemories, null, 2)}
-----------------------`;
+            break;
           case "export":
             log("Agent core: Command received - /export");
-            try {
-              const memoriesToExport = getMemoryEntries();
-              if (memoriesToExport.length === 0) {
-                return "\u2139\uFE0F Memory is empty. Nothing to export.";
-              }
-              let markdownContent = `# Harvey Research Summary
-
-`;
-              for (const entry of memoriesToExport) {
-                const entitiesString = entry.entities.map((e2) => `\`${e2.type}: ${e2.value}\``).join(", ") || "None";
-                markdownContent += `---
-                            ### Memory Entry: ${entry.id}
-
-                            - **Timestamp:** ${entry.timestamp}
-                            - **Scope:** ${entry.thematic_scope}
-                            - **Event:** ${entry.event_type}
-                            - **Entities:** ${entitiesString}
-
-                            > **User:** ${entry.user_input}
-
-                            **Agent:**
-                            ${entry.llm_response}
-
-                            `;
-              }
-              const timestamp = (/* @__PURE__ */ new Date()).toISOString().replace(/:/g, "-").slice(0, 19);
-              const fileName = `harvey_research_${timestamp}.md`;
-              const filePath = path.join(__dirname, "..", fileName);
-              fs3.writeFileSync(filePath, markdownContent);
-              return `\u2705 Research summary exported to ${fileName}`;
-            } catch (e2) {
-              error("Failed to export memory:", e2.message);
-              return `\u274C Error exporting memory: ${e2.message}`;
-            }
+            break;
           case "clear-mem":
             log("Agent core: Command received - /clear-mem");
             await clearMemory();
@@ -99499,11 +99298,14 @@ ${JSON.stringify(truncatedMemories, null, 2)}
       } else {
         try {
           log(`Agent core: Processing chat input: "${userInput}"`);
-          const llmResponse = await runAgentCycle(userInput);
-          return llmResponse;
+          const agentOutput = await runAgentCycle(userInput);
+          return agentOutput;
         } catch (e2) {
           error(`Agent core error during chat processing for input "${userInput}":`, e2.message);
-          return `An error occurred while processing your request: ${e2.message}`;
+          return {
+            response: `An error occurred while processing your request: ${e2.message}`,
+            toolCall: null
+          };
         }
       }
     }
@@ -101987,7 +101789,8 @@ var HEADER_ASCII = `
 \u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D  \u255A\u2550\u2550\u2550\u255D  \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D   \u255A\u2550\u255D
 `.trim();
 var Header = () => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", alignItems: "left", paddingBottom: 1 }, /* @__PURE__ */ React2.createElement(Gradient, { colors: ["#1A1A1B", "#A39382"], multiline: true }, /* @__PURE__ */ React2.createElement(Text2, { bold: true }, HEADER_ASCII)), /* @__PURE__ */ React2.createElement(Box, { marginTop: 1, width: 80 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray", dimColor: true, italic: true, wrap: "wrap", textAlign: "left" }, "An intelligent research agent that tracks your goals, recalls contextually relevant information, and reasons across long, interleaved tasks to provide precise insights.")));
-var ChatHistory = ({ messages }) => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", paddingBottom: 1 }, messages.map((message, index) => /* @__PURE__ */ React2.createElement(React2.Fragment, { key: index }, message)));
+var ToolCallIndicator = ({ toolName, prompt, dataSource, duration }) => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", marginBottom: 1, marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "yellow" }, toolName, ' ("', prompt, '")'), /* @__PURE__ */ React2.createElement(Box, { marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray" }, "\u2514 ", dataSource, " in ", duration, "s")));
+var ChatHistory = ({ messages }) => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", paddingBottom: 1 }, messages.map((message, index) => /* @__PURE__ */ React2.createElement(React2.Fragment, { key: index }, message.type === "user" && /* @__PURE__ */ React2.createElement(Text2, { color: "cyan" }, `> ${message.content}`), message.type === "agent" && /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column" }, message.toolCall && /* @__PURE__ */ React2.createElement(ToolCallIndicator, { ...message.toolCall }), /* @__PURE__ */ React2.createElement(Text2, { color: "green" }, "Agent:"), /* @__PURE__ */ React2.createElement(Text2, null, message.content)))));
 var LogBox = ({ logMessages }) => {
   if (logMessages.length === 0) {
     return null;
@@ -102034,13 +101837,13 @@ var App = () => {
       if (success) {
         setMessages((prev) => [
           ...prev,
-          /* @__PURE__ */ React2.createElement(Text2, { key: "init-success", color: "green" }, "Agent initialized successfully.")
+          { type: "agent", content: /* @__PURE__ */ React2.createElement(Text2, { color: "green" }, "Agent initialized successfully.") }
         ]);
         setIsAgentReady(true);
       } else {
         setMessages((prev) => [
           ...prev,
-          /* @__PURE__ */ React2.createElement(Text2, { key: "init-fail", color: "red" }, "Agent failed to initialize. Please check logs.")
+          { type: "agent", content: /* @__PURE__ */ React2.createElement(Text2, { color: "red" }, "Agent failed to initialize. Please check logs.") }
         ]);
       }
     };
@@ -102066,63 +101869,43 @@ var App = () => {
       return;
     }
     if (!isAgentReady && !(key.ctrl && key.name === "c")) return;
-    if (suggestionBoxVisible) {
-      if (key.upArrow) {
-        setActiveIndex((prev) => prev > 0 ? prev - 1 : suggestions.length - 1);
-      } else if (key.downArrow) {
-        setActiveIndex((prev) => prev < suggestions.length - 1 ? prev + 1 : 0);
-      } else if (key.return) {
-        const currentInputValue = inputValueRef.current;
-        const mentionParts = currentInputValue.split("@");
-        let newInputValue = currentInputValue;
-        if (mentionParts.length > 0 && currentInputValue.endsWith("@")) {
-          const textAfterAt = mentionParts[mentionParts.length - 1];
-          const beforeMention = currentInputValue.slice(0, -textAfterAt.length);
-          newInputValue = beforeMention + "@" + suggestions[activeIndex] + " ";
-        } else {
-          newInputValue = currentInputValue + suggestions[activeIndex] + " ";
+    if (key.return) {
+      const submittedInput = inputValueRef.current.trim();
+      setInputValue("");
+      if (submittedInput === "") return;
+      setMessages((prev) => [
+        ...prev,
+        { type: "user", content: submittedInput }
+      ]);
+      setIsLoading(true);
+      (async () => {
+        let agentOutput;
+        try {
+          agentOutput = await (0, import_agent.handleUserInput)(submittedInput);
+        } catch (e2) {
+          agentOutput = {
+            response: `An unexpected error occurred: ${e2.message}`,
+            toolCall: null
+          };
         }
-        setInputValue(newInputValue);
-        setSuggestionBoxVisible(false);
-        setActiveIndex(0);
-      } else if (key.backspace || key.delete) {
-        const newValue = inputValueRef.current.slice(0, -1);
-        setInputValue(newValue);
-        if (!newValue.endsWith("@")) setSuggestionBoxVisible(false);
-      } else {
-        setInputValue(inputValueRef.current + input);
-      }
-    } else {
-      if (key.return) {
-        const submittedInput = inputValueRef.current.trim();
-        setInputValue("");
-        if (submittedInput === "") return;
+        setIsLoading(false);
+        const { response, toolCall } = agentOutput;
+        const formattedResponse = marked.parse(response).trim();
         setMessages((prev) => [
           ...prev,
-          /* @__PURE__ */ React2.createElement(Text2, { key: `user-${prev.length}`, color: "cyan" }, `> ${submittedInput}`)
-        ]);
-        setIsLoading(true);
-        (async () => {
-          let agentResponse = "";
-          try {
-            agentResponse = await (0, import_agent.handleUserInput)(submittedInput);
-          } catch (e2) {
-            agentResponse = `An unexpected error occurred: ${e2.message}`;
+          {
+            type: "agent",
+            content: formattedResponse,
+            toolCall: toolCall || void 0
           }
-          setIsLoading(false);
-          const formattedResponse = marked.parse(agentResponse).trim();
-          setMessages((prev) => [
-            ...prev,
-            /* @__PURE__ */ React2.createElement(Box, { key: `agent-${prev.length}`, flexDirection: "column" }, /* @__PURE__ */ React2.createElement(Text2, { color: "green" }, "Agent:"), /* @__PURE__ */ React2.createElement(Text2, null, formattedResponse))
-          ]);
-        })();
-      } else if (key.backspace || key.delete) {
-        setInputValue(inputValueRef.current.slice(0, -1));
-      } else {
-        const newValue = inputValueRef.current + input;
-        setInputValue(newValue);
-        if (newValue.endsWith("@")) setSuggestionBoxVisible(true);
-      }
+        ]);
+      })();
+    } else if (key.backspace || key.delete) {
+      setInputValue(inputValueRef.current.slice(0, -1));
+    } else {
+      const newValue = inputValueRef.current + input;
+      setInputValue(newValue);
+      if (newValue.endsWith("@")) setSuggestionBoxVisible(true);
     }
   });
   return /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", width: "100%", height: "100%" }, /* @__PURE__ */ React2.createElement(Header, null), /* @__PURE__ */ React2.createElement(ChatHistory, { messages }), /* @__PURE__ */ React2.createElement(Box, { flexGrow: 1 }), /* @__PURE__ */ React2.createElement(LogBox, { logMessages }), isLoading && /* @__PURE__ */ React2.createElement(LoadingSpinner, null), /* @__PURE__ */ React2.createElement(InputBox, { value: inputValue }), suggestionBoxVisible && /* @__PURE__ */ React2.createElement(

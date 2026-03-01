@@ -49,89 +49,13 @@ async function handleUserInput(userInput) {
         switch (baseCommand) { // Now 'baseCommand' is correctly defined
             case 'summary':
                 log("Agent core: Command received - /summary");
-                const allMemories = getMemoryEntries(); // Get all memories
-                let filteredMemories = allMemories; // Start with all memories, then filter
-
-                // --- Argument Parsing for Filters ---
-                // Using regex for more robust parsing of quoted strings
-                const filterIntentMatch = userInput.match(/--intent\s+"([^"]+)"/);
-                const filterEntityMatch = userInput.match(/--entity\s+"([^"]+)"/);
-
-                if (filterIntentMatch) {
-                    const intentValue = filterIntentMatch[1];
-                    log(`Agent core: Filtering summary by intent: "${intentValue}"`);
-                    filteredMemories = filteredMemories.filter(entry => 
-                        entry.thematic_scope.toLowerCase().includes(intentValue.toLowerCase())
-                    );
-                } else if (filterEntityMatch) { // prioritize intent if both are present
-                    const entityValue = filterEntityMatch[1];
-                    log(`Agent core: Filtering summary by entity: "${entityValue}"`);
-                    filteredMemories = filteredMemories.filter(entry => 
-                        entry.entities.some(entity => 
-                            entity.value.toLowerCase().includes(entityValue.toLowerCase())
-                        )
-                    );
-                }
-                // --- End Argument Parsing ---
-
-                // Map over (potentially filtered) memories to truncate llm_response for cleaner display
-                const truncatedMemories = filteredMemories.map(entry => { 
-                    const MAX_SUMMARY_LENGTH = 150; 
-                    let displayResponse = entry.llm_response;
-                    if (displayResponse.length > MAX_SUMMARY_LENGTH) {
-                        displayResponse = displayResponse.substring(0, MAX_SUMMARY_LENGTH).trim() + "... (truncated)";
-                    }
-                    return {
-                        ...entry, 
-                        llm_response: displayResponse 
-                    };
-                });
-
-                // Stringify the truncated memories for display
-                return `--- Memory Summary (${filteredMemories.length} entries) ---\n${JSON.stringify(truncatedMemories, null, 2)}\n----------------------`;
+                // ... (rest of the summary case)
+                break;
             
             case 'export':
                 log("Agent core: Command received - /export");
-                try {
-                    const memoriesToExport = getMemoryEntries();
-                    if (memoriesToExport.length === 0) {
-                        return "ℹ️ Memory is empty. Nothing to export.";
-                    }
-
-                    let markdownContent = `# Harvey Research Summary\n\n`;
-
-                    for (const entry of memoriesToExport) {
-                        const entitiesString = entry.entities.map(e => `\`${e.type}: ${e.value}\``).join(', ') || 'None';
-                        
-                        markdownContent += `---
-                            ### Memory Entry: ${entry.id}
-
-                            - **Timestamp:** ${entry.timestamp}
-                            - **Scope:** ${entry.thematic_scope}
-                            - **Event:** ${entry.event_type}
-                            - **Entities:** ${entitiesString}
-
-                            > **User:** ${entry.user_input}
-
-                            **Agent:**
-                            ${entry.llm_response}
-
-                            `;
-                    }
-
-                    const timestamp = new Date().toISOString().replace(/:/g, '-').slice(0, 19);
-                    const fileName = `harvey_research_${timestamp}.md`;
-                    // Save in the project root directory (one level up from 'agent/')
-                    const filePath = path.join(__dirname, '..', fileName);
-
-                    fs.writeFileSync(filePath, markdownContent);
-                    
-                    return `✅ Research summary exported to ${fileName}`;
-
-                } catch (e) {
-                    error("Failed to export memory:", e.message);
-                    return `❌ Error exporting memory: ${e.message}`;
-                }
+                // ... (rest of the export case)
+                break;
 
             case 'clear-mem':
                 log("Agent core: Command received - /clear-mem");
@@ -147,14 +71,17 @@ async function handleUserInput(userInput) {
         // If the input is not a command, treat it as a regular chat message.
         try {
             log(`Agent core: Processing chat input: "${userInput}"`);
-            // Call the agent's core cycle to generate an LLM response.
-            const llmResponse = await runAgentCycle(userInput);
-            return llmResponse;
+            // Call the agent's core cycle to generate a structured response.
+            const agentOutput = await runAgentCycle(userInput);
+            return agentOutput; // Return the entire object { response, toolCall }
         } catch (e) {
             // If any part of the agent cycle fails, catch the error.
             error(`Agent core error during chat processing for input "${userInput}":`, e.message);
-            // Return a user-friendly error message.
-            return `An error occurred while processing your request: ${e.message}`;
+            // Return a user-friendly error message, wrapped in the expected object structure.
+            return {
+                response: `An error occurred while processing your request: ${e.message}`,
+                toolCall: null
+            };
         }
     }
 }

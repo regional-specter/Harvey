@@ -24,6 +24,20 @@ const HEADER_ASCII = `
 ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝   ╚═╝
 `.trim();
 
+// --- Type Definitions ---
+interface ToolCall {
+    toolName: string;
+    prompt: string;
+    dataSource: string;
+    duration: string;
+}
+
+interface Message {
+    type: 'user' | 'agent';
+    content: React.ReactNode;
+    toolCall?: ToolCall;
+}
+
 const Header = () => (
     <Box flexDirection="column" alignItems="left" paddingBottom={1}>
         <Gradient colors={['#1A1A1B', '#A39382']} multiline>
@@ -41,18 +55,36 @@ const Header = () => (
     </Box>
 );
 
-// Modified ChatHistory to display messages, distinguishing user/agent output.
-const ChatHistory = ({ messages }) => (
+// --- New ToolCallIndicator Component ---
+const ToolCallIndicator = ({ toolName, prompt, dataSource, duration }: ToolCall) => (
+    <Box flexDirection="column" marginBottom={1} marginLeft={2}>
+        <Text color="yellow">{toolName} ("{prompt}")</Text>
+        <Box marginLeft={2}>
+            <Text color="gray">└ {dataSource} in {duration}s</Text>
+        </Box>
+    </Box>
+);
+
+const ChatHistory = ({ messages }: { messages: Message[] }) => (
     <Box flexDirection="column" paddingBottom={1}>
         {messages.map((message, index) => (
             <React.Fragment key={index}>
-                {message}
+                {message.type === 'user' && (
+                    <Text color="cyan">{`> ${message.content}`}</Text>
+                )}
+                {message.type === 'agent' && (
+                    <Box flexDirection="column">
+                        {message.toolCall && <ToolCallIndicator {...message.toolCall} />}
+                        <Text color="green">Agent:</Text>
+                        <Text>{message.content}</Text>
+                    </Box>
+                )}
             </React.Fragment>
         ))}
     </Box>
 );
 
-// Displays the latest log messages from the agent core.
+// ... (LogBox, LoadingSpinner, InputBox, FileSuggestions remain the same)
 const LogBox = ({ logMessages }) => {
     if (logMessages.length === 0) {
         return null;
@@ -125,9 +157,10 @@ const FileSuggestions = ({ suggestions, activeIndex, filterText }) => {
     );
 };
 
+
 const App = () => {
     const { exit } = useApp();
-    const [messages, setMessages] = useState<React.ReactNode[]>([]); 
+    const [messages, setMessages] = useState<Message[]>([]);
     const [logMessages, setLogMessages] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState(''); 
     const [suggestions, setSuggestions] = useState<string[]>([]); 
@@ -139,35 +172,29 @@ const App = () => {
     const inputValueRef = useRef(inputValue);
     inputValueRef.current = inputValue;
 
-    // --- Agent Initialization Effect ---
     useEffect(() => {
-        // Set up the logger to capture agent output in the UI state
         setAgentLogger((logMessage) => {
-            setLogMessages(prevLogs => [...prevLogs, logMessage].slice(-7)); // Keep last 7 logs
+            setLogMessages(prevLogs => [...prevLogs, logMessage].slice(-7));
         });
 
         const init = async () => {
             const success = await initializeAgent();
             if (success) {
-                // The "Agent initialized successfully" message is now logged via the agent itself.
-                // We can remove the direct state update from here if we want to rely solely on the logger.
-                // For now, we'll keep it for explicit UI feedback.
                 setMessages((prev) => [
                     ...prev,
-                    <Text key="init-success" color="green">Agent initialized successfully.</Text>
+                    { type: 'agent', content: <Text color="green">Agent initialized successfully.</Text> }
                 ]);
                 setIsAgentReady(true);
             } else {
                 setMessages((prev) => [
                     ...prev,
-                    <Text key="init-fail" color="red">Agent failed to initialize. Please check logs.</Text>
+                    { type: 'agent', content: <Text color="red">Agent failed to initialize. Please check logs.</Text> }
                 ]);
             }
         };
         init();
     }, []);
 
-    // --- File Suggestion Logic ---
     useEffect(() => {
         if (suggestionBoxVisible) {
             fs.readdir(process.cwd(), (err, files) => {
@@ -183,7 +210,6 @@ const App = () => {
         }
     }, [suggestionBoxVisible]);
 
-    // --- Input Handling Logic ---
     useInput((input, key) => {
         if (key.ctrl && key.name === 'c') {
             exit();
@@ -192,70 +218,48 @@ const App = () => {
 
         if (!isAgentReady && !(key.ctrl && key.name === 'c')) return;
 
-        if (suggestionBoxVisible) {
-            if (key.upArrow) {
-                setActiveIndex((prev) => (prev > 0 ? prev - 1 : suggestions.length - 1));
-            } else if (key.downArrow) {
-                setActiveIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : 0));
-            } else if (key.return) {
-                const currentInputValue = inputValueRef.current;
-                const mentionParts = currentInputValue.split('@');
-                let newInputValue = currentInputValue;
+        if (key.return) {
+            const submittedInput = inputValueRef.current.trim();
+            setInputValue('');
 
-                if (mentionParts.length > 0 && currentInputValue.endsWith('@')) {
-                    const textAfterAt = mentionParts[mentionParts.length - 1];
-                    const beforeMention = currentInputValue.slice(0, -textAfterAt.length);
-                    newInputValue = beforeMention + '@' + suggestions[activeIndex] + ' ';
-                } else {
-                    newInputValue = currentInputValue + suggestions[activeIndex] + ' ';
+            if (submittedInput === '') return;
+
+            setMessages((prev) => [
+                ...prev,
+                { type: 'user', content: submittedInput }
+            ]);
+
+            setIsLoading(true);
+            (async () => {
+                let agentOutput;
+                try {
+                    agentOutput = await handleUserInput(submittedInput);
+                } catch (e: any) {
+                    agentOutput = {
+                        response: `An unexpected error occurred: ${e.message}`,
+                        toolCall: null
+                    };
                 }
-                setInputValue(newInputValue);
-                setSuggestionBoxVisible(false);
-                setActiveIndex(0);
-            } else if (key.backspace || key.delete) {
-                const newValue = inputValueRef.current.slice(0, -1);
-                setInputValue(newValue);
-                if (!newValue.endsWith('@')) setSuggestionBoxVisible(false);
-            } else {
-                setInputValue(inputValueRef.current + input);
-            }
-        } else {
-            if (key.return) {
-                const submittedInput = inputValueRef.current.trim();
-                setInputValue('');
+                setIsLoading(false);
 
-                if (submittedInput === '') return;
+                const { response, toolCall } = agentOutput;
+                const formattedResponse = marked.parse(response).trim();
 
                 setMessages((prev) => [
                     ...prev,
-                    <Text key={`user-${prev.length}`} color="cyan">{`> ${submittedInput}`}</Text>
-                ]);
-
-                setIsLoading(true);
-                (async () => {
-                    let agentResponse = '';
-                    try {
-                        agentResponse = await handleUserInput(submittedInput);
-                    } catch (e: any) {
-                        agentResponse = `An unexpected error occurred: ${e.message}`;
+                    {
+                        type: 'agent',
+                        content: formattedResponse,
+                        toolCall: toolCall || undefined
                     }
-                    setIsLoading(false);
-                    const formattedResponse = marked.parse(agentResponse).trim();
-                    setMessages((prev) => [
-                        ...prev,
-                        <Box key={`agent-${prev.length}`} flexDirection="column">
-                            <Text color="green">Agent:</Text>
-                            <Text>{formattedResponse}</Text>
-                        </Box>
-                    ]);
-                })();
-            } else if (key.backspace || key.delete) {
-                setInputValue(inputValueRef.current.slice(0, -1));
-            } else {
-                const newValue = inputValueRef.current + input;
-                setInputValue(newValue);
-                if (newValue.endsWith('@')) setSuggestionBoxVisible(true);
-            }
+                ]);
+            })();
+        } else if (key.backspace || key.delete) {
+            setInputValue(inputValueRef.current.slice(0, -1));
+        } else {
+            const newValue = inputValueRef.current + input;
+            setInputValue(newValue);
+            if (newValue.endsWith('@')) setSuggestionBoxVisible(true);
         }
     });
 
