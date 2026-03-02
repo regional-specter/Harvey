@@ -49,22 +49,32 @@ async function handleUserInput(userInput) {
         switch (baseCommand) { // Now 'baseCommand' is correctly defined
             case 'summary':
                 log("Agent core: Command received - /summary");
-                // ... (rest of the summary case)
-                break;
+                // For summary, we can either fetch from memory directly or use the agent cycle with a specific prompt.
+                // For now, let's just return a placeholder. In a future iteration, this could invoke the LLM with a prompt
+                // like "Summarize my memories."
+                const summaryResponse = await runAgentCycle("Summarize our current conversation and learning.");
+                return { response: summaryResponse.response, toolCall: null };
             
             case 'export':
                 log("Agent core: Command received - /export");
-                // ... (rest of the export case)
-                break;
+                // For export, we'd typically write memories to a file. For now, a placeholder.
+                const allMemories = getMemoryEntries();
+                if (allMemories.length === 0) {
+                    return { response: "No memories to export.", toolCall: null };
+                }
+                const exportContent = JSON.stringify(allMemories, null, 2);
+                const exportFileName = `memory_export_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+                fs.writeFileSync(exportFileName, exportContent);
+                return { response: `Memories exported to ${exportFileName}`, toolCall: null };
 
             case 'clear-mem':
                 log("Agent core: Command received - /clear-mem");
                 await clearMemory();
-                return "Memory has been cleared.";
+                return { response: "Memory has been cleared.", toolCall: null };
 
             default:
                 // If the command is not recognized, inform the user.
-                return `Unknown command: /${baseCommand}. Type '/help' (not yet implemented) for available commands.`;
+                return { response: `Unknown command: /${baseCommand}. Type '/help' (not yet implemented) for available commands.`, toolCall: null };
         }
     } else {
         // --- Chat Input Handling ---

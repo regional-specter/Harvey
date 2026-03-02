@@ -99090,157 +99090,322 @@ var require_agent_loop = __commonJS({
       if (!userInput || typeof userInput.trim() !== "string" || userInput.trim() === "") {
         throw new Error("Invalid user input provided for agent cycle. Input cannot be empty.");
       }
-      let toolCall = null;
+      const createToolCallMarkdown = (toolName, toolInput, startTime) => {
+        const duration = (/* @__PURE__ */ new Date()).getTime() - startTime;
+        return `\`\`\`tool-output
+Tool Used: ${toolName}
+Input: ${toolInput}
+Duration: ${duration}ms
+\`\`\``;
+      };
+      let contextForMemory = {};
+      let augmentedPromptParts = [];
+      let currentInput = userInput;
+      let toolCalledDuringIteration = false;
+      let allToolCalls = [];
+      let currentIntent = null;
+      const MAX_TOOL_ITERATIONS = 5;
+      let iterationCount = 0;
       try {
-        console.log(`Agent loop: Extracting intent from query: "${userInput}"`);
-        const initialIntent = await extractIntentAndEntities(userInput, "");
-        let llmResponse;
-        let contextForMemory = {};
-        let augmentedPrompt = userInput;
-        if (initialIntent.event_type === "data_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
-          console.log("Agent loop: Detected a data request for stock price. Using finance tool...");
-          const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
-          if (tickerEntity) {
-            const startTime = Date.now();
-            const price = await fetchStockPrice(tickerEntity.value);
-            const duration = ((Date.now() - startTime) / 1e3).toFixed(1);
-            if (price !== null) {
-              contextForMemory.price = price;
-              augmentedPrompt = `The user asked: "${userInput}". Using the data I found: The live price of ${tickerEntity.value} is $${price}. Formulate a natural language response.`;
-              toolCall = {
-                toolName: "Finance API",
-                prompt: userInput,
-                dataSource: "Alpha Vantage API",
-                // Assuming this is the source
-                duration
-              };
+        do {
+          toolCalledDuringIteration = false;
+          iterationCount++;
+          console.log(`Agent loop: Extracting intent from query: "${currentInput}"`);
+          currentIntent = await extractIntentAndEntities(currentInput, "");
+          let toolOutputAddedToPrompt = false;
+          if (currentIntent.event_type === "data_request" && currentIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
+            console.log("Agent loop: Detected a data request for stock price. Using finance tool...");
+            const tickerEntity = currentIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
+            if (tickerEntity) {
+              const startTime = (/* @__PURE__ */ new Date()).getTime();
+              const price = await fetchStockPrice(tickerEntity.value);
+              const toolCallMarkdown = createToolCallMarkdown("fetchStockPrice", tickerEntity.value, startTime);
+              allToolCalls.push({ toolName: "fetchStockPrice", toolInput: tickerEntity.value, duration: (/* @__PURE__ */ new Date()).getTime() - startTime });
+              if (price !== null) {
+                contextForMemory.price = price;
+                augmentedPromptParts.push(`The live price of ${tickerEntity.value} is $${price}.`);
+              } else {
+                augmentedPromptParts.push(`I could not retrieve the live price for ${tickerEntity.value}.`);
+              }
+              augmentedPromptParts.push(toolCallMarkdown);
+              currentInput = `Based on the user's query "${userInput}" and the information I have gathered so far (${augmentedPromptParts.join(" ")}), what should I do next?`;
+              toolCalledDuringIteration = true;
+              toolOutputAddedToPrompt = true;
+            }
+          } else if (currentIntent.event_type === "news_request" && currentIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
+            console.log("Agent loop: Detected a news request. Using news tool...");
+            const tickerEntity = currentIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
+            if (tickerEntity) {
+              let fromDateTime = null;
+              let toDateTime = null;
+              const fromEntity = currentIntent.entities.find((e2) => e2.type === "DATE_FROM");
+              const toEntity = currentIntent.entities.find((e2) => e2.type === "DATE_TO");
+              if (fromEntity && toEntity) {
+                fromDateTime = fromEntity.value;
+                toDateTime = toEntity.value;
+                console.log(`Agent loop: Fetching news from ${fromDateTime} to ${toDateTime}`);
+              } else {
+                const now = /* @__PURE__ */ new Date();
+                const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1e3);
+                const formatDateTime = (date) => {
+                  return date.toISOString().replace(/[-:]|\..+/g, "").slice(0, 13);
+                };
+                fromDateTime = formatDateTime(twentyFourHoursAgo);
+                toDateTime = formatDateTime(now);
+                console.log(`Agent loop: Fetching latest news (last 24 hours)`);
+              }
+              const startTime = (/* @__PURE__ */ new Date()).getTime();
+              const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
+              const toolCallMarkdown = createToolCallMarkdown("fetchNews", tickerEntity.value, startTime);
+              allToolCalls.push({ toolName: "fetchNews", toolInput: tickerEntity.value, duration: (/* @__PURE__ */ new Date()).getTime() - startTime });
+              if (newsArticles && newsArticles.length > 0) {
+                contextForMemory.news = newsArticles;
+                const formattedNews = newsArticles.map((article) => {
+                  const sentimentScore = parseFloat(article.overall_sentiment_score).toFixed(2);
+                  return `- ${article.title} (Source: ${article.source}) [Sentiment: ${sentimentScore}]`;
+                }).join("\n");
+                augmentedPromptParts.push(`Here are the relevant news headlines I found for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}:
+--- News Headlines ---
+${formattedNews}
+---`);
+              } else {
+                augmentedPromptParts.push(`I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}.`);
+              }
+              augmentedPromptParts.push(toolCallMarkdown);
+              currentInput = `Based on the user's query "${userInput}" and the information I have gathered so far (${augmentedPromptParts.join(" ")}), what should I do next?`;
+              toolCalledDuringIteration = true;
+              toolOutputAddedToPrompt = true;
+            }
+          } else if (currentIntent.event_type === "earnings_request" && currentIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
+            console.log("Agent loop: Detected an earnings request. Using SEC EDGAR API...");
+            const tickerEntity = currentIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
+            if (tickerEntity) {
+              const ticker = tickerEntity.value;
+              const cik = await getCik(ticker);
+              const startTime = (/* @__PURE__ */ new Date()).getTime();
+              const companyFacts = await fetchCompanyFacts(cik);
+              const toolCallMarkdown = createToolCallMarkdown("fetchCompanyFacts", cik, startTime);
+              allToolCalls.push({ toolName: "fetchCompanyFacts", toolInput: cik, duration: (/* @__PURE__ */ new Date()).getTime() - startTime });
+              if (!cik) {
+                augmentedPromptParts.push(`I could not find the CIK for ticker ${ticker}.`);
+                augmentedPromptParts.push(toolCallMarkdown);
+                toolCalledDuringIteration = true;
+                toolOutputAddedToPrompt = true;
+              } else if (!companyFacts || !companyFacts.facts || !companyFacts.facts["us-gaap"]) {
+                augmentedPromptParts.push(`I could not retrieve company facts for ${ticker} (CIK: ${cik}).`);
+                augmentedPromptParts.push(toolCallMarkdown);
+                toolCalledDuringIteration = true;
+                toolOutputAddedToPrompt = true;
+              } else {
+                contextForMemory.companyFacts = companyFacts;
+                let fromDateTime = null;
+                let toDateTime = null;
+                const fromEntity = currentIntent.entities.find((e2) => e2.type === "DATE_FROM");
+                const toEntity = currentIntent.entities.find((e2) => e2.type === "DATE_TO");
+                if (fromEntity && toEntity) {
+                  const fromStr = fromEntity.value.substring(0, 8);
+                  const toStr = toEntity.value.substring(0, 8);
+                  fromDateTime = new Date(
+                    parseInt(fromStr.substring(0, 4)),
+                    parseInt(fromStr.substring(4, 6)) - 1,
+                    parseInt(fromStr.substring(6, 8))
+                  );
+                  toDateTime = new Date(
+                    parseInt(toStr.substring(0, 4)),
+                    parseInt(toStr.substring(4, 6)) - 1,
+                    parseInt(toStr.substring(6, 8))
+                  );
+                  console.log(`Agent loop: Filtering earnings from ${fromDateTime.toDateString()} to ${toDateTime.toDateString()}`);
+                }
+                const extractEpsData = (facts, isAnnual, fromFilter, toFilter) => {
+                  const epsData = [];
+                  if (!facts || !facts["us-gaap"]) {
+                    return epsData;
+                  }
+                  const usGaap = facts["us-gaap"];
+                  const findMetricKeys = (needle) => Object.keys(usGaap).filter(
+                    (key) => key.toLowerCase().includes(needle)
+                  );
+                  const basicKeys = findMetricKeys("earningspersharebasic");
+                  const dilutedKeys = findMetricKeys("earningspersharediluted");
+                  const processUnitsArray = (unitsArray, isBasic) => {
+                    if (!Array.isArray(unitsArray)) return;
+                    unitsArray.forEach((unit) => {
+                      if (!unit || !unit.form || !unit.end || unit.val === void 0) return;
+                      const fiscalDate = new Date(unit.end);
+                      const reportPrefix = isAnnual ? "10-K" : "10-Q";
+                      if (!unit.form.startsWith(reportPrefix)) return;
+                      if (fromFilter && fiscalDate < fromFilter) return;
+                      if (toFilter && fiscalDate > toFilter) return;
+                      const dateStr = fiscalDate.toISOString().split("T")[0];
+                      let existingEntry = epsData.find(
+                        (e2) => e2.date === dateStr && e2.form === unit.form
+                      );
+                      if (!existingEntry) {
+                        existingEntry = {
+                          date: dateStr,
+                          form: unit.form,
+                          fy: unit.fy,
+                          fp: unit.fp
+                        };
+                        epsData.push(existingEntry);
+                      }
+                      if (isBasic) {
+                        existingEntry.epsBasic = unit.val;
+                      } else {
+                        existingEntry.epsDiluted = unit.val;
+                      }
+                    });
+                  };
+                  basicKeys.forEach((metricKey) => {
+                    const metric = usGaap[metricKey];
+                    if (!metric || !metric.units || typeof metric.units !== "object") return;
+                    Object.keys(metric.units).forEach((unitName) => {
+                      processUnitsArray(metric.units[unitName], true);
+                    });
+                  });
+                  dilutedKeys.forEach((metricKey) => {
+                    const metric = usGaap[metricKey];
+                    if (!metric || !metric.units || typeof metric.units !== "object") return;
+                    Object.keys(metric.units).forEach((unitName) => {
+                      processUnitsArray(metric.units[unitName], false);
+                    });
+                  });
+                  epsData.sort((a, b2) => {
+                    if (b2.fy !== a.fy) return b2.fy - a.fy;
+                    const fpOrder = { "Q4": 4, "Q3": 3, "Q2": 2, "Q1": 1, "FY": 5 };
+                    return (fpOrder[b2.fp] || 0) - (fpOrder[a.fp] || 0);
+                  });
+                  return epsData;
+                };
+                let annualReports = extractEpsData(companyFacts.facts, true, fromDateTime, toDateTime);
+                let quarterlyReports = extractEpsData(companyFacts.facts, false, fromDateTime, toDateTime);
+                if (fromDateTime && toDateTime && annualReports.length === 0 && quarterlyReports.length === 0) {
+                  console.log("Agent loop: No earnings found strictly within requested window; falling back to most recent earnings data.");
+                  annualReports = extractEpsData(companyFacts.facts, true, null, null);
+                  quarterlyReports = extractEpsData(companyFacts.facts, false, null, null);
+                }
+                let annualEarningsSummary = "No annual earnings data available for the specified period.";
+                if (annualReports && annualReports.length > 0) {
+                  annualEarningsSummary = annualReports.slice(0, 3).map(
+                    (report) => `Fiscal Year End: ${report.date} (FY: ${report.fy}), Basic EPS: ${report.epsBasic || "N/A"}, Diluted EPS: ${report.epsDiluted || "N/A"}`
+                  ).join("\n");
+                }
+                let quarterlyEarningsSummary = "No quarterly earnings data available for the specified period.";
+                if (quarterlyReports && quarterlyReports.length > 0) {
+                  quarterlyEarningsSummary = quarterlyReports.slice(0, 3).map(
+                    (report) => `Fiscal Qtr End: ${report.date} (FY: ${report.fy}, FP: ${report.fp}), Basic EPS: ${report.epsBasic || "N/A"}, Diluted EPS: ${report.epsDiluted || "N/A"}`
+                  ).join("\n");
+                }
+                augmentedPromptParts.push(`Here is the earnings data for ${ticker} (CIK: ${cik}):
+--- Annual Earnings Reports ---
+${annualEarningsSummary}
+--- Quarterly Earnings Reports ---
+${quarterlyEarningsSummary}`);
+                augmentedPromptParts.push(toolCallMarkdown);
+                currentInput = `Based on the user's query "${userInput}" and the information I have gathered so far (${augmentedPromptParts.join(" ")}), what should I do next?`;
+                toolCalledDuringIteration = true;
+                toolOutputAddedToPrompt = true;
+              }
+            }
+          } else if (currentIntent.event_type === "filing_request" && currentIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
+            console.log("Agent loop: Detected a filing request. Using SEC EDGAR API...");
+            const tickerEntity = currentIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
+            if (tickerEntity) {
+              const ticker = tickerEntity.value;
+              const cik = await getCik(ticker);
+              const startTime = (/* @__PURE__ */ new Date()).getTime();
+              const submissionMetadata = await fetchSubmissionMetadata(cik);
+              const toolCallMarkdown = createToolCallMarkdown("fetchSubmissionMetadata", cik, startTime);
+              allToolCalls.push({ toolName: "fetchSubmissionMetadata", toolInput: cik, duration: (/* @__PURE__ */ new Date()).getTime() - startTime });
+              if (!cik) {
+                augmentedPromptParts.push(`I could not find the CIK for ticker ${ticker}.`);
+                augmentedPromptParts.push(toolCallMarkdown);
+                toolCalledDuringIteration = true;
+                toolOutputAddedToPrompt = true;
+              } else if (!submissionMetadata || !submissionMetadata.filings || !submissionMetadata.filings.recent) {
+                augmentedPromptParts.push(`I could not retrieve submission metadata for ${ticker} (CIK: ${cik}).`);
+                augmentedPromptParts.push(toolCallMarkdown);
+                toolCalledDuringIteration = true;
+                toolOutputAddedToPrompt = true;
+              } else {
+                contextForMemory.submissionMetadata = submissionMetadata;
+                const recentFilings = submissionMetadata.filings.recent;
+                const filingForms = recentFilings.form;
+                const accessionNumbers = recentFilings.accessionNumber;
+                const reportDates = recentFilings.reportDate;
+                const tenKFilings = [];
+                const tenQFilings = [];
+                let kCount = 0;
+                let qCount = 0;
+                for (let i2 = 0; i2 < filingForms.length && (kCount < 3 || qCount < 3); i2++) {
+                  const form = filingForms[i2];
+                  const accessionNumber = accessionNumbers[i2];
+                  const reportDate = reportDates[i2];
+                  if (form === "10-K" && kCount < 3) {
+                    tenKFilings.push({
+                      reportDate,
+                      accessionNumber,
+                      form
+                    });
+                    kCount++;
+                  } else if (form === "10-Q" && qCount < 3) {
+                    tenQFilings.push({
+                      reportDate,
+                      accessionNumber,
+                      form
+                    });
+                    qCount++;
+                  }
+                }
+                const formatFilings = (filingList, type) => {
+                  if (!filingList || filingList.length === 0) {
+                    return `No recent ${type} filings found.`;
+                  }
+                  return filingList.map((filing) => {
+                    const filingUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${filing.accessionNumber.replace(/-/g, "")}/${filing.accessionNumber}.txt`;
+                    return `- ${type} filed on ${filing.reportDate} ([Link](${filingUrl}))`;
+                  }).join("\n");
+                };
+                const tenKSummary = formatFilings(tenKFilings, "10-K");
+                const tenQSummary = formatFilings(tenQFilings, "10-Q");
+                augmentedPromptParts.push(`Here are the most recent SEC filings for ${ticker} (CIK: ${cik}):
+--- 10-K Filings (Annual Reports) ---
+${tenKSummary}
+--- 10-Q Filings (Quarterly Reports) ---
+${tenQSummary}`);
+                augmentedPromptParts.push(toolCallMarkdown);
+                currentInput = `Based on the user's query "${userInput}" and the information I have gathered so far (${augmentedPromptParts.join(" ")}), what should I do next?`;
+                toolCalledDuringIteration = true;
+                toolOutputAddedToPrompt = true;
+              }
             }
           }
-        } else if (initialIntent.event_type === "news_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
-          console.log("Agent loop: Detected a news request. Using news tool...");
-          const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
-          if (tickerEntity) {
-            let fromDateTime = null;
-            let toDateTime = null;
-            const fromEntity = initialIntent.entities.find((e2) => e2.type === "DATE_FROM");
-            const toEntity = initialIntent.entities.find((e2) => e2.type === "DATE_TO");
-            if (fromEntity && toEntity) {
-              fromDateTime = fromEntity.value;
-              toDateTime = toEntity.value;
-              console.log(`Agent loop: Fetching news from ${fromDateTime} to ${toDateTime}`);
-            } else {
-              const now = /* @__PURE__ */ new Date();
-              const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1e3);
-              const formatDateTime = (date) => {
-                return date.toISOString().replace(/[-:]|\..+/g, "").slice(0, 13);
-              };
-              fromDateTime = formatDateTime(twentyFourHoursAgo);
-              toDateTime = formatDateTime(now);
-              console.log(`Agent loop: Fetching latest news (last 24 hours)`);
-            }
-            const startTime = Date.now();
-            const newsArticles = await fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 });
-            const duration = ((Date.now() - startTime) / 1e3).toFixed(1);
-            if (newsArticles && newsArticles.length > 0) {
-              contextForMemory.news = newsArticles;
-              toolCall = {
-                toolName: "News API",
-                prompt: `What's the latest news on ${tickerEntity.value}?`,
-                // Example prompt
-                dataSource: "Alpha Vantage API",
-                duration
-              };
-              const formattedNews = newsArticles.map((article) => {
-                const sentimentScore = parseFloat(article.overall_sentiment_score).toFixed(2);
-                return `- ${article.title} (Source: ${article.source}) [Sentiment: ${sentimentScore}]`;
-              }).join("\n");
-              augmentedPrompt = `
-            The user asked: "${userInput}".
-            Here are the relevant news headlines I found for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}.
-            Present this list to the user exactly as it is written, without any changes or summarization.
+        } while (toolCalledDuringIteration && iterationCount < MAX_TOOL_ITERATIONS);
+        console.log(`Agent loop: Generating final response with accumulated prompt parts.`);
+        const finalAugmentedPrompt = `${augmentedPromptParts.join("\n")}
 
-            --- News Headlines ---
-            ${formattedNews}
-            ---
-          `;
-            } else {
-              augmentedPrompt = `The user asked: "${userInput}". I could not find any news for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}. Please inform the user.`;
-            }
-          }
-        } else if (initialIntent.event_type === "earnings_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
-          console.log("Agent loop: Detected an earnings request. Using SEC EDGAR API...");
-          const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
-          if (tickerEntity) {
-            const ticker = tickerEntity.value;
-            const startTime = Date.now();
-            const cik = await getCik(ticker);
-            if (!cik) {
-              augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker}. Please inform the user.`;
-              llmResponse = await generateResponse(augmentedPrompt);
-              return { response: llmResponse, toolCall: null };
-            }
-            const companyFacts = await fetchCompanyFacts(cik);
-            const duration = ((Date.now() - startTime) / 1e3).toFixed(1);
-            toolCall = {
-              toolName: "Earnings API",
-              prompt: userInput,
-              dataSource: "SEC EDGAR API",
-              duration
-            };
-            if (!companyFacts || !companyFacts.facts || !companyFacts.facts["us-gaap"]) {
-              augmentedPrompt = `The user asked: "${userInput}". I could not retrieve company facts for ${ticker} (CIK: ${cik}). Please inform the user.`;
-              llmResponse = await generateResponse(augmentedPrompt);
-              return { response: llmResponse, toolCall };
-            }
-            contextForMemory.companyFacts = companyFacts;
-          }
-        } else if (initialIntent.event_type === "filing_request" && initialIntent.entities.some((e2) => e2.type === "STOCK_TICKER")) {
-          console.log("Agent loop: Detected a filing request. Using SEC EDGAR API...");
-          const tickerEntity = initialIntent.entities.find((e2) => e2.type === "STOCK_TICKER");
-          if (tickerEntity) {
-            const ticker = tickerEntity.value;
-            const startTime = Date.now();
-            const cik = await getCik(ticker);
-            if (!cik) {
-              augmentedPrompt = `The user asked: "${userInput}". I could not find the CIK for ticker ${ticker}. Please inform the user.`;
-              llmResponse = await generateResponse(augmentedPrompt);
-              return { response: llmResponse, toolCall: null };
-            }
-            const submissionMetadata = await fetchSubmissionMetadata(cik);
-            const duration = ((Date.now() - startTime) / 1e3).toFixed(1);
-            toolCall = {
-              toolName: "Filing API",
-              prompt: userInput,
-              dataSource: "SEC EDGAR API",
-              duration
-            };
-            if (!submissionMetadata || !submissionMetadata.filings || !submissionMetadata.filings.recent) {
-              augmentedPrompt = `The user asked: "${userInput}". I could not retrieve submission metadata for ${ticker} (CIK: ${cik}). Please inform the user.`;
-              llmResponse = await generateResponse(augmentedPrompt);
-              return { response: llmResponse, toolCall };
-            }
-            contextForMemory.submissionMetadata = submissionMetadata;
-          }
-        }
-        if (!llmResponse) {
-          console.log(`Agent loop: Generating response with final prompt...`);
-          llmResponse = await generateResponse(augmentedPrompt);
-          console.log(`Agent loop: Received final response from LLM.`);
-        }
+Please summarize this information for the user, answering their original query: "${userInput}".`;
+        const llmResponse = await generateResponse(finalAugmentedPrompt);
+        console.log(`Agent loop: Received final response from LLM.`);
         const memoryEntryData = {
           user_input: userInput,
           llm_response: llmResponse,
-          thematic_scope: initialIntent.thematic_scope,
-          event_type: initialIntent.event_type,
-          entities: initialIntent.entities,
+          thematic_scope: currentIntent ? currentIntent.thematic_scope : "unknown",
+          // Use the last identified intent
+          event_type: currentIntent ? currentIntent.event_type : "no_tool_call",
+          // Use the last identified event type
+          entities: currentIntent ? currentIntent.entities : [],
+          // Use the last identified entities
           context: contextForMemory
+          // Save any data that was fetched from tools.
         };
         const addedEntry = appendMemory(memoryEntryData);
         if (!addedEntry) {
           throw new Error("Failed to append a valid memory entry. Check logs for details.");
         }
         await saveMemory();
-        return { response: llmResponse, toolCall };
+        return { response: llmResponse, toolCall: allToolCalls.length > 0 ? allToolCalls[allToolCalls.length - 1] : null };
       } catch (error) {
         console.error(`Agent Cycle Error: ${error.message}`);
         throw error;
@@ -99284,16 +99449,24 @@ var require_agent = __commonJS({
           // Now 'baseCommand' is correctly defined
           case "summary":
             log("Agent core: Command received - /summary");
-            break;
+            const summaryResponse = await runAgentCycle("Summarize our current conversation and learning.");
+            return { response: summaryResponse.response, toolCall: null };
           case "export":
             log("Agent core: Command received - /export");
-            break;
+            const allMemories = getMemoryEntries();
+            if (allMemories.length === 0) {
+              return { response: "No memories to export.", toolCall: null };
+            }
+            const exportContent = JSON.stringify(allMemories, null, 2);
+            const exportFileName = `memory_export_${(/* @__PURE__ */ new Date()).toISOString().replace(/[:.]/g, "-")}.json`;
+            fs3.writeFileSync(exportFileName, exportContent);
+            return { response: `Memories exported to ${exportFileName}`, toolCall: null };
           case "clear-mem":
             log("Agent core: Command received - /clear-mem");
             await clearMemory();
-            return "Memory has been cleared.";
+            return { response: "Memory has been cleared.", toolCall: null };
           default:
-            return `Unknown command: /${baseCommand}. Type '/help' (not yet implemented) for available commands.`;
+            return { response: `Unknown command: /${baseCommand}. Type '/help' (not yet implemented) for available commands.`, toolCall: null };
         }
       } else {
         try {

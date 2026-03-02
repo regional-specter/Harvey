@@ -6,7 +6,7 @@ Data Sources :
      ✔ Integrate stock price and fundamentals ingestion from Alpha Vantage @done(26-02-16 14:39)
      ☐ Add macroeconomic time-series data ingestion using FRED
      ☐ Pull structured market indicators and historical data from Alpha Vantage
-     ☐ Fetch and parse SEC filings (10-K, 10-Q, 8-K) via EDGAR
+     ✔ Fetch and parse SEC filings (10-K, 10-Q, 8-K) via EDGAR @done(26-03-02 11:14)
      ☐ Normalize all incoming data into a shared internal format with timestamps and entity labels
      ✔ Research possible SEC and Earning Reports sources for data collection @done(26-02-27 19:23)
      ✔ Integrate SEC documents access for financial reports (10-K, 10-Q, 8-K) @done(26-02-27 19:23)
@@ -45,6 +45,7 @@ CLI Experience :
      ☐ Warn users when they attempt to mix incompatible research intents
      ✔ Add a research reset that preserves raw data but clears reasoning @done(26-02-17 18:02)
      ☐ Keep the interaction calm, structured, and repeatable
+     ☐ Add multiple tool call ability for agent
 
 UI :
      ✔ Setup basic UI framework and component library @done(26-02-28 16:52)
