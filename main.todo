@@ -1,6 +1,8 @@
 Core Agent Features :
      ☐ Force explicit research intent selection before any data is fetched (long-term, short-term, risk, macro)
      ✔ Implement a minimal goal parser that normalizes user intent into a fixed schema @done(26-02-11 17:04)
+     ☐ Update intent extractor to use an array for storing all intents from prompt
+     ☐ Update agent loop for multiple tool calls concurrently
 
 Data Sources :
      ✔ Integrate stock price and fundamentals ingestion from Alpha Vantage @done(26-02-16 14:39)
