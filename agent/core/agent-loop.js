@@ -1,6 +1,3 @@
-// agent/core/agent-loop.js
-
-// Import necessary modules from other parts of the agent.
 const { generateResponse } = require('./llm-client');
 const { appendMemory, saveMemory } = require('../memory/memory-store'); 
 // Import our new intent extractor function.
