@@ -27,15 +27,14 @@ const HEADER_ASCII = `
 // --- Type Definitions ---
 interface ToolCall {
     toolName: string;
-    prompt: string;
-    dataSource: string;
+    toolInput: string;
     duration: string;
 }
 
 interface Message {
     type: 'user' | 'agent';
     content: React.ReactNode;
-    toolCall?: ToolCall;
+    allToolCalls?: ToolCall[];
 }
 
 const Header = () => (
@@ -55,12 +54,12 @@ const Header = () => (
     </Box>
 );
 
-// --- New ToolCallIndicator Component ---
-const ToolCallIndicator = ({ toolName, prompt, dataSource, duration }: ToolCall) => (
+// --- New SingleToolCallDisplay Component ---
+const SingleToolCallDisplay = ({ toolName, toolInput, duration }: ToolCall) => (
     <Box flexDirection="column" marginBottom={1} marginLeft={2}>
-        <Text color="yellow">{toolName} ("{prompt}")</Text>
+        <Text color="yellow">{toolName} ("{toolInput}")</Text>
         <Box marginLeft={2}>
-            <Text color="gray">└ {dataSource} in {duration}s</Text>
+            <Text color="gray">└ in {duration}ms</Text>
         </Box>
     </Box>
 );
@@ -74,7 +73,13 @@ const ChatHistory = ({ messages }: { messages: Message[] }) => (
                 )}
                 {message.type === 'agent' && (
                     <Box flexDirection="column">
-                        {message.toolCall && <ToolCallIndicator {...message.toolCall} />}
+                        {message.allToolCalls && message.allToolCalls.length > 0 && (
+                            <Box flexDirection="column" marginLeft={2}>
+                                {message.allToolCalls.map((toolCall, tcIndex) => (
+                                    <SingleToolCallDisplay key={tcIndex} {...toolCall} />
+                                ))}
+                            </Box>
+                        )}
                         <Text color="green">Agent:</Text>
                         <Text>{message.content}</Text>
                     </Box>
@@ -242,7 +247,7 @@ const App = () => {
                 }
                 setIsLoading(false);
 
-                const { response, toolCall } = agentOutput;
+                const { response, allToolCalls } = agentOutput;
                 const formattedResponse = marked.parse(response).trim();
 
                 setMessages((prev) => [
@@ -250,7 +255,7 @@ const App = () => {
                     {
                         type: 'agent',
                         content: formattedResponse,
-                        toolCall: toolCall || undefined
+                        allToolCalls: allToolCalls || undefined
                     }
                 ]);
             })();

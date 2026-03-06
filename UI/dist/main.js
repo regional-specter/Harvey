@@ -101972,8 +101972,8 @@ var HEADER_ASCII = `
 \u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D  \u255A\u2550\u2550\u2550\u255D  \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D   \u255A\u2550\u255D
 `.trim();
 var Header = () => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", alignItems: "left", paddingBottom: 1 }, /* @__PURE__ */ React2.createElement(Gradient, { colors: ["#1A1A1B", "#A39382"], multiline: true }, /* @__PURE__ */ React2.createElement(Text2, { bold: true }, HEADER_ASCII)), /* @__PURE__ */ React2.createElement(Box, { marginTop: 1, width: 80 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray", dimColor: true, italic: true, wrap: "wrap", textAlign: "left" }, "An intelligent research agent that tracks your goals, recalls contextually relevant information, and reasons across long, interleaved tasks to provide precise insights.")));
-var ToolCallIndicator = ({ toolName, prompt, dataSource, duration }) => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", marginBottom: 1, marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "yellow" }, toolName, ' ("', prompt, '")'), /* @__PURE__ */ React2.createElement(Box, { marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray" }, "\u2514 ", dataSource, " in ", duration, "s")));
-var ChatHistory = ({ messages }) => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", paddingBottom: 1 }, messages.map((message, index) => /* @__PURE__ */ React2.createElement(React2.Fragment, { key: index }, message.type === "user" && /* @__PURE__ */ React2.createElement(Text2, { color: "cyan" }, `> ${message.content}`), message.type === "agent" && /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column" }, message.toolCall && /* @__PURE__ */ React2.createElement(ToolCallIndicator, { ...message.toolCall }), /* @__PURE__ */ React2.createElement(Text2, { color: "green" }, "Agent:"), /* @__PURE__ */ React2.createElement(Text2, null, message.content)))));
+var SingleToolCallDisplay = ({ toolName, toolInput, duration }) => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", marginBottom: 1, marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "yellow" }, toolName, ' ("', toolInput, '")'), /* @__PURE__ */ React2.createElement(Box, { marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray" }, "\u2514 in ", duration, "ms")));
+var ChatHistory = ({ messages }) => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", paddingBottom: 1 }, messages.map((message, index) => /* @__PURE__ */ React2.createElement(React2.Fragment, { key: index }, message.type === "user" && /* @__PURE__ */ React2.createElement(Text2, { color: "cyan" }, `> ${message.content}`), message.type === "agent" && /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column" }, message.allToolCalls && message.allToolCalls.length > 0 && /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", marginLeft: 2 }, message.allToolCalls.map((toolCall, tcIndex) => /* @__PURE__ */ React2.createElement(SingleToolCallDisplay, { key: tcIndex, ...toolCall }))), /* @__PURE__ */ React2.createElement(Text2, { color: "green" }, "Agent:"), /* @__PURE__ */ React2.createElement(Text2, null, message.content)))));
 var LogBox = ({ logMessages }) => {
   if (logMessages.length === 0) {
     return null;
@@ -102072,14 +102072,14 @@ var App = () => {
           };
         }
         setIsLoading(false);
-        const { response, toolCall } = agentOutput;
+        const { response, allToolCalls } = agentOutput;
         const formattedResponse = marked.parse(response).trim();
         setMessages((prev) => [
           ...prev,
           {
             type: "agent",
             content: formattedResponse,
-            toolCall: toolCall || void 0
+            allToolCalls: allToolCalls || void 0
           }
         ]);
       })();
