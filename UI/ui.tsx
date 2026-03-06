@@ -13,7 +13,6 @@ import { initializeAgent, handleUserInput, setAgentLogger } from '../agent/index
 
 const marked = new Marked(new markedTerminal());
 
-// --- ASCII Art Header ---
 const HEADER_ASCII = `
 
 ██╗  ██╗ █████╗ ██████╗ ██╗   ██╗███████╗██╗   ██╗
