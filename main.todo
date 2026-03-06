@@ -1,8 +1,8 @@
 Core Agent Features :
      ☐ Force explicit research intent selection before any data is fetched (long-term, short-term, risk, macro)
      ✔ Implement a minimal goal parser that normalizes user intent into a fixed schema @done(26-02-11 17:04)
-     ☐ Update intent extractor to use an array for storing all intents from prompt
-     ☐ Update agent loop for multiple tool calls concurrently
+     ✔ Update intent extractor to use an array for storing all intents from prompt @done(26-03-06 12:29)
+     ✔ Update agent loop for multiple tool calls concurrently @done(26-03-06 12:29)
 
 Data Sources :
      ✔ Integrate stock price and fundamentals ingestion from Alpha Vantage @done(26-02-16 14:39)
@@ -55,6 +55,7 @@ UI :
      ☐ Implement UI for managing research goals
      ✔ Implementing new header and subheading position @done(26-02-28 16:52)
      ✔ Implemented Tool call UI feature for clear indication @done(26-03-01 14:38)
+     ⏳ Implement updated system for handling multiple tool call indicators @inprogress(26-03-06 12:31)
 
 Evaluation & Benchmarking :
      ☐ Compare outputs against one-shot AI chat tools for the same queries
