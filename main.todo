@@ -3,8 +3,8 @@ Core Agent Features :
      ✔ Implement a minimal goal parser that normalizes user intent into a fixed schema @done(26-02-11 17:04)
      ✔ Update intent extractor to use an array for storing all intents from prompt @done(26-03-06 12:29)
      ✔ Update agent loop for multiple tool calls concurrently @done(26-03-06 12:29)
-     ☐ Ensure all successful tool calls are called and run
-     ☐ Embed any error data for later UI indication through error messages
+     ✔ Ensure all successful tool calls are called and run @done(26-03-06 12:52)
+     ✔ Embed any error data for later UI indication through error messages @done(26-03-06 12:52)
 
 Data Sources :
      ✔ Integrate stock price and fundamentals ingestion from Alpha Vantage @done(26-02-16 14:39)
