@@ -61,6 +61,11 @@ UI :
      ✔ Add error message indication similar to the tool call @done(26-03-06 12:52)
      ⏳ Update tool call indication to include prompt for better UX @inprogress(26-03-06 20:25)
 
+Agent Performance and Infrastruture Updates :
+     ☐ Update tool call responses to use default response templates for redundent queries
+     ☐ Update prompts for final response generation
+     ☐ Update infrastructure for efficient tool call handling
+
 Evaluation & Benchmarking :
      ☐ Compare outputs against one-shot AI chat tools for the same queries
      ☐ Demonstrate how intent separation prevents mixed conclusions
