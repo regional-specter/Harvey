@@ -99233,11 +99233,22 @@ Duration: ${duration}ms
               const error = result.reason;
               console.error(`Agent loop: Tool call for intent '${intentType}' failed for ${ticker}. Reason:`, error);
               let specificToolName = "unknown_tool";
-              if (intentType === "data_request") specificToolName = "fetchStockPrice";
-              if (intentType === "news_request") specificToolName = "fetchNews";
-              if (intentType === "earnings_request") specificToolName = "fetchCompanyFacts";
-              if (intentType === "filing_request") specificToolName = "fetchSubmissionMetadata";
+              let descriptiveInput = ticker;
+              if (intentType === "data_request") {
+                specificToolName = "fetchStockPrice";
+                descriptiveInput = `stock price of ${ticker}`;
+              } else if (intentType === "news_request") {
+                specificToolName = "fetchNews";
+                descriptiveInput = `latest news for ${ticker}`;
+              } else if (intentType === "earnings_request") {
+                specificToolName = "fetchCompanyFacts";
+                descriptiveInput = `earnings for ${ticker}`;
+              } else if (intentType === "filing_request") {
+                specificToolName = "fetchSubmissionMetadata";
+                descriptiveInput = `filings for ${ticker}`;
+              }
               toolCallData.toolName = specificToolName;
+              toolCallData.toolInput = descriptiveInput;
               toolCallData.error = error.message || "Unknown error";
               allToolCalls.push(toolCallData);
               augmentedPromptParts.push(`I tried to perform the action '${toolName}' for ${ticker}, but it failed with the error: ${error.message}`);
@@ -99246,73 +99257,33 @@ Duration: ${duration}ms
             const value = result.value;
             if (intentType === "data_request") {
               toolCallData.toolName = "fetchStockPrice";
+              toolCallData.toolInput = `stock price of ${ticker}`;
               const price = value;
-              if (price !== null && price !== void 0) {
-                contextForMemory.price = price;
-                augmentedPromptParts.push(`The live price of ${ticker} is $${price}.`);
-              } else {
-                toolCallData.error = `Could not retrieve the live price for ${ticker}.`;
-                augmentedPromptParts.push(toolCallData.error);
-              }
-              allToolCalls.push(toolCallData);
             } else if (intentType === "news_request") {
               toolCallData.toolName = "fetchNews";
+              toolCallData.toolInput = `latest news for ${ticker}`;
               const newsArticles = value;
               const { fromDateTime, toDateTime } = meta;
-              if (newsArticles && newsArticles.length > 0) {
-                contextForMemory.news = newsArticles;
-                const formattedNews = newsArticles.map((article) => {
-                  const sentimentScore = parseFloat(article.overall_sentiment_score).toFixed(2);
-                  return `- ${article.title} (Source: ${article.source}) [Sentiment: ${sentimentScore}]`;
-                }).join("\n");
-                augmentedPromptParts.push(`Here are the relevant news headlines I found for ${ticker} from ${fromDateTime} to ${toDateTime}:
---- News Headlines ---
-${formattedNews}
----`);
-              } else {
-                toolCallData.error = `I could not find any news for ${ticker} from ${fromDateTime} to ${toDateTime}.`;
-                augmentedPromptParts.push(toolCallData.error);
-              }
-              allToolCalls.push(toolCallData);
             } else if (intentType === "earnings_request") {
               toolCallData.toolName = "fetchCompanyFacts";
               const { cik, companyFacts } = value;
-              toolCallData.toolInput = cik || ticker;
+              toolCallData.toolInput = `earnings for ${ticker}`;
               if (!cik || !companyFacts || !companyFacts.facts || !companyFacts.facts["us-gaap"]) {
                 toolCallData.error = `Could not retrieve company facts for ${ticker}. CIK found: ${cik || "None"}.`;
                 augmentedPromptParts.push(toolCallData.error);
                 allToolCalls.push(toolCallData);
                 return;
               }
-              contextForMemory.companyFacts = companyFacts;
-              const fromEntity = entities.find((e2) => e2.type === "DATE_FROM");
-              const toEntity = entities.find((e2) => e2.type === "DATE_TO");
-              let fromDateTime = null, toDateTime = null;
-              if (fromEntity && toEntity) {
-              }
-              const annualReports = extractEpsData(companyFacts.facts, true, fromDateTime, toDateTime);
-              const quarterlyReports = extractEpsData(companyFacts.facts, false, fromDateTime, toDateTime);
-              const annualEarningsSummary = annualReports.length > 0 ? "..." : "...";
-              const quarterlyEarningsSummary = quarterlyReports.length > 0 ? "..." : "...";
-              augmentedPromptParts.push(`Here is the earnings data for ${ticker} (CIK: ${cik}):
-...`);
-              allToolCalls.push(toolCallData);
             } else if (intentType === "filing_request") {
               toolCallData.toolName = "fetchSubmissionMetadata";
               const { cik, submissionMetadata } = value;
-              toolCallData.toolInput = cik || ticker;
+              toolCallData.toolInput = `filings for ${ticker}`;
               if (!cik || !submissionMetadata || !submissionMetadata.filings || !submissionMetadata.filings.recent) {
                 toolCallData.error = `Could not retrieve submission metadata for ${ticker}. CIK found: ${cik || "None"}.`;
                 augmentedPromptParts.push(toolCallData.error);
                 allToolCalls.push(toolCallData);
                 return;
               }
-              contextForMemory.submissionMetadata = submissionMetadata;
-              const tenKSummary = "...";
-              const tenQSummary = "...";
-              augmentedPromptParts.push(`Here are the most recent SEC filings for ${ticker} (CIK: ${cik}):
-...`);
-              allToolCalls.push(toolCallData);
             }
           });
         } else {
