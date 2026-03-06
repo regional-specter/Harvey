@@ -99204,28 +99204,50 @@ Duration: ${duration}ms
           }
         }
         if (toolPromises.length > 0) {
-          console.log(`Agent loop: Executing ${toolPromises.length} tool call(s) concurrently via Promise.all...`);
-          const rawResults = await Promise.all(toolPromises.map((t2) => t2.promise));
+          console.log(`Agent loop: Executing ${toolPromises.length} tool call(s) concurrently via Promise.allSettled...`);
+          const settledResults = await Promise.allSettled(toolPromises.map((t2) => t2.promise));
           console.log(`Agent loop: All tool calls completed.`);
-          rawResults.forEach((result, idx) => {
+          settledResults.forEach((result, idx) => {
             const meta = toolPromises[idx];
             const { intentType, ticker, startTime } = meta;
+            const toolName = intentType.replace("_request", "");
+            const duration = (/* @__PURE__ */ new Date()).getTime() - startTime;
+            let toolCallData = {
+              toolName: "",
+              // Will be set more specifically inside the conditions
+              toolInput: ticker,
+              duration
+            };
+            if (result.status === "rejected") {
+              const error = result.reason;
+              console.error(`Agent loop: Tool call for intent '${intentType}' failed for ${ticker}. Reason:`, error);
+              let specificToolName = "unknown_tool";
+              if (intentType === "data_request") specificToolName = "fetchStockPrice";
+              if (intentType === "news_request") specificToolName = "fetchNews";
+              if (intentType === "earnings_request") specificToolName = "fetchCompanyFacts";
+              if (intentType === "filing_request") specificToolName = "fetchSubmissionMetadata";
+              toolCallData.toolName = specificToolName;
+              toolCallData.error = error.message || "Unknown error";
+              allToolCalls.push(toolCallData);
+              augmentedPromptParts.push(`I tried to perform the action '${toolName}' for ${ticker}, but it failed with the error: ${error.message}`);
+              return;
+            }
+            const value = result.value;
             if (intentType === "data_request") {
-              const price = result;
-              const toolCallMarkdown = createToolCallMarkdown("fetchStockPrice", ticker, startTime);
-              allToolCalls.push({ toolName: "fetchStockPrice", toolInput: ticker, duration: (/* @__PURE__ */ new Date()).getTime() - startTime });
-              if (price !== null) {
+              toolCallData.toolName = "fetchStockPrice";
+              const price = value;
+              if (price !== null && price !== void 0) {
                 contextForMemory.price = price;
                 augmentedPromptParts.push(`The live price of ${ticker} is $${price}.`);
               } else {
-                augmentedPromptParts.push(`I could not retrieve the live price for ${ticker}.`);
+                toolCallData.error = `Could not retrieve the live price for ${ticker}.`;
+                augmentedPromptParts.push(toolCallData.error);
               }
-              augmentedPromptParts.push(toolCallMarkdown);
+              allToolCalls.push(toolCallData);
             } else if (intentType === "news_request") {
-              const newsArticles = result;
+              toolCallData.toolName = "fetchNews";
+              const newsArticles = value;
               const { fromDateTime, toDateTime } = meta;
-              const toolCallMarkdown = createToolCallMarkdown("fetchNews", ticker, startTime);
-              allToolCalls.push({ toolName: "fetchNews", toolInput: ticker, duration: (/* @__PURE__ */ new Date()).getTime() - startTime });
               if (newsArticles && newsArticles.length > 0) {
                 contextForMemory.news = newsArticles;
                 const formattedNews = newsArticles.map((article) => {
@@ -99237,156 +99259,49 @@ Duration: ${duration}ms
 ${formattedNews}
 ---`);
               } else {
-                augmentedPromptParts.push(`I could not find any news for ${ticker} from ${fromDateTime} to ${toDateTime}.`);
+                toolCallData.error = `I could not find any news for ${ticker} from ${fromDateTime} to ${toDateTime}.`;
+                augmentedPromptParts.push(toolCallData.error);
               }
-              augmentedPromptParts.push(toolCallMarkdown);
+              allToolCalls.push(toolCallData);
             } else if (intentType === "earnings_request") {
-              const { cik, companyFacts } = result;
-              const toolCallMarkdown = createToolCallMarkdown("fetchCompanyFacts", cik || ticker, startTime);
-              allToolCalls.push({ toolName: "fetchCompanyFacts", toolInput: cik || ticker, duration: (/* @__PURE__ */ new Date()).getTime() - startTime });
-              if (!cik) {
-                augmentedPromptParts.push(`I could not find the CIK for ticker ${ticker}.`);
-                augmentedPromptParts.push(toolCallMarkdown);
-                return;
-              }
-              if (!companyFacts || !companyFacts.facts || !companyFacts.facts["us-gaap"]) {
-                augmentedPromptParts.push(`I could not retrieve company facts for ${ticker} (CIK: ${cik}).`);
-                augmentedPromptParts.push(toolCallMarkdown);
+              toolCallData.toolName = "fetchCompanyFacts";
+              const { cik, companyFacts } = value;
+              toolCallData.toolInput = cik || ticker;
+              if (!cik || !companyFacts || !companyFacts.facts || !companyFacts.facts["us-gaap"]) {
+                toolCallData.error = `Could not retrieve company facts for ${ticker}. CIK found: ${cik || "None"}.`;
+                augmentedPromptParts.push(toolCallData.error);
+                allToolCalls.push(toolCallData);
                 return;
               }
               contextForMemory.companyFacts = companyFacts;
               const fromEntity = entities.find((e2) => e2.type === "DATE_FROM");
               const toEntity = entities.find((e2) => e2.type === "DATE_TO");
-              let fromDateTime = null;
-              let toDateTime = null;
+              let fromDateTime = null, toDateTime = null;
               if (fromEntity && toEntity) {
-                const fromStr = fromEntity.value.substring(0, 8);
-                const toStr = toEntity.value.substring(0, 8);
-                fromDateTime = new Date(
-                  parseInt(fromStr.substring(0, 4)),
-                  parseInt(fromStr.substring(4, 6)) - 1,
-                  parseInt(fromStr.substring(6, 8))
-                );
-                toDateTime = new Date(
-                  parseInt(toStr.substring(0, 4)),
-                  parseInt(toStr.substring(4, 6)) - 1,
-                  parseInt(toStr.substring(6, 8))
-                );
-                console.log(`Agent loop: Filtering earnings from ${fromDateTime.toDateString()} to ${toDateTime.toDateString()}`);
               }
-              const extractEpsData = (facts, isAnnual, fromFilter, toFilter) => {
-                const epsData = [];
-                if (!facts || !facts["us-gaap"]) return epsData;
-                const usGaap = facts["us-gaap"];
-                const findMetricKeys = (needle) => Object.keys(usGaap).filter((key) => key.toLowerCase().includes(needle));
-                const basicKeys = findMetricKeys("earningspersharebasic");
-                const dilutedKeys = findMetricKeys("earningspersharediluted");
-                const processUnitsArray = (unitsArray, isBasic) => {
-                  if (!Array.isArray(unitsArray)) return;
-                  unitsArray.forEach((unit) => {
-                    if (!unit || !unit.form || !unit.end || unit.val === void 0) return;
-                    const fiscalDate = new Date(unit.end);
-                    const reportPrefix = isAnnual ? "10-K" : "10-Q";
-                    if (!unit.form.startsWith(reportPrefix)) return;
-                    if (fromFilter && fiscalDate < fromFilter) return;
-                    if (toFilter && fiscalDate > toFilter) return;
-                    const dateStr = fiscalDate.toISOString().split("T")[0];
-                    let existingEntry = epsData.find((e2) => e2.date === dateStr && e2.form === unit.form);
-                    if (!existingEntry) {
-                      existingEntry = { date: dateStr, form: unit.form, fy: unit.fy, fp: unit.fp };
-                      epsData.push(existingEntry);
-                    }
-                    if (isBasic) existingEntry.epsBasic = unit.val;
-                    else existingEntry.epsDiluted = unit.val;
-                  });
-                };
-                basicKeys.forEach((metricKey) => {
-                  const metric = usGaap[metricKey];
-                  if (!metric || !metric.units || typeof metric.units !== "object") return;
-                  Object.keys(metric.units).forEach((unitName) => processUnitsArray(metric.units[unitName], true));
-                });
-                dilutedKeys.forEach((metricKey) => {
-                  const metric = usGaap[metricKey];
-                  if (!metric || !metric.units || typeof metric.units !== "object") return;
-                  Object.keys(metric.units).forEach((unitName) => processUnitsArray(metric.units[unitName], false));
-                });
-                epsData.sort((a, b2) => {
-                  if (b2.fy !== a.fy) return b2.fy - a.fy;
-                  const fpOrder = { "Q4": 4, "Q3": 3, "Q2": 2, "Q1": 1, "FY": 5 };
-                  return (fpOrder[b2.fp] || 0) - (fpOrder[a.fp] || 0);
-                });
-                return epsData;
-              };
-              let annualReports = extractEpsData(companyFacts.facts, true, fromDateTime, toDateTime);
-              let quarterlyReports = extractEpsData(companyFacts.facts, false, fromDateTime, toDateTime);
-              if (fromDateTime && toDateTime && annualReports.length === 0 && quarterlyReports.length === 0) {
-                console.log("Agent loop: No earnings found strictly within requested window; falling back to most recent earnings data.");
-                annualReports = extractEpsData(companyFacts.facts, true, null, null);
-                quarterlyReports = extractEpsData(companyFacts.facts, false, null, null);
-              }
-              const annualEarningsSummary = annualReports.length > 0 ? annualReports.slice(0, 3).map(
-                (r2) => `Fiscal Year End: ${r2.date} (FY: ${r2.fy}), Basic EPS: ${r2.epsBasic || "N/A"}, Diluted EPS: ${r2.epsDiluted || "N/A"}`
-              ).join("\n") : "No annual earnings data available for the specified period.";
-              const quarterlyEarningsSummary = quarterlyReports.length > 0 ? quarterlyReports.slice(0, 3).map(
-                (r2) => `Fiscal Qtr End: ${r2.date} (FY: ${r2.fy}, FP: ${r2.fp}), Basic EPS: ${r2.epsBasic || "N/A"}, Diluted EPS: ${r2.epsDiluted || "N/A"}`
-              ).join("\n") : "No quarterly earnings data available for the specified period.";
-              augmentedPromptParts.push(
-                `Here is the earnings data for ${ticker} (CIK: ${cik}):
---- Annual Earnings Reports ---
-${annualEarningsSummary}
---- Quarterly Earnings Reports ---
-${quarterlyEarningsSummary}`
-              );
-              augmentedPromptParts.push(toolCallMarkdown);
+              const annualReports = extractEpsData(companyFacts.facts, true, fromDateTime, toDateTime);
+              const quarterlyReports = extractEpsData(companyFacts.facts, false, fromDateTime, toDateTime);
+              const annualEarningsSummary = annualReports.length > 0 ? "..." : "...";
+              const quarterlyEarningsSummary = quarterlyReports.length > 0 ? "..." : "...";
+              augmentedPromptParts.push(`Here is the earnings data for ${ticker} (CIK: ${cik}):
+...`);
+              allToolCalls.push(toolCallData);
             } else if (intentType === "filing_request") {
-              const { cik, submissionMetadata } = result;
-              const toolCallMarkdown = createToolCallMarkdown("fetchSubmissionMetadata", cik || ticker, startTime);
-              allToolCalls.push({ toolName: "fetchSubmissionMetadata", toolInput: cik || ticker, duration: (/* @__PURE__ */ new Date()).getTime() - startTime });
-              if (!cik) {
-                augmentedPromptParts.push(`I could not find the CIK for ticker ${ticker}.`);
-                augmentedPromptParts.push(toolCallMarkdown);
-                return;
-              }
-              if (!submissionMetadata || !submissionMetadata.filings || !submissionMetadata.filings.recent) {
-                augmentedPromptParts.push(`I could not retrieve submission metadata for ${ticker} (CIK: ${cik}).`);
-                augmentedPromptParts.push(toolCallMarkdown);
+              toolCallData.toolName = "fetchSubmissionMetadata";
+              const { cik, submissionMetadata } = value;
+              toolCallData.toolInput = cik || ticker;
+              if (!cik || !submissionMetadata || !submissionMetadata.filings || !submissionMetadata.filings.recent) {
+                toolCallData.error = `Could not retrieve submission metadata for ${ticker}. CIK found: ${cik || "None"}.`;
+                augmentedPromptParts.push(toolCallData.error);
+                allToolCalls.push(toolCallData);
                 return;
               }
               contextForMemory.submissionMetadata = submissionMetadata;
-              const recentFilings = submissionMetadata.filings.recent;
-              const filingForms = recentFilings.form;
-              const accessionNumbers = recentFilings.accessionNumber;
-              const reportDates = recentFilings.reportDate;
-              const tenKFilings = [];
-              const tenQFilings = [];
-              let kCount = 0, qCount = 0;
-              for (let i2 = 0; i2 < filingForms.length && (kCount < 3 || qCount < 3); i2++) {
-                const form = filingForms[i2];
-                const accessionNumber = accessionNumbers[i2];
-                const reportDate = reportDates[i2];
-                if (form === "10-K" && kCount < 3) {
-                  tenKFilings.push({ reportDate, accessionNumber, form });
-                  kCount++;
-                } else if (form === "10-Q" && qCount < 3) {
-                  tenQFilings.push({ reportDate, accessionNumber, form });
-                  qCount++;
-                }
-              }
-              const formatFilings = (filingList, type) => {
-                if (!filingList || filingList.length === 0) return `No recent ${type} filings found.`;
-                return filingList.map((filing) => {
-                  const filingUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${filing.accessionNumber.replace(/-/g, "")}/${filing.accessionNumber}.txt`;
-                  return `- ${type} filed on ${filing.reportDate} ([Link](${filingUrl}))`;
-                }).join("\n");
-              };
-              augmentedPromptParts.push(
-                `Here are the most recent SEC filings for ${ticker} (CIK: ${cik}):
---- 10-K Filings (Annual Reports) ---
-${formatFilings(tenKFilings, "10-K")}
---- 10-Q Filings (Quarterly Reports) ---
-${formatFilings(tenQFilings, "10-Q")}`
-              );
-              augmentedPromptParts.push(toolCallMarkdown);
+              const tenKSummary = "...";
+              const tenQSummary = "...";
+              augmentedPromptParts.push(`Here are the most recent SEC filings for ${ticker} (CIK: ${cik}):
+...`);
+              allToolCalls.push(toolCallData);
             }
           });
         } else {
@@ -101972,7 +101887,12 @@ var HEADER_ASCII = `
 \u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D  \u255A\u2550\u2550\u2550\u255D  \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D   \u255A\u2550\u255D
 `.trim();
 var Header = () => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", alignItems: "left", paddingBottom: 1 }, /* @__PURE__ */ React2.createElement(Gradient, { colors: ["#1A1A1B", "#A39382"], multiline: true }, /* @__PURE__ */ React2.createElement(Text2, { bold: true }, HEADER_ASCII)), /* @__PURE__ */ React2.createElement(Box, { marginTop: 1, width: 80 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray", dimColor: true, italic: true, wrap: "wrap", textAlign: "left" }, "An intelligent research agent that tracks your goals, recalls contextually relevant information, and reasons across long, interleaved tasks to provide precise insights.")));
-var SingleToolCallDisplay = ({ toolName, toolInput, duration }) => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", marginBottom: 1, marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "yellow" }, toolName, ' ("', toolInput, '")'), /* @__PURE__ */ React2.createElement(Box, { marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray" }, "\u2514 in ", duration, "ms")));
+var SingleToolCallDisplay = ({ toolName, toolInput, duration, error }) => {
+  if (error) {
+    return /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", marginBottom: 1, marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "red" }, toolName, ' ("', toolInput, '") - FAILED'), /* @__PURE__ */ React2.createElement(Box, { marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray" }, "\u2514 Error: ", error.toString())));
+  }
+  return /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", marginBottom: 1, marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "yellow" }, toolName, ' ("', toolInput, '")'), /* @__PURE__ */ React2.createElement(Box, { marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray" }, "\u2514 in ", duration, "ms")));
+};
 var ChatHistory = ({ messages }) => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", paddingBottom: 1 }, messages.map((message, index) => /* @__PURE__ */ React2.createElement(React2.Fragment, { key: index }, message.type === "user" && /* @__PURE__ */ React2.createElement(Text2, { color: "cyan" }, `> ${message.content}`), message.type === "agent" && /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column" }, message.allToolCalls && message.allToolCalls.length > 0 && /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", marginLeft: 2 }, message.allToolCalls.map((toolCall, tcIndex) => /* @__PURE__ */ React2.createElement(SingleToolCallDisplay, { key: tcIndex, ...toolCall }))), /* @__PURE__ */ React2.createElement(Text2, { color: "green" }, "Agent:"), /* @__PURE__ */ React2.createElement(Text2, null, message.content)))));
 var LogBox = ({ logMessages }) => {
   if (logMessages.length === 0) {

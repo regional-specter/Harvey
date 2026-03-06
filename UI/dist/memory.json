@@ -2750,5 +2750,57 @@
         }
       ]
     }
+  },
+  {
+    "id": 2,
+    "timestamp": "2026-03-06T08:48:53.534Z",
+    "user_input": "Whats the stock price of AAPL today and stock price of AAPL yesterday ?",
+    "llm_response": "As of today, the live price for **Apple Inc. (AAPL)** is **$260.29**. \n\nYesterday, the stock ended the trading session at a closing price of **$186.88**.",
+    "thematic_scope": "stock price analysis",
+    "event_type": "chat_turn",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "AAPL"
+      },
+      {
+        "type": "FINANCIAL_METRIC",
+        "value": "stock price"
+      },
+      {
+        "type": "DATE_FROM",
+        "value": "20260220T0000"
+      },
+      {
+        "type": "DATE_TO",
+        "value": "20260221T2359"
+      }
+    ],
+    "context": {
+      "price": 260.29
+    }
+  },
+  {
+    "id": 3,
+    "timestamp": "2026-03-06T08:50:58.096Z",
+    "user_input": "What is the latest news regarding MSST and stock price of MSFT",
+    "llm_response": "I was unable to retrieve the latest news or the current stock price for **MSST** and **MSFT** (Microsoft) for the requested period of March 5, 2026, to March 6, 2026.\n\nAccording to the system logs, no news articles were found for these identifiers during that timeframe, and the live price data is currently unavailable. This may be due to a lack of market activity during that specific window or a technical issue in retrieving the data for those symbols.",
+    "thematic_scope": "latest news and stock price information",
+    "event_type": "chat_turn",
+    "entities": [
+      {
+        "entity": "MSST",
+        "type": "STOCK_TICKER"
+      },
+      {
+        "entity": "MSFT",
+        "type": "STOCK_TICKER"
+      },
+      {
+        "entity": "stock price",
+        "type": "FINANCIAL_METRIC"
+      }
+    ],
+    "context": {}
   }
 ]

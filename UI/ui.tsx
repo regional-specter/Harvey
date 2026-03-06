@@ -28,6 +28,7 @@ interface ToolCall {
     toolName: string;
     toolInput: string;
     duration: string;
+    error?: any;
 }
 
 interface Message {
@@ -54,14 +55,27 @@ const Header = () => (
 );
 
 // --- New SingleToolCallDisplay Component ---
-const SingleToolCallDisplay = ({ toolName, toolInput, duration }: ToolCall) => (
-    <Box flexDirection="column" marginBottom={1} marginLeft={2}>
-        <Text color="yellow">{toolName} ("{toolInput}")</Text>
-        <Box marginLeft={2}>
-            <Text color="gray">└ in {duration}ms</Text>
+const SingleToolCallDisplay = ({ toolName, toolInput, duration, error }: ToolCall) => {
+    if (error) {
+        return (
+            <Box flexDirection="column" marginBottom={1} marginLeft={2}>
+                <Text color="red">{toolName} ("{toolInput}") - FAILED</Text>
+                <Box marginLeft={2}>
+                    <Text color="gray">└ Error: {error.toString()}</Text>
+                </Box>
+            </Box>
+        );
+    }
+
+    return (
+        <Box flexDirection="column" marginBottom={1} marginLeft={2}>
+            <Text color="yellow">{toolName} ("{toolInput}")</Text>
+            <Box marginLeft={2}>
+                <Text color="gray">└ in {duration}ms</Text>
+            </Box>
         </Box>
-    </Box>
-);
+    );
+};
 
 const ChatHistory = ({ messages }: { messages: Message[] }) => (
     <Box flexDirection="column" paddingBottom={1}>
