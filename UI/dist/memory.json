@@ -2802,5 +2802,2760 @@
       }
     ],
     "context": {}
+  },
+  {
+    "id": 4,
+    "timestamp": "2026-03-06T08:57:48.959Z",
+    "user_input": "What is the price of MSST today and latest news on MSFT ?",
+    "llm_response": "### Price Information\nI was unable to retrieve a live price for **MSST**. If you intended to ask for the price of Microsoft (**MSFT**), please note that real-time market data was not available at the time of this report.\n\n### Latest News on Microsoft (MSFT)\nBased on headlines from February 21, 2026, the sentiment surrounding Microsoft is **largely positive**, focused heavily on the company's leadership in AI integration, enterprise productivity, and gaming.\n\n#### 1. **AI and Enterprise Productivity**\n*   **High ROI for AI Tools:** A Forrester study highlighted a significant **346% Return on Investment (ROI)** for companies modernizing service operations with **Dynamics 365 Field Service**.\n*   **Developer Gains:** Lumen Technologies reported substantial financial gains and productivity boosts by implementing **GitHub Copilot, Azure DevOps, and Visual Studio**.\n*   **Low-Code Success:** Aon Brazil significantly reduced costs (8%) and deployment times (80%) by utilizing the **Power Platform** (Power BI, Power Apps, and Power Automate).\n\n#### 2. **Gaming and Leadership**\n*   **New Gaming Leadership:** Microsoft has officially named a **new CEO for its gaming unit**, signaling a continued strategic focus on that sector following recent major acquisitions.\n*   **Hardware Integration:** New reviews for peripherals like the Turtle Beach VelocityOne Flightdeck suggest continued consumer interest and ecosystem strength for **Microsoft Flight Simulator**.\n\n#### 3. **Analyst and Market Sentiment**\n*   **Top Pick Status:** Analysts continue to list MSFT as a **\"Top Technology Pick\"** and include it in lists of **\"7 Must-Own Retirement Stocks\"** for millennial investors.\n*   **ETF Performance:** MSFT remains a core holding in high-profile ETFs, including the \"Nancy Pelosi\" tracker (NANC), which has recently outperformed the S&P 500 due to its heavy tech concentration.\n*   **Contrarian Moves:** While most sentiment is bullish, billionaire investor **Ray Dalio** reportedly reduced his position in several major tech stocks, including Microsoft, amid broader concerns about the U.S. economy.\n\n#### 4. **Infrastructure and Competition**\n*   Microsoft is noted as a key player in the **data center construction surge**, alongside Oracle, Google, and Meta, to keep up with the massive hardware demands of AI.\n\n### Summary of Sentiment\nThe news suggests that Microsoft is successfully converting its AI investments into **tangible financial results** for its enterprise customers. While some institutional investors (like Ray Dalio) are diversifying away from big tech, the consensus among analysts remains that Microsoft is a foundational growth stock.",
+    "thematic_scope": "stock price and news inquiry",
+    "event_type": "chat_turn",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "MSST"
+      },
+      {
+        "type": "STOCK_TICKER",
+        "value": "MSFT"
+      },
+      {
+        "type": "DATE_FROM",
+        "value": "20260221T0000"
+      },
+      {
+        "type": "DATE_TO",
+        "value": "20260221T2359"
+      }
+    ],
+    "context": {
+      "news": [
+        {
+          "title": "US' Duluth Holdings appoints Janet Kennedy to board of directors",
+          "url": "https://www.alchempro.com/news/apparel-news/us-duluth-holdings-appoints-janet-kennedy-to-board-of-directors-289078-newsdetails.htm",
+          "time_published": "20260221T230240",
+          "authors": [],
+          "summary": "Duluth Holdings Inc. has appointed Janet H. Kennedy to its board of directors, effective August 23, 2023. Kennedy brings over 30 years of experience in digital and tech transformations, having held leadership roles at Google Cloud, Ernst & Young, Microsoft, and IBM. The appointment is expected to strengthen Duluth's strategic priorities, particularly in transforming into a digitally-led organization.",
+          "banner_image": "https://static.fibre2fashion.com/Newsresource/images/289/janet-h-kennedy_300666.jpg",
+          "source": "ALCHEMPro",
+          "category_within_source": "General",
+          "source_domain": "ALCHEMPro",
+          "topics": [
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.840943"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.721751"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.633100"
+            }
+          ],
+          "overall_sentiment_score": 0.103944,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "CP",
+              "relevance_score": "0.646770",
+              "ticker_sentiment_score": "0.114798",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.634300",
+              "ticker_sentiment_score": "0.135616",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "IBM",
+              "relevance_score": "0.608727",
+              "ticker_sentiment_score": "0.144986",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.628821",
+              "ticker_sentiment_score": "0.121325",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "What’s up with… Nokia, Adtran, Ooredoo, Tejas and BSNL",
+          "url": "https://www.telecomtv.com/content/access-evolution/what-s-up-with-nokia-adtran-ooredoo-tejas-and-bsnl-48248/",
+          "time_published": "20260221T222150",
+          "authors": [],
+          "summary": "Nokia and Adtran are increasing their US fiber broadband equipment manufacturing to meet BEAD program demand. Ooredoo is enhancing its digital transformation through new partnerships with Google Cloud and Tech Mahindra, focusing on API integration. Tejas Networks secured a significant $901 million deal to provide 4G/5G RAN equipment to BSNL, highlighting India's \"Make in India\" initiative.",
+          "banner_image": "https://assets.telecomtv.com/assets/telecomtv/nokia-logo-16238.jpeg?w=896&h=504&crop=auto",
+          "source": "TelecomTV",
+          "category_within_source": "General",
+          "source_domain": "TelecomTV",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.909945"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.710722"
+            },
+            {
+              "topic": "manufacturing",
+              "relevance_score": "0.612264"
+            }
+          ],
+          "overall_sentiment_score": 0.299129,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "FN",
+              "relevance_score": "0.854108",
+              "ticker_sentiment_score": "0.309260",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.700075",
+              "ticker_sentiment_score": "0.279882",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.635011",
+              "ticker_sentiment_score": "0.234524",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "BofA Reinstates Coverage of NIQ Global Intelligence plc (NIQ) with a Buy Rating and a $20 Price Target",
+          "url": "https://www.insidermonkey.com/blog/bofa-reinstates-coverage-of-niq-global-intelligence-plc-niq-with-a-buy-rating-and-a-20-price-target-1700655/?amp=1",
+          "time_published": "20260221T221300",
+          "authors": [
+            "Jeff Lewis",
+            "Inan Dogan",
+            "PhD"
+          ],
+          "summary": "BofA analyst Curtis Nagle reinstated coverage of NIQ Global Intelligence plc (NYSE: NIQ) with a Buy rating and a $20 price target, expressing a generally constructive view on the Information and Business Services sector for 2026. This follows Baird analyst Jeffrey Meuler lowering his price target to $20 from $24 due to the unexpected departure of COO Tracey Massey, though NIQ clarified her resignation was for personal reasons and not due to company disagreements, with her responsibilities being absorbed by the CEO and other executives. The article also includes promotional content for an AI stock with \"100x upside potential.\"",
+          "banner_image": null,
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.928776"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.823466"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.744999"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.609150"
+            }
+          ],
+          "overall_sentiment_score": 0.268226,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "NIQ",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.273960",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.645042",
+              "ticker_sentiment_score": "0.328058",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.607753",
+              "ticker_sentiment_score": "0.277697",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "TSLA",
+              "relevance_score": "0.595321",
+              "ticker_sentiment_score": "0.215937",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.572844",
+              "ticker_sentiment_score": "0.343007",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Perfect Corp. Unveils Groundbreaking \"YouCam AI Pro\" App, Redefining Creative Expression with AI-Powered Text-to-Image Technology",
+          "url": "https://aithority.com/machine-learning/perfect-corp-unveils-groundbreaking-youcam-ai-pro-app-redefining-creative-expression-with-ai-powered-text-to-image-technology/",
+          "time_published": "20260221T215031",
+          "authors": [
+            "Business Wire"
+          ],
+          "summary": "Perfect Corp. has launched \"YouCam AI Pro,\" a new app that uses AI-powered text-to-image technology to allow users to generate unique visual content from text prompts. The app, which is part of the YouCam Suite, offers various artistic styles and also includes the popular AI Magic Avatar feature. It aims to democratize creative expression for artists, designers, and enthusiasts alike, making advanced design accessible without prior expertise.",
+          "banner_image": "https://aithority.com/wp-content/uploads/2023/09/AIT_1-1.png",
+          "source": "AiThority",
+          "category_within_source": "General",
+          "source_domain": "AiThority",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.937805"
+            }
+          ],
+          "overall_sentiment_score": 0.574613,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "PERF",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.831885",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.625208",
+              "ticker_sentiment_score": "0.329012",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Q3 2023 market & economic outlook",
+          "url": "https://www.bizjournals.com/milwaukee/news/2023/09/04/q3-2023-market-economic-outlook.html",
+          "time_published": "20260221T214908",
+          "authors": [
+            "1834",
+            "a Division of Old National Bank"
+          ],
+          "summary": "The US economy is akin to a barge, slow to change direction, yet despite aggressive Federal Reserve interest rate hikes, economic data remains strong, with a resilient consumer and labor market. Many economists predicted a recession by now, but a severe downturn is becoming less likely, though sluggish growth may persist. This outlook provides insights into investment views for equities and fixed income, highlighting the impact of AI on market leaders and discussing the inverted yield curve's implications while emphasizing the current housing affordability crisis.",
+          "banner_image": "https://media.bizj.us/view/img/12582906/4-image1*900xx1920-1080-0-0.jpg",
+          "source": "The Business Journals",
+          "category_within_source": "General",
+          "source_domain": "The Business Journals",
+          "topics": [
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.928644"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.919527"
+            },
+            {
+              "topic": "economy_monetary",
+              "relevance_score": "0.836846"
+            },
+            {
+              "topic": "real_estate",
+              "relevance_score": "0.723585"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.638651"
+            }
+          ],
+          "overall_sentiment_score": 0.568422,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ONBPO",
+              "relevance_score": "0.933177",
+              "ticker_sentiment_score": "0.309066",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.683445",
+              "ticker_sentiment_score": "0.631115",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.661077",
+              "ticker_sentiment_score": "0.639752",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.683562",
+              "ticker_sentiment_score": "0.619016",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.672065",
+              "ticker_sentiment_score": "0.737806",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Ray Dalio Sours On America And Sold These Tech Stocks",
+          "url": "https://247wallst.com/investing/2026/02/21/ray-dalio-sours-on-america-and-sold-these-tech-stocks/",
+          "time_published": "20260221T193637",
+          "authors": [
+            "Vandita Jadeja"
+          ],
+          "summary": "Legendary investor Ray Dalio's Bridgewater Associates reduced its holdings in major tech stocks like Microsoft, Meta, and Alphabet in Q4, citing concerns about AI spending failing to justify returns and increasing capital expenditures. While trimming these positions, Dalio simultaneously added other tech stocks such as Nvidia, Broadcom, Oracle, Adobe, and Micron, suggesting a portfolio rebalancing rather than an exit from the tech sector. This move reflects his broader concerns about the U.S. economy, including unsustainable debt and geopolitical conflicts.",
+          "banner_image": "https://247wallst.com/wp-content/uploads/2019/02/imageforentry7-8n7.jpg",
+          "source": "24/7 Wall St.",
+          "category_within_source": "General",
+          "source_domain": "24/7 Wall St.",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.940515"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.800836"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.616757"
+            }
+          ],
+          "overall_sentiment_score": -0.160865,
+          "overall_sentiment_label": "Somewhat-Bearish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.970336",
+              "ticker_sentiment_score": "-0.323137",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "META",
+              "relevance_score": "0.912662",
+              "ticker_sentiment_score": "-0.423832",
+              "ticker_sentiment_label": "Bearish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.853411",
+              "ticker_sentiment_score": "-0.201770",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.850301",
+              "ticker_sentiment_score": "-0.248393",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.727950",
+              "ticker_sentiment_score": "0.346000",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "C3.ai Stock Jumps After OpenAI Drama",
+          "url": "https://www.nasdaq.com/articles/c3.ai-stock-jumps-after-openai-drama",
+          "time_published": "20260221T193531",
+          "authors": [
+            "Travis Hoium"
+          ],
+          "summary": "C3.ai's stock saw an 8.2% jump following the OpenAI leadership turmoil, where CEO Sam Altman was fired and subsequently joined Microsoft. The article suggests this rise is more due to AI hype than C3.ai's financial performance, noting only 3% revenue growth and ongoing losses. The author expresses skepticism about C3.ai's long-term success in the AI \"arms race\" dominated by larger companies.",
+          "banner_image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fmedia.ycharts.com%2Fcharts%2F90c2dcb163d04a4d87987c9a4d970516.png&w=700",
+          "source": "Nasdaq",
+          "category_within_source": "General",
+          "source_domain": "Nasdaq",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.927188"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.842649"
+            }
+          ],
+          "overall_sentiment_score": 0.00909,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "AI",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "-0.230162",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.717691",
+              "ticker_sentiment_score": "0.233049",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "7 Must-Own Retirement Stocks for Millennial Investors",
+          "url": "https://investorplace.com/2023/11/retirement-stocks-for-millennials-7-choices-for-the-must-own-list/",
+          "time_published": "20260221T193456",
+          "authors": [
+            "Chris Markoch"
+          ],
+          "summary": "Millennial investors, generally defined as those born between 1981 and 1996, need to focus on long-term growth and dividend-paying stocks with staying power for 20 to 30 years. This article highlights seven \"must-own\" retirement stocks, including Archer-Daniels-Midland (ADM), Microsoft (MSFT), and Costco (COST) for their consistent dividends and growth prospects, and also suggests Lululemon (LULU) and Chewy (CHWY) for breakout growth potential despite not currently paying dividends. The selections aim to combine the benefits of compounding returns from dividends with the long-term appreciation from growth companies.",
+          "banner_image": "https://investorplace.com/wp-content/uploads/2019/07/retire-retirement-ahead-sign-768x432.jpg",
+          "source": "InvestorPlace",
+          "category_within_source": "General",
+          "source_domain": "InvestorPlace",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.901035"
+            },
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.728784"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.741581"
+            },
+            {
+              "topic": "life_sciences",
+              "relevance_score": "0.603602"
+            }
+          ],
+          "overall_sentiment_score": 0.413087,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ADM",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.479909",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.881104",
+              "ticker_sentiment_score": "0.443350",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "COST",
+              "relevance_score": "0.837953",
+              "ticker_sentiment_score": "0.401509",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "LOW",
+              "relevance_score": "0.765616",
+              "ticker_sentiment_score": "0.422469",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "WELL",
+              "relevance_score": "0.708372",
+              "ticker_sentiment_score": "0.289367",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Super Micro Computer, Blue Owl, Hims & Hers And More: 5 Stocks Investors Couldn't Stop Buzzing About This Week",
+          "url": "https://www.sahmcapital.com/news/content/super-micro-computer-blue-owl-hims-hers-and-more-5-stocks-investors-couldnt-stop-buzzing-about-this-week-2026-02-21",
+          "time_published": "20260221T185305",
+          "authors": [
+            "Benzinga News"
+          ],
+          "summary": "This article highlights five stocks—Super Micro Computer (SMCI), Hims & Hers Health (HIMS), Blue Owl Capital (OWL), Microsoft (MSFT), and Walmart (WMT)—that generated significant retail investor buzz on X and Reddit's r/WallStreetBets from February 16-20. The discussions were driven by a mix of earnings reports, AI developments, corporate news, and retail hype across diverse sectors. Each stock experienced notable events, from SMCI's post-earnings rebound and HIMS's major acquisition to OWL's asset sale concerns, MSFT's AI spending worries, and WMT's strong holiday quarter despite a conservative outlook.",
+          "banner_image": null,
+          "source": "Sahm",
+          "category_within_source": "General",
+          "source_domain": "Sahm",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.909380"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.931757"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.839814"
+            },
+            {
+              "topic": "mergers_and_acquisitions",
+              "relevance_score": "0.746047"
+            },
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.718243"
+            }
+          ],
+          "overall_sentiment_score": 0.10206,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "HIMS",
+              "relevance_score": "0.910030",
+              "ticker_sentiment_score": "0.330051",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "SMCI",
+              "relevance_score": "0.831192",
+              "ticker_sentiment_score": "0.408309",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.701757",
+              "ticker_sentiment_score": "-0.232584",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "WMT",
+              "relevance_score": "0.736948",
+              "ticker_sentiment_score": "-0.229838",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            }
+          ]
+        },
+        {
+          "title": "Mutual Fund Managers Are Wrong More Than They’re Right",
+          "url": "https://www.morningstar.com/funds/mutual-fund-managers-are-wrong-more-than-theyre-right",
+          "time_published": "20260221T180934",
+          "authors": [
+            "Jack Shannon"
+          ],
+          "summary": "This article analyzes mutual fund managers' \"hit rates\" (percentage of holdings outperforming their benchmark index) and finds that most managers pick more losing stocks than winners. While higher hit rates generally correlate with less underperformance, the study concludes that portfolio construction, specifically the weighting of winning stocks, is more crucial than merely picking winners. Market returns are concentrated, meaning a few big winners drive most gains, and past hit rates are not reliable predictors of future success for mutual fund managers or individual investors.",
+          "banner_image": "https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/oO740opUaGOHp6Tnv5IbsG-tJOI=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/8f7783c2-4594-4d77-bae5-93f2c748cd2d.jpg",
+          "source": "Morningstar",
+          "category_within_source": "General",
+          "source_domain": "Morningstar",
+          "topics": [
+            {
+              "topic": "finance",
+              "relevance_score": "0.911905"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.743505"
+            }
+          ],
+          "overall_sentiment_score": 0.048481,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.896652",
+              "ticker_sentiment_score": "-0.144429",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.802693",
+              "ticker_sentiment_score": "0.114527",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.778191",
+              "ticker_sentiment_score": "0.145990",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Equinix Fabric adds multi-cloud routing",
+          "url": "https://www.techtarget.com/searchnetworking/news/366566736/Equinix-Fabric-adds-multi-cloud-routing",
+          "time_published": "20260221T180413",
+          "authors": [
+            "Antone Gonsalves"
+          ],
+          "summary": "Equinix has made its virtual routing service, Fabric Cloud Router, generally available to enterprises leasing its data centers, allowing for in-house multi-cloud connectivity. This service provides Layer 3 connectivity to major cloud providers and other service providers, marketed as a monthly subscription that eliminates the need for physical or virtual routers. Equinix aims to simplify infrastructure complexity for hybrid cloud environments and support emerging technologies like private generative AI, positioning itself against competitors like Megaport with higher bandwidth capabilities.",
+          "banner_image": "https://www.techtarget.com/rms/onlineimages/cloud_g1135435124_searchsitetablet_520X173.jpg",
+          "source": "TechTarget",
+          "category_within_source": "General",
+          "source_domain": "TechTarget",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.905489"
+            }
+          ],
+          "overall_sentiment_score": 0.164192,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "EQIX",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.279297",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.610653",
+              "ticker_sentiment_score": "0.148204",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.631320",
+              "ticker_sentiment_score": "0.102706",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.647678",
+              "ticker_sentiment_score": "0.106346",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NOW",
+              "relevance_score": "0.632651",
+              "ticker_sentiment_score": "0.112920",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Market Clubhouse Morning Memo - February 14th, 2024 (Trade Strategy For SPY, QQQ, AAPL, MSFT, NVDA, GOOGL, META, And TSLA)",
+          "url": "https://www.tradingview.com/news/benzinga:314d450c2094b:0-market-clubhouse-morning-memo-february-14th-2024-trade-strategy-for-spy-qqq-aapl-msft-nvda-googl-meta-and-tsla/",
+          "time_published": "20260221T172855",
+          "authors": [],
+          "summary": "This Market Clubhouse Morning Memo provides detailed trade strategies for key stocks and ETFs including SPY, QQQ, Apple, Microsoft, NVIDIA, Alphabet, Meta, and Tesla for February 14th, 2024. It outlines specific bullish and bearish price targets and support/resistance levels for each, based on a proprietary formula. The memo also highlights that today's trading will be influenced by PPI Revisions and reactions to yesterday's hotter-than-anticipated CPI data, advising traders to expect volatility and proceed with caution.",
+          "banner_image": null,
+          "source": "TradingView",
+          "category_within_source": "General",
+          "source_domain": "TradingView",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "economy_monetary",
+              "relevance_score": "0.748399"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.631737"
+            }
+          ],
+          "overall_sentiment_score": 0.226571,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "QQQ",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.244067",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.739140",
+              "ticker_sentiment_score": "0.222790",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.714330",
+              "ticker_sentiment_score": "0.237174",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.708689",
+              "ticker_sentiment_score": "0.215428",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "ETF Named After Nancy Pelosi, Tracking Congressional Democrats' Stock Trades, Surpasses S&P 500 with Tech Triumph",
+          "url": "https://www.tradingview.com/news/benzinga:7a3d1967e094b:0-etf-named-after-nancy-pelosi-tracking-congressional-democrats-stock-trades-surpasses-s-p-500-with-tech-triumph/",
+          "time_published": "20260221T172147",
+          "authors": [],
+          "summary": "The Unusual Whales Democratic ETF (NANC), which tracks the stock trades of Democratic members of Congress, has outperformed the S&P 500 since its launch in February 2023, growing 30% compared to the S&P 500's 24%. This success is attributed to significant investments in major tech companies like Microsoft, Amazon, Apple, and Nvidia. The ETF was created amidst ongoing scrutiny of congressional stock trading, and its performance highlights the market's confidence in stocks favored by Democratic lawmakers, including those frequently traded by Nancy Pelosi.",
+          "banner_image": null,
+          "source": "TradingView",
+          "category_within_source": "General",
+          "source_domain": "TradingView",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.936814"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.836404"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.719426"
+            },
+            {
+              "topic": "economy_fiscal",
+              "relevance_score": "0.636618"
+            }
+          ],
+          "overall_sentiment_score": 0.561527,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "NANC",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.634135",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.800461",
+              "ticker_sentiment_score": "0.546753",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.748956",
+              "ticker_sentiment_score": "0.532936",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.716795",
+              "ticker_sentiment_score": "0.503158",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.604183",
+              "ticker_sentiment_score": "0.540712",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Forrester study finds 346% ROI when modernizing service operations with Dynamics 365 Field Service",
+          "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2024/02/05/forrester-study-finds-346-roi-when-modernizing-service-operations-with-dynamics-365-field-service/",
+          "time_published": "20260221T170414",
+          "authors": [
+            "Safiyyah O’Quinn"
+          ],
+          "summary": "A Forrester Consulting Total Economic Impact (TEI) Study, commissioned by Microsoft in December 2023, found that modernizing service operations with Microsoft Dynamics 365 Field Service yields a 346% ROI with a payback period of less than six months. The study, based on interviews with 11 representatives from seven organizations, revealed $42.65 million in benefits over three years for a composite organization. Key benefits include increased first-time fix rates, enhanced technician and dispatcher productivity, reduced time to invoice customers, and avoided travel time.",
+          "banner_image": "https://www.microsoft.com/en-us/dynamics-365/blog/wp-content/uploads/2024/02/MSFT_DYNAMICS_JAN31_Blog_313847_20240130_FINAL_1260.jpg",
+          "source": "Microsoft",
+          "category_within_source": "General",
+          "source_domain": "Microsoft",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.810758"
+            },
+            {
+              "topic": "manufacturing",
+              "relevance_score": "0.645016"
+            }
+          ],
+          "overall_sentiment_score": 0.35386,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "FORR",
+              "relevance_score": "0.319054",
+              "ticker_sentiment_score": "0.028143",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.985814",
+              "ticker_sentiment_score": "0.722549",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "WEC Energy Rose 5% in the Last 30 Days. Here’s How Much the Stock Could Rise in 2026",
+          "url": "https://www.tikr.com/blog/wec-energy-rose-5-in-the-last-30-days-heres-how-much-the-stock-could-rise-in-2026",
+          "time_published": "20260221T164157",
+          "authors": [
+            "Nikko Henson"
+          ],
+          "summary": "WEC Energy Group stock increased 5% in the past 30 days due to strong earnings, increased data center demand, and expanded capital investment plans. The company reaffirmed its 2026 guidance and raised its five-year capital plan to $37.5 billion, with institutional investors showing strong conviction. A valuation model suggests the stock is currently undervalued, with a target price of $140, implying a 22% total upside and a 7.3% annualized return through 2026.",
+          "banner_image": "https://res.cloudinary.com/tikr/images/f_auto,q_auto,w_800/v1771690287/images/@Lina-Darjans-Images-via-Canva/@Lina-Darjans-Images-via-Canva",
+          "source": "TIKR.com",
+          "category_within_source": "General",
+          "source_domain": "TIKR.com",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.918522"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.934112"
+            },
+            {
+              "topic": "energy_transportation",
+              "relevance_score": "0.715828"
+            }
+          ],
+          "overall_sentiment_score": 0.389837,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "WEC",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.445936",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.608311",
+              "ticker_sentiment_score": "0.343214",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Turtle Beach VelocityOne Flightdeck HOTAS review: My new favorite stick for Microsoft Flight Simulator",
+          "url": "https://www.windowscentral.com/gaming/pc-gaming/turtle-beach-velocityone-flightdeck-hotas-review",
+          "time_published": "20260221T163518",
+          "authors": [
+            "Ben Wilson"
+          ],
+          "summary": "Ben Wilson reviews the Turtle Beach VelocityOne Flightdeck HOTAS system, an advanced peripheral designed for flight simulators. He praises its extensive customizability, OLED touchscreen, and hall-effect flight stick axes. Although it's a pricey option and lacks pre-made configuration profiles for Microsoft Flight Simulator at launch, its overall performance and features make it his top recommendation for serious flight simulation enthusiasts.",
+          "banner_image": "https://cdn.mos.cms.futurecdn.net/WMDgoGrFxtE433km2WYdMS.jpg",
+          "source": "Windows Central",
+          "category_within_source": "General",
+          "source_domain": "Windows Central",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "1.000000"
+            }
+          ],
+          "overall_sentiment_score": 0.179336,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "TBCH",
+              "relevance_score": "0.311084",
+              "ticker_sentiment_score": "0.023633",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "BBY",
+              "relevance_score": "0.710836",
+              "ticker_sentiment_score": "0.241758",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "WMT",
+              "relevance_score": "0.657906",
+              "ticker_sentiment_score": "0.238200",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.695375",
+              "ticker_sentiment_score": "0.223846",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.652018",
+              "ticker_sentiment_score": "0.215007",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Oracle, Google and Meta lead data center construction surge",
+          "url": "https://www.constructiondive.com/news/oracle-google-meta-data-center-construction/711408/",
+          "time_published": "20260221T162344",
+          "authors": [
+            "Sebastian Obando"
+          ],
+          "summary": "Driven by digital transformation, data center construction saw a 46% year-over-year increase in 2023, with even greater growth anticipated for 2024. Major tech companies like Oracle, Google, and Meta are investing billions in new facilities across the U.S., despite ongoing supply chain issues and rising construction costs. States like Wisconsin and Indiana are becoming new hubs, offering tax incentives and affordable power to attract these large-scale projects.",
+          "banner_image": "https://imgproxy.divecdn.com/nlx1kX94soJk590n8KrUUKMQn2kyhnwjrECyEG4Kgcs/g:ce/rs:fill:1200:675:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS80MzIzOTg2NTJfMTIyMTE2NTUwNzIwMjMxMzQyXzM1MzQ0MTY2OTYwODYwMDEyMV9uLmpwZw==.webp",
+          "source": "Construction Dive",
+          "category_within_source": "General",
+          "source_domain": "Construction Dive",
+          "topics": [
+            {
+              "topic": "real_estate",
+              "relevance_score": "0.924604"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.812816"
+            }
+          ],
+          "overall_sentiment_score": 0.38586,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ORCL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.418343",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.886780",
+              "ticker_sentiment_score": "0.421462",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.860517",
+              "ticker_sentiment_score": "0.447931",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "META",
+              "relevance_score": "0.823165",
+              "ticker_sentiment_score": "0.435494",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.607478",
+              "ticker_sentiment_score": "0.308510",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Corsair Virtuoso Pro review: The best-sounding gaming headset yet",
+          "url": "https://www.windowscentral.com/gaming/corsair-virtuoso-pro-review",
+          "time_published": "20260221T155346",
+          "authors": [
+            "Harish Jonnalagadda"
+          ],
+          "summary": "The Corsair Virtuoso Pro is an open-back gaming headset praised for its extraordinary sound quality, making it one of the best in its category despite lacking typical gaming headset extras like wireless connectivity, onboard controls, and a high-quality built-in microphone. It features a sturdy, lightweight design with comfortable memory foam ear pads and connects via a 3.5mm jack. While on the costlier side, its superior audio performance, vibrant sound, and durable build make it a top recommendation for users prioritizing sound quality over added features.",
+          "banner_image": "https://cdn.mos.cms.futurecdn.net/QmpsWRf2o8QBSLj8YhMPMm.jpg",
+          "source": "Windows Central",
+          "category_within_source": "General",
+          "source_domain": "Windows Central",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "1.000000"
+            }
+          ],
+          "overall_sentiment_score": 0.142504,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "CRSR",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.494658",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AMD",
+              "relevance_score": "0.597711",
+              "ticker_sentiment_score": "0.147460",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.598475",
+              "ticker_sentiment_score": "-0.113593",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "DELL",
+              "relevance_score": "0.576517",
+              "ticker_sentiment_score": "0.113049",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.561996",
+              "ticker_sentiment_score": "0.187568",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Better Stock to Buy Right Now: Amazon vs. Home Depot",
+          "url": "https://www.nasdaq.com/articles/better-stock-buy-right-now-amazon-vs-home-depot",
+          "time_published": "20260221T153605",
+          "authors": [
+            "Chris Neiger"
+          ],
+          "summary": "This article compares Amazon (AMZN) and Home Depot (HD) as potential stock buys, concluding that Amazon is currently the better option due to its substantial investment in AI and its leading position in cloud computing. Home Depot, on the other hand, is struggling with a stalled housing market. The author notes that Amazon's stock is also more attractively priced compared to the average tech stock P/E ratio.",
+          "banner_image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F855112%2Fgettyimages-1345004230-1201x675-128554e.jpg&w=700",
+          "source": "Nasdaq",
+          "category_within_source": "General",
+          "source_domain": "Nasdaq",
+          "topics": [
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.903029"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.803541"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.738034"
+            },
+            {
+              "topic": "real_estate",
+              "relevance_score": "0.712811"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.634969"
+            }
+          ],
+          "overall_sentiment_score": 0.126298,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "HD",
+              "relevance_score": "0.991222",
+              "ticker_sentiment_score": "-0.382640",
+              "ticker_sentiment_label": "Bearish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.926339",
+              "ticker_sentiment_score": "0.491113",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.636728",
+              "ticker_sentiment_score": "0.279265",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.585744",
+              "ticker_sentiment_score": "0.259605",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "INTC",
+              "relevance_score": "0.551967",
+              "ticker_sentiment_score": "-0.089121",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Most In-Demand Skills According to Upwork’s Recent Study",
+          "url": "https://www.channelinsider.com/news-and-trends/us/upwork-study-reveals-top-job-skills/",
+          "time_published": "20260221T153506",
+          "authors": [
+            "Pamela Winikoff"
+          ],
+          "summary": "A recent Upwork study highlights the most in-demand job skills for 2024, showing a significant increase in demand for data science, analytics, generative AI, and machine learning skills. The study also indicates a growing reliance on freelancers to fill skill gaps and a shift towards skills-based hiring over traditional credentials. Professionals proficient in AI are experiencing higher earnings and more complex, high-value work opportunities.",
+          "banner_image": "https://assets.channelinsider.com/uploads/2025/07/Untitled-design-1.png?w=128",
+          "source": "Channel Insider",
+          "category_within_source": "General",
+          "source_domain": "Channel Insider",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.923045"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.848533"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.649431"
+            }
+          ],
+          "overall_sentiment_score": 0.182321,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "UPWK",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.302834",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "IBM",
+              "relevance_score": "0.618467",
+              "ticker_sentiment_score": "0.135789",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.576967",
+              "ticker_sentiment_score": "0.129772",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "BA",
+              "relevance_score": "0.550134",
+              "ticker_sentiment_score": "0.121780",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "WMT",
+              "relevance_score": "0.555352",
+              "ticker_sentiment_score": "0.117274",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Microsoft names new CEO for gaming unit (MSFT:NASDAQ)",
+          "url": "https://seekingalpha.com/news/4554915-microsoft-names-new-ceo-gaming-unit",
+          "time_published": "20260221T145531",
+          "authors": [
+            "Dulan Lokuwithana"
+          ],
+          "summary": "Microsoft has announced Asha Sharma as the new CEO of its gaming division, succeeding Phil Spencer who is retiring after 38 years with the company. Sharma previously led product development for Microsoft. This leadership change marks a significant transition for Microsoft's gaming sector.",
+          "banner_image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1310441327/image_1310441327.jpg?io=getty-c-w630",
+          "source": "Seeking Alpha",
+          "category_within_source": "General",
+          "source_domain": "Seeking Alpha",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.842480"
+            }
+          ],
+          "overall_sentiment_score": 0.103173,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "MSFT",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.121664",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Meet the Most Profitable Company in America (It’s Not Apple or Microsoft)",
+          "url": "https://247wallst.com/investing/2026/02/21/meet-the-most-profitable-company-in-america-its-not-apple-or-microsoft/",
+          "time_published": "20260221T145531",
+          "authors": [
+            "Marc Guberti"
+          ],
+          "summary": "Alphabet has emerged as the most profitable company in America, surpassing Apple and Microsoft, largely due to the rapid growth of Google Cloud, fueled by AI demand. The company's investments in emerging technologies like the Gemini App and Waymo, alongside strong financial performance (including a 48% year-over-year revenue increase in Google Cloud for Q4), position it for continued margin expansion and make it a top-performing Magnificent Seven stock.",
+          "banner_image": "https://247wallst.com/wp-content/uploads/2022/03/imageForEntry17-6Zo.jpg",
+          "source": "24/7 Wall St.",
+          "category_within_source": "General",
+          "source_domain": "24/7 Wall St.",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.941969"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.827949"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.730403"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.625185"
+            }
+          ],
+          "overall_sentiment_score": 0.191588,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.781085",
+              "ticker_sentiment_score": "-0.194372",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.808719",
+              "ticker_sentiment_score": "-0.204238",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.992215",
+              "ticker_sentiment_score": "0.462446",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.991440",
+              "ticker_sentiment_score": "0.466128",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "UBER",
+              "relevance_score": "0.562837",
+              "ticker_sentiment_score": "0.265414",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Tech Bytes: New Partnerships at Send, Mulberri, Bold Penguin",
+          "url": "https://www.carriermanagement.com/news/2024/05/23/262473.htm",
+          "time_published": "20260221T140719",
+          "authors": [],
+          "summary": "This article highlights new partnerships in the insurance technology sector. Send Technology Solutions partnered with Decerto to deliver its AI-powered underwriting platform to commercial and specialty insurers. Mulberri, an AI-driven insurance platform, teamed up with Acronis to embed cyber insurance for SMB customers. Lastly, Bold Penguin collaborated with Salesforce to launch its commercial insurance quote and bind tools on Salesforce AppExchange.",
+          "banner_image": "https://www.carriermanagement.com/assets/bigstock-Corporate-Deal-Blue-Handshak-104958-620x413.jpg",
+          "source": "Carrier Management",
+          "category_within_source": "General",
+          "source_domain": "Carrier Management",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.921212"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.841077"
+            }
+          ],
+          "overall_sentiment_score": 0.218896,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "PENG",
+              "relevance_score": "0.907818",
+              "ticker_sentiment_score": "0.319884",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "CRM",
+              "relevance_score": "0.834506",
+              "ticker_sentiment_score": "0.293380",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.615270",
+              "ticker_sentiment_score": "0.141757",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AON",
+              "relevance_score": "0.594776",
+              "ticker_sentiment_score": "0.132267",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Lumen Technologies accelerates dev productivity, sees financial gains with GitHub Copilot, Azure DevOps, and Visual Studio",
+          "url": "https://www.microsoft.com/en/customers/story/1769628185480172641-lumen-technologies-inc-azure-telecommunications-en-united-states",
+          "time_published": "20260221T140010",
+          "authors": [],
+          "summary": "Lumen Technologies has significantly increased developer productivity and anticipates financial gains between $95 million and $300 million by implementing GitHub Copilot, Azure DevOps, and Visual Studio. After a successful pilot program with nearly 600 engineers in Bangalore, India, Lumen is globally scaling these Microsoft solutions to all 2,400 engineers. The tools have streamlined developer workflows, accelerated problem-solving, and improved security, empowering developers to deliver high-quality code faster and efficiently adapt to new scripting languages.",
+          "banner_image": "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/LUMEN%20TECHNOLOGIES%20INC%20Header%20Image?resMode=sharp2&op_usm=1.5,0.65,15,0&wid=1900&hei=550&qlt=100&fmt=png-alpha&fit=crop",
+          "source": "Microsoft",
+          "category_within_source": "General",
+          "source_domain": "Microsoft",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.908723"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.720205"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.725322"
+            }
+          ],
+          "overall_sentiment_score": 0.466458,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "LUMN",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.475070",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.855537",
+              "ticker_sentiment_score": "0.447520",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Super Micro Computer, Blue Owl, Hims & Hers And More: 5 Stocks Investors Couldn't Stop Buzzing About This Week",
+          "url": "https://finviz.com/news/317900/super-micro-computer-blue-owl-hims-hers-and-more-5-stocks-investors-couldnt-stop-buzzing-about-this-week",
+          "time_published": "20260221T132034",
+          "authors": [
+            "Rishabh Mishra"
+          ],
+          "summary": "This article highlights five stocks—Super Micro Computer, Hims & Hers Health, Blue Owl Capital, Microsoft, and Walmart—that garnered significant investor attention on X and Reddit this week. The interest was driven by factors such as strong earnings, strategic acquisitions, market pressures, AI-related news, and quarterly financial reports. The article details the key events and retail investor sentiment surrounding each company.",
+          "banner_image": "https://editorial-assets.benzinga.com/wp-content/uploads/2026/02/20014332/SMCI-RDDT-1.png",
+          "source": "Finviz - Stock Screener",
+          "category_within_source": "General",
+          "source_domain": "Finviz - Stock Screener",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.827388"
+            },
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.732585"
+            },
+            {
+              "topic": "mergers_and_acquisitions",
+              "relevance_score": "0.619163"
+            }
+          ],
+          "overall_sentiment_score": 0.071604,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "SMCI",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.270353",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.823410",
+              "ticker_sentiment_score": "-0.114250",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "WMT",
+              "relevance_score": "0.741865",
+              "ticker_sentiment_score": "-0.097798",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Insight’s Megan Amdahl On Windows 10 End-Of-Life And 4 Other AI PC Tailwinds",
+          "url": "https://www.crn.com/news/computing/2024/insight-s-megan-amdahl-on-windows-10-end-of-life-and-4-other-ai-pc-tailwinds",
+          "time_published": "20260221T131016",
+          "authors": [],
+          "summary": "Megan Amdahl, an executive at Insight Enterprises, identifies several key drivers for the widespread adoption of AI PCs, including their potential for significant productivity gains and improved battery life. She also points to the large number of aging PCs purchased during the COVID-19 pandemic and Microsoft's impending end-of-life support for Windows 10 as major catalysts. Additionally, Amdahl suggests that device-as-a-service models can help businesses overcome cost barriers to upgrading their PC fleets.",
+          "banner_image": null,
+          "source": "CRN",
+          "category_within_source": "General",
+          "source_domain": "CRN",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.934668"
+            }
+          ],
+          "overall_sentiment_score": 0.494024,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "NSIT",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.625382",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.919759",
+              "ticker_sentiment_score": "0.548930",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "DELL",
+              "relevance_score": "0.739166",
+              "ticker_sentiment_score": "0.430038",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "HPQ",
+              "relevance_score": "0.725606",
+              "ticker_sentiment_score": "0.438787",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "QCOM",
+              "relevance_score": "0.702649",
+              "ticker_sentiment_score": "0.439794",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Aon Brazil CRS uses Power BI, lowers costs 8%, deployment time by 80% with Power Apps, Power Automate workflows",
+          "url": "https://www.microsoft.com/en/customers/story/1784384335160024829-aon-corporation-power-apps-insurance-en-united-states",
+          "time_published": "20260221T130816",
+          "authors": [],
+          "summary": "Aon Brazil CRS significantly reduced costs and deployment time by implementing Microsoft Power Platform solutions, including Power Automate, Power Apps, and Power BI. This automation streamlined broking and claims processing, eliminating manual tasks and improving data management. The company avoided 8% of budgeted operating costs and reduced deployment time by 80%, with plans to integrate generative AI for further efficiencies.",
+          "banner_image": "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/AON%20CORPORATION%20Header%20Image-1?resMode=sharp2&op_usm=1.5,0.65,15,0&wid=1900&hei=550&qlt=100&fmt=png-alpha&fit=crop",
+          "source": "Microsoft",
+          "category_within_source": "General",
+          "source_domain": "Microsoft",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.916818"
+            }
+          ],
+          "overall_sentiment_score": 0.448124,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MSFT",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.481926",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AON",
+              "relevance_score": "0.885431",
+              "ticker_sentiment_score": "0.414882",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Our partners",
+          "url": "https://www.moodys.com/web/en/us/about-us/partners.html",
+          "time_published": "20260221T130658",
+          "authors": [],
+          "summary": "Moody's partners with various organizations to enhance its risk analysis solutions and bring cutting-edge technologies to its customers. These partnerships include strategic alliances with companies like Microsoft and Google to advance integrated risk analysis and leverage AI, solution providers to address complex operational challenges, and delivery partners trained to implement Moody's software. The article also highlights Moody's structured finance partners who provide economic, credit, and cash flow models and data, and outlines the benefits for delivery partners in their PartnerAlliance program, including training, certification, and joint business development.",
+          "banner_image": "https://s7d1.scene7.com/is/image/moodyscorp/hero-partner?$responsive$",
+          "source": "Moody's",
+          "category_within_source": "General",
+          "source_domain": "Moody's",
+          "topics": [
+            {
+              "topic": "finance",
+              "relevance_score": "0.888729"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.727878"
+            }
+          ],
+          "overall_sentiment_score": 0.431469,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MCO",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.515442",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.704674",
+              "ticker_sentiment_score": "0.418666",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.654589",
+              "ticker_sentiment_score": "0.430191",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MET",
+              "relevance_score": "0.590634",
+              "ticker_sentiment_score": "0.300032",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Gartner: AI-Augmented Development Hits Radar for 50%-Plus of Enterprises",
+          "url": "https://www.idevnews.com/stories/7569/Gartner-AI-Augmented-Development-Hits-Radar-for-50-Plus-of-Enterprises-",
+          "time_published": "20260221T130232",
+          "authors": [
+            "Vance McCarthy"
+          ],
+          "summary": "Gartner reports that over 50% of enterprises are currently using or planning to use AI-augmented development, including generative AI, to boost developer productivity and control costs. This trend is driven by benefits like automated code generation, enhanced testing, improved software quality, and increased developer satisfaction. Gartner identifies AI-augmented development as one of five key strategic technology trends for software engineering in 2024, alongside software engineering intelligence, platform engineering, cloud development environments, and green software engineering.",
+          "banner_image": "https://www.idevnews.com/images/photos/Gartner_Joachim_Herschmann_ev.jpg",
+          "source": "Integration Developer News",
+          "category_within_source": "General",
+          "source_domain": "Integration Developer News",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "1.000000"
+            }
+          ],
+          "overall_sentiment_score": 0.366916,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "IT",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.411631",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.619067",
+              "ticker_sentiment_score": "0.325619",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "ADBE",
+              "relevance_score": "0.640763",
+              "ticker_sentiment_score": "0.336899",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "CRM",
+              "relevance_score": "0.624545",
+              "ticker_sentiment_score": "0.302621",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Should You Buy Oracle Stock Right Now?",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/NFLX/pressreleases/344238/should-you-buy-oracle-stock-right-now/",
+          "time_published": "20260221T130224",
+          "authors": [
+            "Motley Fool"
+          ],
+          "summary": "Oracle's Oracle Cloud Infrastructure (OCI) revenue is growing at 66% year over year, surpassing competitors like AWS and Azure, fueled by massive AI contracts. However, the company is taking on significant debt and considering selling profitable units to fund its data center expansion, with a large portion of its backlog tied to OpenAI, whose financial stability is questioned. The article suggests that while Oracle is positioned for growth in the AI sector, the financial risks associated with its strategy and heavy reliance on OpenAI make it an unfavorable investment at this time.",
+          "banner_image": "https://barchart-news-media-prod.aws.barchart.com/FC/1d007f3baaec835edce814ee1eec4c37/%3Furl%3Dhttps%253a%252f%252fg.foolcdn.com%252feditorial%252fimages%252f836951%252fai-data-centers-orcl.jpg%26amp%3Bw%3D700",
+          "source": "The Globe and Mail",
+          "category_within_source": "General",
+          "source_domain": "The Globe and Mail",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.942594"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.814609"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.642953"
+            }
+          ],
+          "overall_sentiment_score": 0.150168,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ORCL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "-0.404520",
+              "ticker_sentiment_label": "Bearish"
+            },
+            {
+              "ticker": "META",
+              "relevance_score": "0.749725",
+              "ticker_sentiment_score": "0.323289",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.602090",
+              "ticker_sentiment_score": "0.343478",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.648427",
+              "ticker_sentiment_score": "0.229392",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.647562",
+              "ticker_sentiment_score": "0.214270",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "DGRO vs. DGRW: Battle of the Dividend Growth ETFs",
+          "url": "https://www.nasdaq.com/articles/dgro-vs-dgrw-battle-dividend-growth-etfs",
+          "time_published": "20260221T125048",
+          "authors": [
+            "Michael Byrne"
+          ],
+          "summary": "This article compares two popular dividend growth ETFs, DGRO and DGRW, examining their investment strategies, performance, portfolios, dividend yields, and fees. While both funds are strong choices for investors seeking dividend growth, DGRO is favored due to its higher dividend yield and lower expense ratio. The analysis highlights their common focus on high-quality dividend growth stocks and similar top holdings, despite DGRO offering slightly better diversification.",
+          "banner_image": "https://blog.tipranks.com/wp-content/uploads/2024/06/image-240-1024x552.png?utm_source=nasdaq.com&utm_medium=referral",
+          "source": "Nasdaq",
+          "category_within_source": "General",
+          "source_domain": "Nasdaq",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.906361"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.740177"
+            }
+          ],
+          "overall_sentiment_score": 0.389375,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "DGRO",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.435315",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AVGO",
+              "relevance_score": "0.668006",
+              "ticker_sentiment_score": "0.416727",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.607834",
+              "ticker_sentiment_score": "0.316949",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.615077",
+              "ticker_sentiment_score": "0.329316",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Texas Institute for Electronics Announces Executive Board of Directors",
+          "url": "https://news.utexas.edu/2024/06/27/texas-institute-for-electronics-announces-executive-board-of-directors/",
+          "time_published": "20260221T124041",
+          "authors": [],
+          "summary": "The Texas Institute for Electronics (TIE) has announced its executive board of directors, comprising leaders from industry, academia, and government. This board will provide strategic guidance for TIE to become a national leader in semiconductor research, manufacturing, and workforce development. The members bring diverse expertise in areas such as advanced semiconductor integration, AI hardware, manufacturing innovation, and defense, ensuring TIE's continued leadership in these critical fields.",
+          "banner_image": "https://news.utexas.edu/wp-content/uploads/2024/06/Sharon_Jeannie_inFab-600x400-c-default.jpg",
+          "source": "UT Austin News",
+          "category_within_source": "General",
+          "source_domain": "UT Austin News",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.902104"
+            }
+          ],
+          "overall_sentiment_score": 0.29609,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "AMAT",
+              "relevance_score": "0.934362",
+              "ticker_sentiment_score": "0.334272",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "INTC",
+              "relevance_score": "0.828439",
+              "ticker_sentiment_score": "0.329215",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMD",
+              "relevance_score": "0.774643",
+              "ticker_sentiment_score": "0.302388",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MU",
+              "relevance_score": "0.746422",
+              "ticker_sentiment_score": "0.308240",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.567001",
+              "ticker_sentiment_score": "0.148468",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "What is RSP telling us about this market ? for AMEX:RSP by jlhamilto",
+          "url": "https://www.tradingview.com/chart/RSP/J9k5rosC-What-is-RSP-telling-us-about-this-market/",
+          "time_published": "20260221T122627",
+          "authors": [
+            "jlhamilto"
+          ],
+          "summary": "The article discusses how the Invesco S&P 500 Equal Weight ETF (RSP) breaking out of a triangle formation might signal a broader market uptrend beyond a few large-cap stocks. Unlike the S&P 500 (SPY), RSP gives equal weight to all companies, meaning its performance better reflects small and mid-cap companies. This breakout suggests that smaller companies, potentially benefiting from anticipated lower interest rates, could be leading the market.",
+          "banner_image": "https://s3.tradingview.com/j/J9k5rosC_mid.webp",
+          "source": "TradingView",
+          "category_within_source": "General",
+          "source_domain": "TradingView",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.926432"
+            }
+          ],
+          "overall_sentiment_score": 0.204046,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "RSP",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.445942",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.605119",
+              "ticker_sentiment_score": "0.103884",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.606692",
+              "ticker_sentiment_score": "0.134582",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.607062",
+              "ticker_sentiment_score": "0.140688",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Oracle to lease Texas data center from cryptomining and AI firm Crusoe - report",
+          "url": "https://www.datacenterdynamics.com/en/news/oracle-to-lease-texas-data-center-from-cryptomining-and-ai-firm-crusoe-report/",
+          "time_published": "20260221T122102",
+          "authors": [
+            "Dan Swinhoe"
+          ],
+          "summary": "Oracle is reportedly set to lease a data center from Crusoe Energy, a firm specializing in cryptomining and AI data centers, located in Abilene, Texas. This move is part of Oracle's deal to rent 100,000 advanced GPUs to Microsoft for OpenAI's use. Crusoe will operate the facility where Oracle plans to deploy GPUs, which will then be rented to Microsoft for OpenAI.",
+          "banner_image": "https://media.datacenterdynamics.com/media/images/crusoe_2.width-358.jpg",
+          "source": "Data Center Dynamics",
+          "category_within_source": "General",
+          "source_domain": "Data Center Dynamics",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "blockchain",
+              "relevance_score": "0.914129"
+            },
+            {
+              "topic": "energy_transportation",
+              "relevance_score": "0.724110"
+            }
+          ],
+          "overall_sentiment_score": 0.191202,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ORCL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.270817",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.724939",
+              "ticker_sentiment_score": "0.200075",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.601553",
+              "ticker_sentiment_score": "0.121859",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "DLR",
+              "relevance_score": "0.556118",
+              "ticker_sentiment_score": "0.097516",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Sustainability meets AI: Navigating challenges and opportunities",
+          "url": "https://www.netapp.com/blog/sustainability-meets-ai/",
+          "time_published": "20260221T121939",
+          "authors": [
+            "Spencer Sells"
+          ],
+          "summary": "This article explores how sustainability and artificial intelligence intersect, highlighting survey findings that show government compliance and profitability as key drivers for corporate sustainability. It discusses how AI can both pose challenges through increased energy consumption and offer solutions for optimizing sustainable practices. NetApp's role in providing energy-efficient storage solutions and tools for monitoring sustainability metrics is also emphasized.",
+          "banner_image": "https://www.netapp.com/media/hero-sustainability-meets-ai_tcm19-110347.jpg?v=164199",
+          "source": "NetApp",
+          "category_within_source": "General",
+          "source_domain": "NetApp",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.912659"
+            },
+            {
+              "topic": "energy_transportation",
+              "relevance_score": "0.730636"
+            }
+          ],
+          "overall_sentiment_score": 0.315948,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "NTAP",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.419272",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "DELL",
+              "relevance_score": "0.606548",
+              "ticker_sentiment_score": "0.325718",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "HPE",
+              "relevance_score": "0.645757",
+              "ticker_sentiment_score": "0.313941",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "IBM",
+              "relevance_score": "0.642779",
+              "ticker_sentiment_score": "0.315666",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.634956",
+              "ticker_sentiment_score": "0.240229",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "UBS Downgrades Evergy, Inc. (EVRG) to Neutral, Raises its Price Target to $88",
+          "url": "https://www.insidermonkey.com/blog/ubs-downgrades-evergy-inc-evrg-to-neutral-raises-its-price-target-to-88-1700265/?amp=1",
+          "time_published": "20260221T121809",
+          "authors": [
+            "Jeff Lewis"
+          ],
+          "summary": "UBS downgraded Evergy, Inc. (EVRG) to Neutral from Buy and raised its price target to $88, citing limited upside after strong performance and in-line trading multiples reflecting 7-8% earnings growth. Other analysts, BofA and RBC Capital, also adjusted their price targets and ratings for EVRG, detailing updated earnings forecasts and capital plans. The article mentions EVRG's business of generating and distributing electricity while also promoting an AI stock with significant upside potential.",
+          "banner_image": null,
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.925356"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.837831"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.723276"
+            }
+          ],
+          "overall_sentiment_score": 0.16911,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "EVRG",
+              "relevance_score": "0.973723",
+              "ticker_sentiment_score": "-0.172225",
+              "ticker_sentiment_label": "Somewhat-Bearish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.617553",
+              "ticker_sentiment_score": "0.286274",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.575633",
+              "ticker_sentiment_score": "0.236724",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.575883",
+              "ticker_sentiment_score": "0.238393",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.568991",
+              "ticker_sentiment_score": "0.218174",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Raiffeisen Bank International AG Has $11.96 Million Stake in Marvell Technology, Inc. $MRVL",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-raiffeisen-bank-international-ag-has-1196-million-stake-in-marvell-technology-inc-mrvl-2026-02-21/",
+          "time_published": "20260221T121802",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Raiffeisen Bank International AG increased its stake in Marvell Technology, Inc. by 25.3% in the third quarter, bringing its total holdings to 144,964 shares valued at approximately $11.96 million. Other institutions like Vanguard Group Inc. and Norges Bank also significantly increased their positions, indicating strong institutional conviction in the semiconductor company. Marvell Technology reported strong Q3 earnings, beating analyst estimates, and provided positive guidance for Q4 2026, with an average analyst price target of around $115.16.",
+          "banner_image": "https://www.marketbeat.com/logos/marvell-technology-inc-logo-1200x675.jpg?v=20231226132558",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.941326"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.941590"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.807598"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.818552"
+            }
+          ],
+          "overall_sentiment_score": 0.210669,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MRVL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.415767",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.612740",
+              "ticker_sentiment_score": "0.131039",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.619357",
+              "ticker_sentiment_score": "0.147752",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.639250",
+              "ticker_sentiment_score": "0.230176",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "$43.8M financing secured for Courtyard by Marriott San Jose Campbell",
+          "url": "https://www.jll.com/en-us/newsroom/financing-secured-for-courtyard-by-marriott-san-jose",
+          "time_published": "20260221T121150",
+          "authors": [
+            "GL Grace Lewis"
+          ],
+          "summary": "JLL Capital Markets has secured $43.8 million in bridge financing for the Courtyard by Marriott San Jose Campbell, a 162-key hotel located in Silicon Valley. The financing, obtained through Prime Finance for Huntington Hotel Group, will retire existing debt and fund a brand-mandated Property Improvement Plan. The hotel benefits from its prime location near major tech companies and transportation hubs, highlighting the continued attractiveness of the Silicon Valley market for investors and lenders.",
+          "banner_image": null,
+          "source": "JLL",
+          "category_within_source": "General",
+          "source_domain": "JLL",
+          "topics": [
+            {
+              "topic": "real_estate",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.716149"
+            }
+          ],
+          "overall_sentiment_score": 0.256513,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "JLL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.450366",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MAR",
+              "relevance_score": "0.719479",
+              "ticker_sentiment_score": "0.306796",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.601189",
+              "ticker_sentiment_score": "0.146937",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.622632",
+              "ticker_sentiment_score": "0.108130",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "INTC",
+              "relevance_score": "0.601346",
+              "ticker_sentiment_score": "0.113133",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Blink Charging Co. (BLNK) Strengthens EV Integration Capabilities",
+          "url": "https://www.insidermonkey.com/blog/blink-charging-co-blnk-strengthens-ev-integration-capabilities-1699309/?amp=1",
+          "time_published": "20260221T115826",
+          "authors": [
+            "Abdul Rahman"
+          ],
+          "summary": "Blink Charging Co. (BLNK) has partnered with BetterFleet to offer an integrated solution for managing EV fleets, aiming to optimize operations and minimize costly mistakes for businesses. This collaboration provides an AI-powered platform that creates a \"digital twin\" of a fleet's operations, allowing for simulation and optimization before hardware purchases or grid upgrades. The initiative is part of Blink's strategy to expand its full-service offerings for corporate and fleet customers, particularly in sectors like government, utilities, and logistics.",
+          "banner_image": null,
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.801757"
+            },
+            {
+              "topic": "energy_transportation",
+              "relevance_score": "0.726644"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.618286"
+            }
+          ],
+          "overall_sentiment_score": 0.160284,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "BLNK",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.441795",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.635935",
+              "ticker_sentiment_score": "0.149525",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "ORCL",
+              "relevance_score": "0.630420",
+              "ticker_sentiment_score": "0.119654",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.631125",
+              "ticker_sentiment_score": "0.149607",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.633275",
+              "ticker_sentiment_score": "0.104967",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Zacks Research Upgrades Bank Of Montreal (NYSE:BMO) to \"Strong-Buy\"",
+          "url": "https://www.marketbeat.com/instant-alerts/zacks-research-upgrades-bank-of-montreal-nysebmo-to-strong-buy-2026-02-21/",
+          "time_published": "20260221T115550",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "Zacks Research has upgraded Bank Of Montreal (NYSE:BMO) from a \"hold\" to a \"strong-buy\" rating, with a consensus \"Moderate Buy\" and an average price target of $163.00. The upgrade follows stronger-than-expected quarterly results, where BMO reported $2.36 EPS against an expected $2.16 and revenue up 5.3% year-over-year. Analysts anticipate an EPS of approximately 7.71 for the current fiscal year, and the stock is currently trading near its 12-month high.",
+          "banner_image": "https://www.marketbeat.com/logos/bank-of-montreal-logo-1200x675.jpg",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.915041"
+            }
+          ],
+          "overall_sentiment_score": 0.080097,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "SHNY",
+              "relevance_score": "0.341475",
+              "ticker_sentiment_score": "0.046201",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "DVN",
+              "relevance_score": "0.639096",
+              "ticker_sentiment_score": "0.116877",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.599302",
+              "ticker_sentiment_score": "0.133928",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "ORCL",
+              "relevance_score": "0.560729",
+              "ticker_sentiment_score": "-0.104933",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.575303",
+              "ticker_sentiment_score": "0.105305",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Analysts’ Top Technology Picks: Toast Inc (TOST), Microsoft (MSFT)",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/MSFT-Q/pressreleases/344713/analysts-top-technology-picks-toast-inc-tost-microsoft-msft/",
+          "time_published": "20260221T113932",
+          "authors": [
+            "Tipranks"
+          ],
+          "summary": "This article highlights bullish sentiments from financial analysts regarding several technology companies. Wells Fargo maintained a Buy rating for Toast Inc (TOST) with a $47.00 price target, and Bernstein also upgraded it to Buy. Citi reiterated a Buy rating on Microsoft (MSFT) with a $635.00 price target, while Needham maintained a Buy rating on Vicor (VICR) with a $180.00 price target, reflecting strong analyst consensus for all three.",
+          "banner_image": null,
+          "source": "The Globe and Mail",
+          "category_within_source": "General",
+          "source_domain": "The Globe and Mail",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.930481"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.818007"
+            }
+          ],
+          "overall_sentiment_score": 0.47096,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "TOST",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.412856",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.869190",
+              "ticker_sentiment_score": "0.450342",
+              "ticker_sentiment_label": "Bullish"
+            }
+          ]
+        },
+        {
+          "title": "King Luther Capital Management Corp Makes New $2.24 Million Investment in TransMedics Group, Inc. $TMDX",
+          "url": "https://www.marketbeat.com/instant-alerts/filing-king-luther-capital-management-corp-makes-new-224-million-investment-in-transmedics-group-inc-tmdx-2026-02-21/",
+          "time_published": "20260221T113746",
+          "authors": [
+            "MarketBeat"
+          ],
+          "summary": "King Luther Capital Management Corp has made a new investment of $2.24 million in TransMedics Group, Inc. (NASDAQ:TMDX), acquiring 20,000 shares. This comes amidst significant institutional interest, with total institutional ownership reaching 99.67%, and an average analyst rating of \"Moderate Buy\" with a target price of $144.25. Despite positive analyst sentiment and institutional growth, insiders have sold shares totaling $1.26 million in the last three months.",
+          "banner_image": "https://www.marketbeat.com/logos/transmedics-group-inc-logo-1200x675.png?v=20240424104726",
+          "source": "MarketBeat",
+          "category_within_source": "General",
+          "source_domain": "MarketBeat",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.930208"
+            },
+            {
+              "topic": "life_sciences",
+              "relevance_score": "0.833767"
+            }
+          ],
+          "overall_sentiment_score": 0.196502,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "TMDX",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.407550",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "DVN",
+              "relevance_score": "0.619325",
+              "ticker_sentiment_score": "0.145391",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.627452",
+              "ticker_sentiment_score": "0.114812",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "ORCL",
+              "relevance_score": "0.642478",
+              "ticker_sentiment_score": "0.111743",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.603510",
+              "ticker_sentiment_score": "0.109082",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Barclays Initiates Coverage of ON Semiconductor Corporation (ON) with an Equal Weight Rating",
+          "url": "https://www.insidermonkey.com/blog/barclays-initiates-coverage-of-on-semiconductor-corporation-on-with-an-equal-weight-rating-1699903/?amp=1",
+          "time_published": "20260221T112911",
+          "authors": [
+            "Jeff Lewis"
+          ],
+          "summary": "Barclays has initiated coverage of ON Semiconductor Corporation (ON) with an Equal Weight rating and a $75 price target, citing cautious optimism for an industrial recovery despite challenges like high China and auto exposure. This follows recent price target increases from Deutsche Bank and Needham after ON Semi reported strong Q4 non-GAAP EPS. The company continues to focus on intelligent power and sensing technologies, particularly in automotive, industrial, and AI data center power markets.",
+          "banner_image": null,
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.907983"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.828045"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.811567"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.629490"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.611185"
+            }
+          ],
+          "overall_sentiment_score": 0.248658,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "ON",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.268799",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.708866",
+              "ticker_sentiment_score": "0.332879",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.624490",
+              "ticker_sentiment_score": "0.246008",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.620297",
+              "ticker_sentiment_score": "0.234272",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "TSLA",
+              "relevance_score": "0.604702",
+              "ticker_sentiment_score": "0.216330",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "NetApp INSIGHT 2024 matters now more than ever | NetApp Blog",
+          "url": "https://www.netapp.com/blog/insight-2024-matters-more-than-ever/",
+          "time_published": "20260221T111616",
+          "authors": [
+            "John Woodall"
+          ],
+          "summary": "This article emphasizes the importance of attending NetApp INSIGHT 2024 to understand NetApp's technological leadership and intelligent data infrastructure. The author, a long-time NetApp advocate, highlights how NetApp consistently innovates and stays ahead of competitors in data storage, cloud, AI, and security. Attendees will learn how NetApp's solutions can benefit their businesses through simplified operations, cost control, improved sustainability, enhanced security, and AI innovation.",
+          "banner_image": "https://www.netapp.com/media/hero-netapp-insight-why-it-matters_tcm19-112089.jpg?v=213299",
+          "source": "NetApp",
+          "category_within_source": "General",
+          "source_domain": "NetApp",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "0.812663"
+            }
+          ],
+          "overall_sentiment_score": 0.381659,
+          "overall_sentiment_label": "Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "NTAP",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.851878",
+              "ticker_sentiment_label": "Bullish"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.636223",
+              "ticker_sentiment_score": "0.314846",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.584319",
+              "ticker_sentiment_score": "0.264668",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.599385",
+              "ticker_sentiment_score": "0.251978",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.576009",
+              "ticker_sentiment_score": "0.298324",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Opendoor Technologies (OPEN) Climbs 7.5% on Upbeat Outlook",
+          "url": "https://www.insidermonkey.com/blog/opendoor-technologies-open-climbs-7-5-on-upbeat-outlook-1700410/?amp=1",
+          "time_published": "20260221T111300",
+          "authors": [
+            "Angelica Ballesteros"
+          ],
+          "summary": "Opendoor Technologies Inc. (NASDAQ:OPEN) saw its stock climb 7.53% on Friday, extending a three-day winning streak, after reaffirming its goal to return to profitability on an adjusted basis by year-end. The company reported a narrowed adjusted net loss in the past year to $195 million but a widened net loss to $1.3 billion, with revenues declining by 15%. CEO Kaz Nejatian highlighted structural improvements like accurate pricing and faster inventory turns as key to executing their four-step transformation plan.",
+          "banner_image": null,
+          "source": "Insider Monkey",
+          "category_within_source": "General",
+          "source_domain": "Insider Monkey",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.923083"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.842836"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.717021"
+            },
+            {
+              "topic": "real_estate",
+              "relevance_score": "0.637922"
+            }
+          ],
+          "overall_sentiment_score": 0.146712,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "OPEN",
+              "relevance_score": "0.998918",
+              "ticker_sentiment_score": "0.333624",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.633619",
+              "ticker_sentiment_score": "0.112265",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "TSLA",
+              "relevance_score": "0.623347",
+              "ticker_sentiment_score": "0.129812",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.622228",
+              "ticker_sentiment_score": "0.103017",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.605505",
+              "ticker_sentiment_score": "0.147531",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Who Owns McDonald's? Largest MCD Stock Shareholders",
+          "url": "https://admiralmarkets.com/education/articles/shares/largest-mcdonalds-shareholders",
+          "time_published": "20260221T111219",
+          "authors": [
+            "Jitanchandra Solanki"
+          ],
+          "summary": "This article details the largest institutional and individual shareholders of McDonald's (MCD). It highlights that institutional investors hold 72% of the company's outstanding shares, with The Vanguard Group, BlackRock, and State Street Corp. being the biggest. Among individual shareholders, John Rogers Jr. is identified as the largest, followed by former executives Kevin Ozan and Stephen Easterbrook.",
+          "banner_image": null,
+          "source": "admiralmarkets.com",
+          "category_within_source": "General",
+          "source_domain": "admiralmarkets.com",
+          "topics": [
+            {
+              "topic": "finance",
+              "relevance_score": "0.943179"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.834640"
+            },
+            {
+              "topic": "ipo",
+              "relevance_score": "0.721305"
+            },
+            {
+              "topic": "retail_wholesale",
+              "relevance_score": "0.604818"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.610522"
+            }
+          ],
+          "overall_sentiment_score": 0.187328,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "MCD",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.223469",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "BLK",
+              "relevance_score": "0.725130",
+              "ticker_sentiment_score": "0.284859",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AON",
+              "relevance_score": "0.601300",
+              "ticker_sentiment_score": "0.137889",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NKE",
+              "relevance_score": "0.627941",
+              "ticker_sentiment_score": "0.102719",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.551812",
+              "ticker_sentiment_score": "0.108669",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Global ETF Approaches Key Index Rebalancing",
+          "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/global-etf-approaches-key-index-rebalancing/68596918",
+          "time_published": "20260221T105219",
+          "authors": [],
+          "summary": "The iShares MSCI ACWI ETF has seen a 3.08% year-to-date gain, with technology stocks making up 27% of its holdings. Investors are closely watching a scheduled index rebalancing at the end of February, which could subtly alter the fund's composition. Following this, the next ex-dividend date for shareholders is set for June 15.",
+          "banner_image": null,
+          "source": "AD HOC NEWS",
+          "category_within_source": "General",
+          "source_domain": "AD HOC NEWS",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.946695"
+            },
+            {
+              "topic": "finance",
+              "relevance_score": "0.738483"
+            }
+          ],
+          "overall_sentiment_score": 0.109309,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "ACWI",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.146672",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.645701",
+              "ticker_sentiment_score": "0.132957",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AAPL",
+              "relevance_score": "0.620852",
+              "ticker_sentiment_score": "0.105204",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.646795",
+              "ticker_sentiment_score": "0.111930",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.644802",
+              "ticker_sentiment_score": "0.140812",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Alibaba Group Holding Limited (BABA) Faces Analyst Downgrade, Counters with Queen3.5 AI Launch",
+          "url": "https://finviz.com/news/317451/alibaba-group-holding-limited-baba-faces-analyst-downgrade-counters-with-queen35-ai-launch",
+          "time_published": "20260221T105152",
+          "authors": [
+            "Neha Gupta"
+          ],
+          "summary": "Alibaba Group Holding Limited (BABA) recently received a downgrade from Buy to Hold by Erste Group due to concerns about operating margins and increased long-term debt. Despite this, Alibaba has launched Qwen 3.5, a new AI model with significant performance and cost improvements, aiming to compete with US rivals. The company is actively focusing on AI monetization through cloud services and developing its own AI chips, which is seen as a positive counter-measure to financial concerns.",
+          "banner_image": "https://www.insidermonkey.com/blog/wp-content/uploads/2015/03/AlibabaGroupBABA_ChinaRegulatorsSAIC_ZhangMao.png",
+          "source": "Finviz",
+          "category_within_source": "General",
+          "source_domain": "Finviz",
+          "topics": [
+            {
+              "topic": "technology",
+              "relevance_score": "1.000000"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.938148"
+            }
+          ],
+          "overall_sentiment_score": 0.143321,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "BABA",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.054088",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "GOOG",
+              "relevance_score": "0.571450",
+              "ticker_sentiment_score": "0.111594",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "GOOGL",
+              "relevance_score": "0.564831",
+              "ticker_sentiment_score": "0.109578",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.595118",
+              "ticker_sentiment_score": "0.181735",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.586154",
+              "ticker_sentiment_score": "0.129391",
+              "ticker_sentiment_label": "Neutral"
+            }
+          ]
+        },
+        {
+          "title": "Wipro Stock: Quiet Rally, Big Question for US Tech Investors",
+          "url": "https://www.ad-hoc-news.de/boerse/ueberblick/wipro-stock-quiet-rally-big-question-for-us-tech-investors/68598105",
+          "time_published": "20260221T103620",
+          "authors": [
+            "ad-hoc-news.de"
+          ],
+          "summary": "Wipro Ltd's US-listed shares have seen a quiet rally due to stronger IT services demand and cost discipline, yet they remain discounted compared to US tech peers. The company's performance is tied to global enterprise tech spending and India's structural growth, offering US investors a diversified tech exposure. While analysts are cautiously constructive, Wipro's execution, competitive landscape, and client concentration present risks alongside opportunities for margin improvement and capital returns.",
+          "banner_image": "https://mdb.ad-hoc-news.de/bild/stock-5051155_1920.jpg",
+          "source": "AD HOC NEWS",
+          "category_within_source": "General",
+          "source_domain": "AD HOC NEWS",
+          "topics": [
+            {
+              "topic": "earnings",
+              "relevance_score": "0.832065"
+            },
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.933833"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.946271"
+            },
+            {
+              "topic": "economy_macro",
+              "relevance_score": "0.600383"
+            }
+          ],
+          "overall_sentiment_score": 0.177901,
+          "overall_sentiment_label": "Somewhat-Bullish",
+          "ticker_sentiment": [
+            {
+              "ticker": "WIT",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "0.268302",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "ACN",
+              "relevance_score": "0.621020",
+              "ticker_sentiment_score": "0.100569",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "CTSH",
+              "relevance_score": "0.628196",
+              "ticker_sentiment_score": "0.125028",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "CRM",
+              "relevance_score": "0.594461",
+              "ticker_sentiment_score": "0.195218",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.690246",
+              "ticker_sentiment_score": "0.253863",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        },
+        {
+          "title": "Should You Buy Oracle Stock Right Now?",
+          "url": "https://www.theglobeandmail.com/investing/markets/markets-news/motley/344238/should-you-buy-oracle-stock-right-now/",
+          "time_published": "20260221T103529",
+          "authors": [
+            "Motley Fool"
+          ],
+          "summary": "Oracle's cloud infrastructure (OCI) revenue is growing significantly, driven by massive AI contracts, but the company is taking on substantial debt and selling profitable units to fund its data center expansion. The article raises concerns about Oracle's reliance on OpenAI, whose financial stability is questioned, and advises against investing in Oracle stock at this time.",
+          "banner_image": "https://barchart-news-media-prod.aws.barchart.com/FC/1d007f3baaec835edce814ee1eec4c37/%3Furl%3Dhttps%253a%252f%252fg.foolcdn.com%252feditorial%252fimages%252f836951%252fai-data-centers-orcl.jpg%26amp%3Bw%3D700",
+          "source": "The Globe and Mail",
+          "category_within_source": "General",
+          "source_domain": "The Globe and Mail",
+          "topics": [
+            {
+              "topic": "financial_markets",
+              "relevance_score": "0.900189"
+            },
+            {
+              "topic": "technology",
+              "relevance_score": "0.811090"
+            },
+            {
+              "topic": "earnings",
+              "relevance_score": "0.716890"
+            }
+          ],
+          "overall_sentiment_score": 0.036992,
+          "overall_sentiment_label": "Neutral",
+          "ticker_sentiment": [
+            {
+              "ticker": "ORCL",
+              "relevance_score": "1.000000",
+              "ticker_sentiment_score": "-0.427736",
+              "ticker_sentiment_label": "Bearish"
+            },
+            {
+              "ticker": "MSFT",
+              "relevance_score": "0.632240",
+              "ticker_sentiment_score": "-0.135156",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "AMZN",
+              "relevance_score": "0.630686",
+              "ticker_sentiment_score": "-0.110453",
+              "ticker_sentiment_label": "Neutral"
+            },
+            {
+              "ticker": "NVDA",
+              "relevance_score": "0.613877",
+              "ticker_sentiment_score": "0.335990",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            },
+            {
+              "ticker": "META",
+              "relevance_score": "0.642419",
+              "ticker_sentiment_score": "0.313678",
+              "ticker_sentiment_label": "Somewhat-Bullish"
+            }
+          ]
+        }
+      ]
+    }
   }
 ]

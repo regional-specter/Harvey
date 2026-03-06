@@ -99124,10 +99124,13 @@ Duration: ${duration}ms
         const { intents = [], entities = [] } = currentIntent;
         console.log(`Agent loop: Identified intents: ${JSON.stringify(intents)}`);
         const toolPromises = [];
+        const availableEntities = [...entities];
         for (const intent of intents) {
-          if (intent === "data_request" && entities.some((e2) => e2.type === "STOCK_TICKER")) {
-            const tickerEntity = entities.find((e2) => e2.type === "STOCK_TICKER");
-            if (tickerEntity) {
+          const findEntityIndex = (type) => availableEntities.findIndex((e2) => e2.type === type && e2.value);
+          if (intent === "data_request") {
+            const entityIndex = findEntityIndex("STOCK_TICKER");
+            if (entityIndex > -1) {
+              const tickerEntity = availableEntities[entityIndex];
               console.log(`Agent loop: Queuing fetchStockPrice for ${tickerEntity.value}`);
               const startTime = (/* @__PURE__ */ new Date()).getTime();
               toolPromises.push({
@@ -99136,25 +99139,28 @@ Duration: ${duration}ms
                 startTime,
                 promise: fetchStockPrice(tickerEntity.value)
               });
+              availableEntities.splice(entityIndex, 1);
             }
-          } else if (intent === "news_request" && entities.some((e2) => e2.type === "STOCK_TICKER")) {
-            const tickerEntity = entities.find((e2) => e2.type === "STOCK_TICKER");
-            if (tickerEntity) {
-              const fromEntity = entities.find((e2) => e2.type === "DATE_FROM");
-              const toEntity = entities.find((e2) => e2.type === "DATE_TO");
+          } else if (intent === "news_request") {
+            const tickerEntityIndex = findEntityIndex("STOCK_TICKER");
+            if (tickerEntityIndex > -1) {
+              const tickerEntity = availableEntities[tickerEntityIndex];
+              const fromEntityIndex = findEntityIndex("DATE_FROM");
+              const toEntityIndex = findEntityIndex("DATE_TO");
               let fromDateTime, toDateTime;
-              if (fromEntity && toEntity) {
-                fromDateTime = fromEntity.value;
-                toDateTime = toEntity.value;
-                console.log(`Agent loop: Queuing fetchNews for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}`);
+              if (fromEntityIndex > -1 && toEntityIndex > -1) {
+                fromDateTime = availableEntities[fromEntityIndex].value;
+                toDateTime = availableEntities[toEntityIndex].value;
+                availableEntities.splice(Math.max(fromEntityIndex, toEntityIndex), 1);
+                availableEntities.splice(Math.min(fromEntityIndex, toEntityIndex), 1);
               } else {
                 const now = /* @__PURE__ */ new Date();
                 const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1e3);
                 const formatDateTime = (date) => date.toISOString().replace(/[-:]|\..+/g, "").slice(0, 13);
                 fromDateTime = formatDateTime(twentyFourHoursAgo);
                 toDateTime = formatDateTime(now);
-                console.log(`Agent loop: Queuing fetchNews for ${tickerEntity.value} (last 24 hours)`);
               }
+              console.log(`Agent loop: Queuing fetchNews for ${tickerEntity.value}`);
               const startTime = (/* @__PURE__ */ new Date()).getTime();
               toolPromises.push({
                 intentType: "news_request",
@@ -99164,10 +99170,12 @@ Duration: ${duration}ms
                 startTime,
                 promise: fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 })
               });
+              availableEntities.splice(tickerEntityIndex, 1);
             }
-          } else if (intent === "earnings_request" && entities.some((e2) => e2.type === "STOCK_TICKER")) {
-            const tickerEntity = entities.find((e2) => e2.type === "STOCK_TICKER");
-            if (tickerEntity) {
+          } else if (intent === "earnings_request") {
+            const entityIndex = findEntityIndex("STOCK_TICKER");
+            if (entityIndex > -1) {
+              const tickerEntity = availableEntities[entityIndex];
               const ticker = tickerEntity.value;
               console.log(`Agent loop: Queuing fetchCompanyFacts for ${ticker}`);
               const startTime = (/* @__PURE__ */ new Date()).getTime();
@@ -99182,10 +99190,12 @@ Duration: ${duration}ms
                   return { cik, companyFacts };
                 })()
               });
+              availableEntities.splice(entityIndex, 1);
             }
-          } else if (intent === "filing_request" && entities.some((e2) => e2.type === "STOCK_TICKER")) {
-            const tickerEntity = entities.find((e2) => e2.type === "STOCK_TICKER");
-            if (tickerEntity) {
+          } else if (intent === "filing_request") {
+            const entityIndex = findEntityIndex("STOCK_TICKER");
+            if (entityIndex > -1) {
+              const tickerEntity = availableEntities[entityIndex];
               const ticker = tickerEntity.value;
               console.log(`Agent loop: Queuing fetchSubmissionMetadata for ${ticker}`);
               const startTime = (/* @__PURE__ */ new Date()).getTime();
@@ -99200,6 +99210,7 @@ Duration: ${duration}ms
                   return { cik, submissionMetadata };
                 })()
               });
+              availableEntities.splice(entityIndex, 1);
             }
           }
         }

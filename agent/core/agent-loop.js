@@ -47,12 +47,19 @@ async function runAgentCycle(userInput) {
     // Build an array of tool Promises (per recognized intent)
     const toolPromises = []; // Each entry: { intentType, promise }
 
+    const availableEntities = [...entities]; // Create a mutable copy of entities to consume.
+
     for (const intent of intents) {
+      
+      // Find the index of the first available entity of a given type.
+      const findEntityIndex = (type) => 
+        availableEntities.findIndex(e => e.type === type && e.value);
 
       // --- data_request: fetch live stock price ---
-      if (intent === 'data_request' && entities.some(e => e.type === 'STOCK_TICKER')) {
-        const tickerEntity = entities.find(e => e.type === 'STOCK_TICKER');
-        if (tickerEntity) {
+      if (intent === 'data_request') {
+        const entityIndex = findEntityIndex('STOCK_TICKER');
+        if (entityIndex > -1) {
+          const tickerEntity = availableEntities[entityIndex];
           console.log(`Agent loop: Queuing fetchStockPrice for ${tickerEntity.value}`);
           const startTime = new Date().getTime();
           toolPromises.push({
@@ -61,21 +68,25 @@ async function runAgentCycle(userInput) {
             startTime,
             promise: fetchStockPrice(tickerEntity.value),
           });
+          availableEntities.splice(entityIndex, 1); // Consume the entity
         }
       }
 
       // --- news_request: fetch news articles ---
-      else if (intent === 'news_request' && entities.some(e => e.type === 'STOCK_TICKER')) {
-        const tickerEntity = entities.find(e => e.type === 'STOCK_TICKER');
-        if (tickerEntity) {
-          const fromEntity = entities.find(e => e.type === 'DATE_FROM');
-          const toEntity   = entities.find(e => e.type === 'DATE_TO');
+      else if (intent === 'news_request') {
+        const tickerEntityIndex = findEntityIndex('STOCK_TICKER');
+        if (tickerEntityIndex > -1) {
+          const tickerEntity = availableEntities[tickerEntityIndex];
+          const fromEntityIndex = findEntityIndex('DATE_FROM');
+          const toEntityIndex = findEntityIndex('DATE_TO');
 
           let fromDateTime, toDateTime;
-          if (fromEntity && toEntity) {
-            fromDateTime = fromEntity.value;
-            toDateTime   = toEntity.value;
-            console.log(`Agent loop: Queuing fetchNews for ${tickerEntity.value} from ${fromDateTime} to ${toDateTime}`);
+          if (fromEntityIndex > -1 && toEntityIndex > -1) {
+            fromDateTime = availableEntities[fromEntityIndex].value;
+            toDateTime = availableEntities[toEntityIndex].value;
+            // Consume date entities
+            availableEntities.splice(Math.max(fromEntityIndex, toEntityIndex), 1);
+            availableEntities.splice(Math.min(fromEntityIndex, toEntityIndex), 1);
           } else {
             const now = new Date();
             const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
@@ -83,9 +94,8 @@ async function runAgentCycle(userInput) {
               date.toISOString().replace(/[-:]|\..+/g, '').slice(0, 13);
             fromDateTime = formatDateTime(twentyFourHoursAgo);
             toDateTime   = formatDateTime(now);
-            console.log(`Agent loop: Queuing fetchNews for ${tickerEntity.value} (last 24 hours)`);
           }
-
+          console.log(`Agent loop: Queuing fetchNews for ${tickerEntity.value}`);
           const startTime = new Date().getTime();
           toolPromises.push({
             intentType: 'news_request',
@@ -95,17 +105,17 @@ async function runAgentCycle(userInput) {
             startTime,
             promise: fetchNews(tickerEntity.value, { from: fromDateTime, to: toDateTime, limit: 5 }),
           });
+          availableEntities.splice(tickerEntityIndex, 1); // Consume the ticker entity
         }
       }
 
       // --- earnings_request: fetch SEC company facts for EPS data ---
-      else if (intent === 'earnings_request' && entities.some(e => e.type === 'STOCK_TICKER')) {
-        const tickerEntity = entities.find(e => e.type === 'STOCK_TICKER');
-        if (tickerEntity) {
+      else if (intent === 'earnings_request') {
+        const entityIndex = findEntityIndex('STOCK_TICKER');
+        if (entityIndex > -1) {
+          const tickerEntity = availableEntities[entityIndex];
           const ticker = tickerEntity.value;
           console.log(`Agent loop: Queuing fetchCompanyFacts for ${ticker}`);
-          // getCik must resolve before we can call fetchCompanyFacts, so we wrap
-          // both calls inside a single async IIFE to keep the outer flow non-blocking.
           const startTime = new Date().getTime();
           toolPromises.push({
             intentType: 'earnings_request',
@@ -118,13 +128,15 @@ async function runAgentCycle(userInput) {
               return { cik, companyFacts };
             })(),
           });
+          availableEntities.splice(entityIndex, 1); // Consume the entity
         }
       }
 
       // --- filing_request: fetch SEC submission metadata ---
-      else if (intent === 'filing_request' && entities.some(e => e.type === 'STOCK_TICKER')) {
-        const tickerEntity = entities.find(e => e.type === 'STOCK_TICKER');
-        if (tickerEntity) {
+      else if (intent === 'filing_request') {
+        const entityIndex = findEntityIndex('STOCK_TICKER');
+        if (entityIndex > -1) {
+          const tickerEntity = availableEntities[entityIndex];
           const ticker = tickerEntity.value;
           console.log(`Agent loop: Queuing fetchSubmissionMetadata for ${ticker}`);
           const startTime = new Date().getTime();
@@ -139,9 +151,11 @@ async function runAgentCycle(userInput) {
               return { cik, submissionMetadata };
             })(),
           });
+          availableEntities.splice(entityIndex, 1); // Consume the entity
         }
       }
-    }
+
+    } // end for (const intent of intents)
 
     // Execute all tool promises concurrently using Promise.allSettled
     if (toolPromises.length > 0) {
