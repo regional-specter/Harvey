@@ -69,9 +69,9 @@ const SingleToolCallDisplay = ({ toolName, toolInput, duration, error }: ToolCal
 
     return (
         <Box flexDirection="column" marginBottom={1} marginLeft={2}>
-            <Text color="yellow">{toolName} ("{toolInput}")</Text>
+            <Text color="green">{toolName} ("{toolInput}")</Text>
             <Box marginLeft={2}>
-                <Text color="gray">└ in {duration}ms</Text>
+                <Text color="green">└ in {duration}ms</Text>
             </Box>
         </Box>
     );
