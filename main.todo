@@ -55,7 +55,8 @@ UI :
      ☐ Implement UI for managing research goals
      ✔ Implementing new header and subheading position @done(26-02-28 16:52)
      ✔ Implemented Tool call UI feature for clear indication @done(26-03-01 14:38)
-     ✔ ⏳ Implement updated system for handling multiple tool call indicators @done(26-03-06 12:40)
+     ✔ Implement updated system for handling multiple tool call indicators @done(26-03-06 12:40)
+     ⏳ Add error message indication similar to the tool call @inprogress(26-03-06 12:42)
 
 Evaluation & Benchmarking :
      ☐ Compare outputs against one-shot AI chat tools for the same queries
