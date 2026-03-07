@@ -65,8 +65,8 @@ UI :
 Agent Performance and Infrastruture Updates :
      ⏳ Update tool call responses to use default response templates for redundent queries @inprogress(26-03-07 20:03)
      ✔ Update finance_api for response template and query detection @done(26-03-07 20:38)
-     ☐ Update prompts for final response generation
-     ☐ Update infrastructure for efficient tool call handling
+     ✔ Update prompts for final response generation @done(26-03-07 20:43)
+     ⏳ Update infrastructure for efficient tool call handling @inprogress(26-03-07 20:44)
 
 Evaluation & Benchmarking :
      ☐ Compare outputs against one-shot AI chat tools for the same queries
