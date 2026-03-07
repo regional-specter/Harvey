@@ -99348,12 +99348,20 @@ ${filingsList.join("\n")}`;
         } else {
           console.log("Agent loop: No tool-backed intents detected; proceeding directly to LLM response.");
         }
-        console.log(`Agent loop: Generating final response with accumulated prompt parts.`);
-        const finalAugmentedPrompt = augmentedPromptParts.length > 0 ? `${augmentedPromptParts.join("\n")}
+        let llmResponse;
+        const isSimpleDataRequest = currentIntent && currentIntent.intents.length === 1 && currentIntent.intents[0] === "data_request";
+        if (isSimpleDataRequest && contextForMemory.price) {
+          console.log("Agent loop: Using simple template for stock price response.");
+          const { ticker, price } = contextForMemory.price;
+          llmResponse = `The current stock price for ${ticker} is ${price}.`;
+        } else {
+          console.log(`Agent loop: Generating final response with accumulated prompt parts.`);
+          const finalAugmentedPrompt = augmentedPromptParts.length > 0 ? `${augmentedPromptParts.join("\n")}
 
 Please summarize this information for the user, answering their original query: "${userInput}".` : userInput;
-        const llmResponse = await generateResponse(finalAugmentedPrompt);
-        console.log(`Agent loop: Received final response from LLM.`);
+          llmResponse = await generateResponse(finalAugmentedPrompt);
+          console.log(`Agent loop: Received final response from LLM.`);
+        }
         const memoryEntryData = {
           user_input: userInput,
           llm_response: llmResponse,
@@ -101974,7 +101982,7 @@ var App = () => {
   inputValueRef.current = inputValue;
   useEffect2(() => {
     (0, import_agent.setAgentLogger)((logMessage) => {
-      setLogMessages((prevLogs) => [...prevLogs, logMessage].slice(-7));
+      setLogMessages((prevLogs) => [...prevLogs, logMessage].slice(-12));
     });
     const init = async () => {
       const success = await (0, import_agent.initializeAgent)();

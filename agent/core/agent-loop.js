@@ -316,13 +316,25 @@ async function runAgentCycle(userInput) {
       console.log('Agent loop: No tool-backed intents detected; proceeding directly to LLM response.');
     }
     // Generate the final LLM response with context
-    console.log(`Agent loop: Generating final response with accumulated prompt parts.`);
-    const finalAugmentedPrompt = augmentedPromptParts.length > 0
-      ? `${augmentedPromptParts.join('\n')}\n\nPlease summarize this information for the user, answering their original query: "${userInput}".`
-      : userInput;
+    let llmResponse;
 
-    const llmResponse = await generateResponse(finalAugmentedPrompt);
-    console.log(`Agent loop: Received final response from LLM.`);
+    // Check for simple, single-intent queries that can be templated
+    const isSimpleDataRequest = currentIntent && currentIntent.intents.length === 1 && currentIntent.intents[0] === 'data_request';
+
+    if (isSimpleDataRequest && contextForMemory.price) {
+      console.log('Agent loop: Using simple template for stock price response.');
+      const { ticker, price } = contextForMemory.price;
+      llmResponse = `The current stock price for ${ticker} is ${price}.`;
+    } else {
+      // Fallback to the full LLM for complex or non-templateable queries
+      console.log(`Agent loop: Generating final response with accumulated prompt parts.`);
+      const finalAugmentedPrompt = augmentedPromptParts.length > 0
+        ? `${augmentedPromptParts.join('\n')}\n\nPlease summarize this information for the user, answering their original query: "${userInput}".`
+        : userInput;
+
+      llmResponse = await generateResponse(finalAugmentedPrompt);
+      console.log(`Agent loop: Received final response from LLM.`);
+    }
 
     const memoryEntryData = {
       user_input: userInput,

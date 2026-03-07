@@ -1,60 +1,9 @@
 [
   {
     "id": 1,
-    "timestamp": "2026-03-07T15:41:11.151Z",
-    "user_input": "What is the current stock price of AAPL today and latest news on AAPL ?",
-    "llm_response": "As of **May 21, 2024**, here is the latest update on Apple Inc. (AAPL):\n\n### **Stock Price Performance**\n*   **Current Price:** ~$191.04 (Closing price on May 20, 2024)\n*   **Pre-market Trading:** AAPL is trading slightly down around **$190.85** (-0.10%) as of 8:30 AM ET.\n*   **Recent Trend:** The stock has seen a significant rebound in May, gaining over 12% this month. It is currently approaching its 52-week high of $199.62.\n\n---\n\n### **Latest News Headlines**\n\n#### **1. The \"AI\" Pivot and OpenAI Partnership**\nThe biggest news driving Apple's sentiment right now is the upcoming **Worldwide Developers Conference (WWDC)** on June 10. Reports indicate that Apple is finalizing a deal with **OpenAI** to integrate ChatGPT-like features into iOS 18. Analysts expect \"Apple Intelligence\" to be the centerpiece of the new operating system, potentially triggering a massive iPhone upgrade cycle.\n\n#### **2. Rebound in China Sales**\nAfter a rocky start to the year, recent data from the China Academy of Information and Communications Technology shows that shipments of foreign-branded phones (primarily iPhones) in China jumped by **52% in April**. This suggests that Apple’s aggressive discounting strategy in the region is working to fend off competition from Huawei.\n\n#### **3. New Product Momentum**\nApple recently launched the **M4 iPad Pro** and the new **iPad Air**. Early reviews have praised the M4 chip's power, and market analysts are watching to see if these high-end tablets will boost Apple’s flagging \"iPad\" revenue segment in the next quarterly report.\n\n#### **4. Major Stock Buyback**\nInvestors remain bullish following Apple's announcement earlier this month of a **$110 billion stock buyback program**, the largest in U.S. corporate history. This has provided a strong \"floor\" for the stock price.\n\n#### **5. Regulatory Headwinds**\nOn the legal front, Apple continues to navigate a major antitrust lawsuit from the **U.S. Department of Justice**, which alleges that the company maintains an illegal monopoly over the smartphone market. While a resolution is years away, it remains a point of concern for long-term institutional investors.\n\n---\n\n### **What to Watch Next**\n*   **June 10, 2024:** WWDC Keynote. This is the \"make or break\" moment for Apple’s AI strategy.\n*   **Inflation Data (CPI):** Like all tech stocks, AAPL remains sensitive to broader macroeconomic trends and Federal Reserve interest rate decisions.\n\n***Disclaimer:** I am an AI, not a financial advisor. Stock prices change by the minute. Please check a real-time tracker like Yahoo Finance, Google Finance, or Bloomberg for the most up-to-the-second data before making investment decisions.*",
-    "thematic_scope": "stock price analysis and company news",
-    "event_type": "chat_turn",
-    "entities": [
-      {
-        "type": "STOCK_TICKER",
-        "value": "AAPL"
-      },
-      {
-        "type": "DATE_FROM",
-        "value": "20260221T0000"
-      },
-      {
-        "type": "DATE_TO",
-        "value": "20260221T2359"
-      }
-    ],
-    "context": {}
-  },
-  {
-    "id": 2,
-    "timestamp": "2026-03-07T15:57:55.248Z",
-    "user_input": "What is the stock price of AAPL today and latest news of AAPL ?",
-    "llm_response": "As of the latest data provided, here is the summary of Apple Inc.'s (AAPL) current stock status and recent developments:\n\n### **Stock Price**\n*   **Current Price:** $257.46\n\n### **Latest News & Key Developments**\n1.  **Apple Intelligence & AI Integration:** The biggest driver for AAPL recently has been the announcement of **\"Apple Intelligence\"** at WWDC 2024. This new AI suite integrates deeply into iOS 18, iPadOS 18, and macOS Sequoia, featuring a partnership with OpenAI to bring ChatGPT capabilities to Siri.\n2.  **Record Highs and Analyst Optimism:** Following the AI announcements, several Wall Street analysts raised their price targets, predicting a massive \"upgrade cycle\" as users trade in older devices to access the new AI features, which are only available on the iPhone 15 Pro and later.\n3.  **Regulatory Pressures in Europe:** Apple is currently facing scrutiny from the European Commission. Recent reports indicate that the EU may charge Apple for allegedly failing to comply with the Digital Markets Act (DMA) regarding its App Store \"steering\" rules.\n4.  **Sales Recovery in China:** After a sluggish start to the year, recent data suggests iPhone sales in China have begun to rebound, boosted by aggressive retail promotions and a stabilizing smartphone market in the region.\n5.  **Market Cap Milestones:** Apple has been in a tight race with Microsoft and Nvidia for the title of the world’s most valuable company, with its valuation fluctuating around the $3 trillion mark based on investor enthusiasm for its software strategy.",
-    "thematic_scope": "stock price and news inquiry",
-    "event_type": "chat_turn",
-    "entities": [
-      {
-        "type": "STOCK_TICKER",
-        "value": "AAPL"
-      },
-      {
-        "type": "DATE_FROM",
-        "value": "20260221T0000"
-      },
-      {
-        "type": "DATE_TO",
-        "value": "20260221T2359"
-      }
-    ],
-    "context": {
-      "price": {
-        "ticker": "AAPL",
-        "price": 257.46
-      }
-    }
-  },
-  {
-    "id": 3,
-    "timestamp": "2026-03-07T16:08:04.634Z",
+    "timestamp": "2026-03-07T16:36:32.472Z",
     "user_input": "Whats the stock price of AAPL today ?",
-    "llm_response": "The current stock price of **Apple Inc. (AAPL)** today is **$257.46**.",
+    "llm_response": "The current stock price for AAPL is 257.46.",
     "thematic_scope": "stock price inquiry",
     "event_type": "chat_turn",
     "entities": [
