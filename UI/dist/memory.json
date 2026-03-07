@@ -21,5 +21,33 @@
       }
     ],
     "context": {}
+  },
+  {
+    "id": 2,
+    "timestamp": "2026-03-07T15:57:55.248Z",
+    "user_input": "What is the stock price of AAPL today and latest news of AAPL ?",
+    "llm_response": "As of the latest data provided, here is the summary of Apple Inc.'s (AAPL) current stock status and recent developments:\n\n### **Stock Price**\n*   **Current Price:** $257.46\n\n### **Latest News & Key Developments**\n1.  **Apple Intelligence & AI Integration:** The biggest driver for AAPL recently has been the announcement of **\"Apple Intelligence\"** at WWDC 2024. This new AI suite integrates deeply into iOS 18, iPadOS 18, and macOS Sequoia, featuring a partnership with OpenAI to bring ChatGPT capabilities to Siri.\n2.  **Record Highs and Analyst Optimism:** Following the AI announcements, several Wall Street analysts raised their price targets, predicting a massive \"upgrade cycle\" as users trade in older devices to access the new AI features, which are only available on the iPhone 15 Pro and later.\n3.  **Regulatory Pressures in Europe:** Apple is currently facing scrutiny from the European Commission. Recent reports indicate that the EU may charge Apple for allegedly failing to comply with the Digital Markets Act (DMA) regarding its App Store \"steering\" rules.\n4.  **Sales Recovery in China:** After a sluggish start to the year, recent data suggests iPhone sales in China have begun to rebound, boosted by aggressive retail promotions and a stabilizing smartphone market in the region.\n5.  **Market Cap Milestones:** Apple has been in a tight race with Microsoft and Nvidia for the title of the world’s most valuable company, with its valuation fluctuating around the $3 trillion mark based on investor enthusiasm for its software strategy.",
+    "thematic_scope": "stock price and news inquiry",
+    "event_type": "chat_turn",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "AAPL"
+      },
+      {
+        "type": "DATE_FROM",
+        "value": "20260221T0000"
+      },
+      {
+        "type": "DATE_TO",
+        "value": "20260221T2359"
+      }
+    ],
+    "context": {
+      "price": {
+        "ticker": "AAPL",
+        "price": 257.46
+      }
+    }
   }
 ]

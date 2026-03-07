@@ -214,7 +214,17 @@ async function runAgentCycle(userInput) {
           toolCallData.toolName = 'fetchStockPrice';
           toolCallData.toolInput = `stock price of ${ticker}`; // Descriptive input
           const price = value;
-          // ... rest of the fulfilled logic ...
+          if (price !== null) {
+            const outputString = `The current stock price of ${ticker} is ${price}.`;
+            augmentedPromptParts.push(outputString);
+            contextForMemory.price = { ticker, price };
+            toolCallData.output = outputString;
+          } else {
+            const errorMsg = `Could not retrieve stock price for ${ticker}.`;
+            augmentedPromptParts.push(errorMsg);
+            toolCallData.error = errorMsg;
+          }
+          allToolCalls.push(toolCallData);
         }
 
         // --- Process news_request result ---
@@ -223,7 +233,18 @@ async function runAgentCycle(userInput) {
           toolCallData.toolInput = `latest news for ${ticker}`; // Descriptive input
           const newsArticles = value;
           const { fromDateTime, toDateTime } = meta;
-          // ... rest of the fulfilled logic ...
+          if (newsArticles && newsArticles.length > 0) {
+            const articlesText = newsArticles.map(a => `- ${a.title} (${a.source.name}): ${a.description}`).join('\n');
+            const outputString = `Here are the latest news articles for ${ticker}:\n${articlesText}`;
+            augmentedPromptParts.push(outputString);
+            contextForMemory.news = { ticker, articles: newsArticles };
+            toolCallData.output = outputString;
+          } else {
+            const errorMsg = `No recent news found for ${ticker} between ${fromDateTime} and ${toDateTime}.`;
+            augmentedPromptParts.push(errorMsg);
+            toolCallData.error = errorMsg;
+          }
+          allToolCalls.push(toolCallData);
         }
 
         // --- Process earnings_request result ---
@@ -232,13 +253,27 @@ async function runAgentCycle(userInput) {
           const { cik, companyFacts } = value;
           toolCallData.toolInput = `earnings for ${ticker}`; // Descriptive input
 
-          if (!cik || !companyFacts || !companyFacts.facts || !companyFacts.facts['us-gaap']) {
-            toolCallData.error = `Could not retrieve company facts for ${ticker}. CIK found: ${cik || 'None'}.`;
-            augmentedPromptParts.push(toolCallData.error);
-            allToolCalls.push(toolCallData);
-            return;
+          const earningsData = companyFacts.facts['us-gaap'].EarningsPerShareDiluted;
+          if (earningsData && earningsData.units && earningsData.units.USD) {
+            // Find the most recent reported EPS
+            const recentFacts = earningsData.units.USD.filter(fact => fact.form === '10-K' || fact.form === '10-Q');
+            if (recentFacts.length > 0) {
+              const mostRecentFact = recentFacts.sort((a, b) => new Date(b.end) - new Date(a.end))[0];
+              const outputString = `The most recent diluted EPS for ${ticker} is ${mostRecentFact.val} for the period ending ${mostRecentFact.end}.`;
+              augmentedPromptParts.push(outputString);
+              contextForMemory.earnings = { ticker, mostRecentFact };
+              toolCallData.output = outputString;
+            } else {
+               const errorMsg = `No recent EPS data found in company filings for ${ticker}.`;
+               augmentedPromptParts.push(errorMsg);
+               toolCallData.error = errorMsg;
+            }
+          } else {
+            const errorMsg = `Could not find 'EarningsPerShareDiluted' in the company facts for ${ticker}.`;
+            augmentedPromptParts.push(errorMsg);
+            toolCallData.error = errorMsg;
           }
-          // ... rest of the fulfilled logic ...
+          allToolCalls.push(toolCallData);
         }
 
         // --- Process filing_request result ---
@@ -253,7 +288,28 @@ async function runAgentCycle(userInput) {
             allToolCalls.push(toolCallData);
             return;
           }
-          // ... rest of the fulfilled logic ...
+          const recentFilings = submissionMetadata.filings.recent;
+          const filingsList = Object.keys(recentFilings)
+            .map((key, i) => {
+              if (key.startsWith('accessionNumber')) {
+                const reportDate = recentFilings.reportDate[i];
+                const form = recentFilings.form[i];
+                return `- ${form} filed on ${reportDate}.`;
+              }
+              return null;
+            }).filter(Boolean).slice(0, 5); // Take top 5 recent
+          
+          if (filingsList.length > 0) {
+            const outputString = `Here are the most recent SEC filings for ${ticker}:\n${filingsList.join('\n')}`;
+            augmentedPromptParts.push(outputString);
+            contextForMemory.filings = { ticker, recentFilings: filingsList };
+            toolCallData.output = outputString;
+          } else {
+            const errorMsg = `No recent filings found for ${ticker}.`;
+            augmentedPromptParts.push(errorMsg);
+            toolCallData.error = errorMsg;
+          }
+          allToolCalls.push(toolCallData);
         }
       });
     } else {

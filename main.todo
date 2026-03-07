@@ -18,7 +18,7 @@ Data Sources :
      ✔ Implement financial reports access for quarterly research and evaluations @done(26-02-27 19:38)
      ✔ Add API for financial news access for company evaluations and market sentiment @done(26-02-21 21:32)
      ✔ Implement specific historical news queries with date ranges @done(26-02-21 21:44)
-     ☐ Update system prompts for AI response overwrite on tool call data
+     ✔ Update system prompts for AI response overwrite on tool call data @done(26-03-07 19:58)
 
 Memory System :
      ✔ Create a lightweight memory store that saves facts with intent tags instead of embeddings @done(26-02-11 17:05)
