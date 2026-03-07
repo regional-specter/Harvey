@@ -71,7 +71,7 @@ const SingleToolCallDisplay = ({ toolName, toolInput, duration, error }: ToolCal
         <Box flexDirection="column" marginBottom={1} marginLeft={2}>
             <Text color="green">{toolName} ("{toolInput}")</Text>
             <Box marginLeft={2}>
-                <Text color="green">└ in {duration}ms</Text>
+                <Text>└ in {duration}ms</Text>
             </Box>
         </Box>
     );
@@ -192,7 +192,7 @@ const App = () => {
 
     useEffect(() => {
         setAgentLogger((logMessage) => {
-            setLogMessages(prevLogs => [...prevLogs, logMessage].slice(-7));
+            setLogMessages(prevLogs => [...prevLogs, logMessage].slice(-12));
         });
 
         const init = async () => {

@@ -63,8 +63,8 @@ UI :
      ⏳ Update tool call indication to include prompt for better UX @inprogress(26-03-06 20:25)
 
 Agent Performance and Infrastruture Updates :
-     ☐ Update tool call responses to use default response templates for redundent queries
-     ☐ Update finance_api for response template and query detection
+     ⏳ Update tool call responses to use default response templates for redundent queries @inprogress(26-03-07 20:03)
+     ⏳ Update finance_api for response template and query detection @inprogress(26-03-07 20:03)
      ☐ Update prompts for final response generation
      ☐ Update infrastructure for efficient tool call handling
 
