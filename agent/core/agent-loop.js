@@ -324,7 +324,16 @@ async function runAgentCycle(userInput) {
     if (isSimpleDataRequest && contextForMemory.price) {
       console.log('Agent loop: Using simple template for stock price response.');
       const { ticker, price } = contextForMemory.price;
-      llmResponse = `The current stock price for ${ticker} is ${price}.`;
+
+      const templates = [
+        `The current stock price for ${ticker} is ${price}.`,
+        `As of the latest data, ${ticker} is trading at ${price}.`,
+        `${ticker}'s current price is ${price}.`,
+        `The price for ${ticker} is currently ${price}.`
+      ];
+      
+      const randomIndex = Math.floor(Math.random() * templates.length);
+      llmResponse = templates[randomIndex];
     } else {
       // Fallback to the full LLM for complex or non-templateable queries
       console.log(`Agent loop: Generating final response with accumulated prompt parts.`);
