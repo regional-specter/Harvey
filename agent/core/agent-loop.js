@@ -338,7 +338,26 @@ async function runAgentCycle(userInput) {
       // Fallback to the full LLM for complex or non-templateable queries
       console.log(`Agent loop: Generating final response with accumulated prompt parts.`);
       const finalAugmentedPrompt = augmentedPromptParts.length > 0
-        ? `${augmentedPromptParts.join('\n')}\n\nPlease summarize this information for the user, answering their original query: "${userInput}".`
+        ? `You are a financial research assistant. Your task is to summarize the provided data to answer the user's query.
+           Do not add any information that is not present in the provided data.
+           Strictly adhere to the following format:
+               
+           **Summary of Information:**
+           - [Summary of the first piece of information]
+           - [Summary of the second piece of information]
+           ...
+               
+           **Answer to the user's query:**
+           - [Direct answer to the user's query based *only* on the summarized information]
+               
+           **Original Query:**
+           "${userInput}"
+               
+           **Provided Data:**
+           ---
+           ${augmentedPromptParts.join('\n\n---\n')}
+           ---
+           `
         : userInput;
 
       llmResponse = await generateResponse(finalAugmentedPrompt);

@@ -1018,5 +1018,15 @@
         ]
       }
     }
+  },
+  {
+    "id": 3,
+    "timestamp": "2026-03-09T13:05:35.616Z",
+    "user_input": "Whats the stock price of AAPL today ?",
+    "llm_response": "As of 12:45 PM EDT on Thursday, May 23, 2024, **Apple Inc. (AAPL)** is trading at approximately **$187.34**.\n\nHere is a quick snapshot of its performance today:\n*   **Price Change:** -$3.53 (-1.85%)\n*   **Day's Range:** $186.63 – $190.95\n*   **Market Cap:** $2.87 Trillion\n\nStock prices fluctuate constantly throughout the trading day. For the most up-to-the-second data, you can check [Google Finance](https://www.google.com/finance/quote/AAPL:NASDAQ), [Yahoo Finance](https://finance.yahoo.com/quote/AAPL/), or your brokerage app.",
+    "thematic_scope": "general_chat",
+    "event_type": "chat_turn",
+    "entities": [],
+    "context": {}
   }
 ]
