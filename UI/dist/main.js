@@ -99353,7 +99353,14 @@ ${filingsList.join("\n")}`;
         if (isSimpleDataRequest && contextForMemory.price) {
           console.log("Agent loop: Using simple template for stock price response.");
           const { ticker, price } = contextForMemory.price;
-          llmResponse = `The current stock price for ${ticker} is ${price}.`;
+          const templates = [
+            `The current stock price for ${ticker} is ${price}.`,
+            `As of the latest data, ${ticker} is trading at ${price}.`,
+            `${ticker}'s current price is ${price}.`,
+            `The price for ${ticker} is currently ${price}.`
+          ];
+          const randomIndex = Math.floor(Math.random() * templates.length);
+          llmResponse = templates[randomIndex];
         } else {
           console.log(`Agent loop: Generating final response with accumulated prompt parts.`);
           const finalAugmentedPrompt = augmentedPromptParts.length > 0 ? `${augmentedPromptParts.join("\n")}
@@ -99469,7 +99476,6 @@ var require_agent = __commonJS({
 // ui.tsx
 import React2, { useState as useState2, useEffect as useEffect2, useRef } from "react";
 import { render, Box, Text as Text2, useInput, useApp } from "ink";
-import Gradient from "ink-gradient";
 
 // node_modules/ink-spinner/build/index.js
 var import_cli_spinners = __toESM(require_cli_spinners(), 1);
@@ -101935,7 +101941,10 @@ var HEADER_ASCII = `
 \u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551 \u255A\u2588\u2588\u2588\u2588\u2554\u255D \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557   \u2588\u2588\u2551   
 \u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D  \u255A\u2550\u2550\u2550\u255D  \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D   \u255A\u2550\u255D
 `.trim();
-var Header = () => /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", alignItems: "left", paddingBottom: 1 }, /* @__PURE__ */ React2.createElement(Gradient, { colors: ["#1A1A1B", "#A39382"], multiline: true }, /* @__PURE__ */ React2.createElement(Text2, { bold: true }, HEADER_ASCII)), /* @__PURE__ */ React2.createElement(Box, { marginTop: 1, width: 80 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray", dimColor: true, italic: true, wrap: "wrap", textAlign: "left" }, "An intelligent research agent that tracks your goals, recalls contextually relevant information, and reasons across long, interleaved tasks to provide precise insights.")));
+var Header = () => {
+  const headerLines = HEADER_ASCII.split("\n");
+  return /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", alignItems: "left", paddingBottom: 1 }, /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column" }, /* @__PURE__ */ React2.createElement(Text2, { bold: true, color: "#ba181b" }, headerLines[0]), /* @__PURE__ */ React2.createElement(Text2, { bold: true, color: "#ba181b" }, headerLines[1]), /* @__PURE__ */ React2.createElement(Text2, { bold: true, color: "#a4161a" }, headerLines[2]), /* @__PURE__ */ React2.createElement(Text2, { bold: true, color: "#a4161a" }, headerLines[3]), /* @__PURE__ */ React2.createElement(Text2, { bold: true, color: "#660708" }, headerLines[4]), /* @__PURE__ */ React2.createElement(Text2, { bold: true, color: "#660708" }, headerLines[5])), /* @__PURE__ */ React2.createElement(Box, { marginTop: 1, width: 80 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray", dimColor: true, italic: true, wrap: "wrap", textAlign: "left" }, "An intelligent research agent that tracks your goals, recalls contextually relevant information, and reasons across long, interleaved tasks to provide precise insights.")));
+};
 var SingleToolCallDisplay = ({ toolName, toolInput, duration, error }) => {
   if (error) {
     return /* @__PURE__ */ React2.createElement(Box, { flexDirection: "column", marginBottom: 1, marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "red" }, toolName, ' ("', toolInput, '") - FAILED'), /* @__PURE__ */ React2.createElement(Box, { marginLeft: 2 }, /* @__PURE__ */ React2.createElement(Text2, { color: "gray" }, "\u2514 Error: ", error.toString())));

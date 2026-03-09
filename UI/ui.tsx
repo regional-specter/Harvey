@@ -37,22 +37,28 @@ interface Message {
     allToolCalls?: ToolCall[];
 }
 
-const Header = () => (
-    <Box flexDirection="column" alignItems="left" paddingBottom={1}>
-        <Gradient colors={['#1A1A1B', '#A39382']} multiline>
-            <Text bold>
-                {HEADER_ASCII}
-            </Text>
-        </Gradient>
-        
-        <Box marginTop={1} width={80}>
-            <Text color="gray" dimColor italic wrap="wrap" textAlign="left">
-                An intelligent research agent that tracks your goals, recalls contextually relevant 
-                information, and reasons across long, interleaved tasks to provide precise insights.
-            </Text>
+const Header = () => {
+    const headerLines = HEADER_ASCII.split('\n');
+    return (
+        <Box flexDirection="column" alignItems="left" paddingBottom={1}>
+            <Box flexDirection="column">
+                    <Text bold color="#ba181b">{headerLines[0]}</Text>
+                    <Text bold color="#ba181b">{headerLines[1]}</Text>
+                    <Text bold color="#a4161a">{headerLines[2]}</Text>
+                    <Text bold color="#a4161a">{headerLines[3]}</Text>
+                    <Text bold color="#660708">{headerLines[4]}</Text>
+                    <Text bold color="#660708">{headerLines[5]}</Text>
+                </Box>
+            
+            <Box marginTop={1} width={80}>
+                <Text color="gray" dimColor italic wrap="wrap" textAlign="left">
+                    An intelligent research agent that tracks your goals, recalls contextually relevant 
+                    information, and reasons across long, interleaved tasks to provide precise insights.
+                </Text>
+            </Box>
         </Box>
-    </Box>
-);
+    );
+};
 
 // --- New SingleToolCallDisplay Component ---
 const SingleToolCallDisplay = ({ toolName, toolInput, duration, error }: ToolCall) => {
