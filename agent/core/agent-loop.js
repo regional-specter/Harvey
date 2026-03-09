@@ -345,7 +345,7 @@ async function runAgentCycle(userInput) {
            **Summary of Information:**
            - [Summary of the first piece of information]
            - [Summary of the second piece of information]
-           ...
+           ....
                
            **Answer to the user's query:**
            - [Direct answer to the user's query based *only* on the summarized information]
