@@ -68,7 +68,7 @@ Agent Performance and Infrastruture Updates :
      ✔ Update prompts for final response generation @done(26-03-07 20:43)
      ⏳ Update infrastructure for efficient tool call handling @inprogress(26-03-07 20:44)
      ✔ Updated LLM base prompt for better consistency @done(26-03-09 17:05)
-     ⏳ Update LLM-Client with a system parameter for high-level instruction and persona @inprogress(26-03-09 17:06)
+     ✔ Update LLM-Client with a system parameter for high-level instruction and persona @done(26-03-09 17:31)
 
 Evaluation & Benchmarking :
      ☐ Compare outputs against one-shot AI chat tools for the same queries

@@ -98543,15 +98543,21 @@ var require_llm_client = __commonJS({
         console.error("\u274C Error initializing Gemini client:", error.message);
       }
     }
-    async function generateResponse(prompt) {
+    async function generateResponse(prompt, system) {
       if (!isClientInitialized || !genAI) {
         throw new Error("LLM client is not initialized. Please ensure GEMINI_API_KEY is set correctly and the Gemini library is functioning.");
       }
       try {
+        const config = {};
+        if (system) {
+          config.systemInstruction = system;
+        }
         const result = await genAI.models.generateContent({
           model: MODEL_NAME,
           // Use the constant for model name
-          contents: [{ text: prompt }]
+          contents: [{ text: prompt }],
+          ...Object.keys(config).length > 0 && { config }
+          // Conditionally add config if it's not empty
         });
         if (result && result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
           const responseText = result.candidates[0].content.parts[0].text;
@@ -99102,6 +99108,17 @@ var require_agent_loop = __commonJS({
     var { fetchStockPrice } = require_finance_api();
     var { fetchNews } = require_news_api();
     var { getCik, fetchCompanyFacts, fetchSubmissionMetadata } = require_sec_api();
+    var SYSTEM_PROMPT = `You are a financial research assistant. Your task is to strictly summarize the provided data to answer the user's query.
+Do not add any information that is not present in the provided data.
+Strictly adhere to the following output format:
+
+**Summary of Information:**
+- [Summary of the first piece of information]
+- [Summary of the second piece of information]
+...
+
+**Answer to the user's query:**
+- [Direct answer to the user's query based *only* on the summarized information]`;
     async function runAgentCycle(userInput) {
       if (!userInput || typeof userInput.trim() !== "string" || userInput.trim() === "") {
         throw new Error("Invalid user input provided for agent cycle. Input cannot be empty.");
@@ -99370,7 +99387,7 @@ ${filingsList.join("\n")}`;
            **Summary of Information:**
            - [Summary of the first piece of information]
            - [Summary of the second piece of information]
-           ...
+           ....
                
            **Answer to the user's query:**
            - [Direct answer to the user's query based *only* on the summarized information]
@@ -99383,7 +99400,7 @@ ${filingsList.join("\n")}`;
            ${augmentedPromptParts.join("\n\n---\n")}
            ---
            ` : userInput;
-          llmResponse = await generateResponse(finalAugmentedPrompt);
+          llmResponse = await generateResponse(finalAugmentedPrompt, SYSTEM_PROMPT);
           console.log(`Agent loop: Received final response from LLM.`);
         }
         const memoryEntryData = {

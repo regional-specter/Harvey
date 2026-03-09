@@ -7,6 +7,18 @@ const { fetchStockPrice } = require('../data_sources/finance_api');
 const { fetchNews } = require('../data_sources/news_api');
 const { getCik, fetchCompanyFacts, fetchSubmissionMetadata } = require('../data_sources/sec_api');
 
+const SYSTEM_PROMPT = `You are a financial research assistant. Your task is to strictly summarize the provided data to answer the user's query.
+Do not add any information that is not present in the provided data.
+Strictly adhere to the following output format:
+
+**Summary of Information:**
+- [Summary of the first piece of information]
+- [Summary of the second piece of information]
+...
+
+**Answer to the user's query:**
+- [Direct answer to the user's query based *only* on the summarized information]`;
+
 
 /**
  * Executes a single cycle of the agent's operation.
@@ -360,7 +372,7 @@ async function runAgentCycle(userInput) {
            `
         : userInput;
 
-      llmResponse = await generateResponse(finalAugmentedPrompt);
+      llmResponse = await generateResponse(finalAugmentedPrompt, SYSTEM_PROMPT);
       console.log(`Agent loop: Received final response from LLM.`);
     }
 
