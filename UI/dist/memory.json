@@ -1028,5 +1028,33 @@
     "event_type": "chat_turn",
     "entities": [],
     "context": {}
+  },
+  {
+    "id": 4,
+    "timestamp": "2026-03-10T06:25:49.028Z",
+    "user_input": "Whats the stock price of AAPL today ?",
+    "llm_response": "The current stock price for AAPL is 259.88.",
+    "thematic_scope": "stock price analysis",
+    "event_type": "chat_turn",
+    "entities": [
+      {
+        "type": "STOCK_TICKER",
+        "value": "AAPL"
+      },
+      {
+        "type": "DATE_FROM",
+        "value": "20260221T0000"
+      },
+      {
+        "type": "DATE_TO",
+        "value": "20260221T2359"
+      }
+    ],
+    "context": {
+      "price": {
+        "ticker": "AAPL",
+        "price": 259.88
+      }
+    }
   }
 ]
