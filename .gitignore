@@ -2,3 +2,12 @@ GEMINI.md
 docs.md
 .env
 .vscode
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+.pytest_cache/
+.mypy_cache/
+harvey/memory/memory.json
+memory_export_*.json
