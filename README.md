@@ -1,4 +1,15 @@
+<div align="center">
+
 # Harvey
+
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen)](https://github.com/your-username/halalquant/issues)
+
+
+https://github.com/user-attachments/assets/d28de031-17e5-4de9-8768-1c4e8761ef13
+
+
+</div>
 
 Harvey is a **financial research agent** that runs in the terminal. You ask a question about stocks, news, earnings, or SEC filings. It extracts *why* you asked, fetches only the data that matches that intent, answers from that data, and stores the turn as an **intent-tagged memory** instead of dumping everything into a vector store.
 
